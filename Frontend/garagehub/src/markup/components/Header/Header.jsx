@@ -6,7 +6,7 @@ function Header(props) {
   return (
     <div>
       <header className="main-header header-style-one">
-        <div classNameName="header-top">
+        <div className="header-top">
           <div className="auto-container">
             <div className="inner-container">
               <div className="left-column">
