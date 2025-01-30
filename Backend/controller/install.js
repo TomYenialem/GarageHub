@@ -2,7 +2,6 @@ const installService=require('../services/install');
 
 // Create a function to install the database tables
 async function install(req, res) {
-
   try {
     const result = await installService.install();
     console.log("Service result:", result);
@@ -16,6 +15,5 @@ async function install(req, res) {
     res.status(500).json({ message: "Server error" });
   }
 }
-
 
 module.exports={install}
