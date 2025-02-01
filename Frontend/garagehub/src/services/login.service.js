@@ -1,14 +1,22 @@
-const API = import.meta.env.VITE_API_URL;
-const login = async (formData) => {
-  const options = {
+
+const api_url = import.meta.env.VITE_API_URL;
+
+// A function to send the login request to the server
+const logIn = async (formData) => {
+  const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formData),
   };
-  const response = await fetch(`${API}/login`, options);
+  console.log("About to send request");
+  console.log(requestOptions.body);
+  const response = await fetch(`${api_url}/api/employee/login`, requestOptions);
   return response;
 };
-const loginService = {
-  login,
+
+// A function to log out the user
+const logOut = () => {
+  localStorage.removeItem("employee");
 };
-export default loginService;
+
+export default { logIn, logOut };

@@ -1,10 +1,8 @@
-// get tokoen from the local storage
-const employeeAuthHeader = async () => {
-  // console.log("Inside employeeAuthHeader");
+// Function to read the data from the user's local storage
+const getAuth = async () => {
   const employee = await JSON.parse(localStorage.getItem("employee"));
   if (employee && employee.employee_token) {
     const decodedToken = await decodeTokenPayload(employee.employee_token);
-    console.log(decodedToken);
     employee.employee_role = decodedToken.employee_role;
     employee.employee_id = decodedToken.employee_id;
     employee.employee_first_name = decodedToken.employee_first_name;
@@ -28,4 +26,4 @@ const decodeTokenPayload = (token) => {
   return JSON.parse(jsonPayload);
 };
 
-export default employeeAuthHeader;
+export default getAuth;

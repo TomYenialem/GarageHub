@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 // import employee.service.js
-import { useNavigate } from "react-router-dom";
 import employeeService from "../../../../services/employee.service";
+// Import the useAuth hook
+import { useAuth } from "../../../../Context/authContext";
 
 function AddEmployeeForm(props) {
   const [employee_email, setEmail] = useState("");
@@ -17,14 +18,18 @@ function AddEmployeeForm(props) {
   const [passwordError, setPasswordError] = useState("");
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState("");
- const[loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
+  // Create a variable to hold the user's token
+  let loggedInEmployeeToken = "";
+  // Destructure the auth hook and get the token
+  const { employee } = useAuth();
+  if (employee && employee.employee_token) {
+    loggedInEmployeeToken = employee.employee_token;
+  }
 
   const handleSubmit = (e) => {
     // Prevent the default behavior of the form
     e.preventDefault();
-    setLoading(true);
     // Handle client side validations
     let valid = true; // Flag
     // First name is required
@@ -58,7 +63,6 @@ function AddEmployeeForm(props) {
     }
     // If the form is not valid, do not submit
     if (!valid) {
-      setLoading(false);
       return;
     }
     const formData = {
@@ -70,10 +74,11 @@ function AddEmployeeForm(props) {
       active_employee,
       company_role_id,
     };
-
     // Pass the form data to the service
-try {
-    const newEmployee = employeeService.createEmployee(formData);
+    const newEmployee = employeeService.createEmployee(
+      formData,
+      loggedInEmployeeToken
+    );
     newEmployee
       .then((response) => response.json())
       .then((data) => {
@@ -85,23 +90,24 @@ try {
           // Handle successful response
           setSuccess(true);
           setServerError("");
-      
-          
+          // Redirect to the employees page after 2 seconds
+          // For now, just redirect to the home page
+          setTimeout(() => {
+            // window.location.href = '/admin/employees';
+            window.location.href = "/";
+          }, 2000);
         }
       })
-
-} catch (error) {
-  const resMessage =
+      // Handle Catch
+      .catch((error) => {
+        const resMessage =
           (error.response &&
             error.response.data &&
             error.response.data.message) ||
           error.message ||
           error.toString();
         setServerError(resMessage);
-}
-finally{
-  setLoading(false);
-}
+      });
   };
 
   return (
@@ -208,14 +214,7 @@ finally{
                         type="submit"
                         data-loading-text="Please wait..."
                       >
-                        <span>{
-                          loading ? 
-                          <>
-                           <ClipLoader size={17} color="white"  />   please
-                              wait...
-                          </>
-                       : 'Add Employee'
-                          }</span>
+                        <span>Add employee</span>
                       </button>
                     </div>
                   </div>
