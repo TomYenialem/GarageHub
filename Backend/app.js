@@ -1,24 +1,30 @@
+// Import the express module
 const express = require("express");
-const app = express();
+// Import the dotenv module and call the config method to load the environment variables
 require("dotenv").config();
-const routers = require("./routes");
+// Import the sanitizer module
+const sanitize = require("sanitize");
+// Import the CORS module
 const cors = require("cors");
-const santizer = require("sanitize");
+// Set up the CORS options to allow requests from our front-end
 
+// Create a variable to hold our port number
+const port = process.env.PORT;
+// Import the router
+const router = require("./routes");
+// Create the webserver
+const app = express();
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-const corsOptions = {
-  origin: process.env.FRONTEND_UR,
-
-  optionsSuccessStatus: 200,
-};
-
-app.use(cors(corsOptions));
-
-app.use(santizer.middleware);
-app.use(routers);
-// add santizer
-
-app.listen(5000, () => {
-  console.log("Server is running on port 5000");
+// Add the CORS middleware
+app.use(cors());
+// Add the express.json middleware to the application
+// Add the sanitizer to the express middleware
+app.use(sanitize.middleware);
+// Add the routes to the application as middleware
+app.use(router);
+// Start the webserver
+app.listen(port, () => {
+  console.log(`Server running on port: ${port}`);
 });
+// Export the webserver for use in the application
+module.exports = app;

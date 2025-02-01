@@ -8,12 +8,31 @@ const dbConfig = {
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
 };
+
+// const pool = mysql.createPool(dbConfig);
+// // Prepare a function that will execute the SQL queries asynchronously
+// async function query(sql, params) {
+//   const [rows, fields] = await pool.execute(sql, params);
+//   return rows;
+
+// }
 // Create the connection pool
-const pool = mysql.createPool(dbConfig);
-// Prepare a function that will execute the SQL queries asynchronously
+const pool=mysql.createPool(dbConfig)
+// Create the query function that will execute the SQL queries asynchronously
 async function query(sql, params) {
-  const [rows, fields] = await pool.execute(sql, params);
-  return rows;
-}
+  const connection = await pool.getConnection();
+  try {
+    const [rows, fields] = await connection.execute(sql, params);
+    return rows;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    connection.release();
+  }
+} 
+
+
+
+
 // Export the query function for use in the application
 module.exports = { query };
