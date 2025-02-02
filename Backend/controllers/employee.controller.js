@@ -35,7 +35,21 @@ async function createEmployee(req, res, next) {
     }
   }
 }
-// Export the createEmployee controller
+async function getAllEmployees(req,res){
+try {
+  const allEmployees=await employeeService.getAllEmployees();
+  res.status(200).json({
+    data:allEmployees,
+  })
+  
+} catch (error) {
+  console.log(error);
+  res.status(500).json({
+    error: "Something went wrong!",
+  });
+}
+}
 module.exports = {
   createEmployee,
+  getAllEmployees
 };
