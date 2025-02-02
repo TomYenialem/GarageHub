@@ -4,7 +4,9 @@ import React from "react";
 import { useAuth } from "../../../Context/authContext";
 // Import the Login component
 import LoginForm from '../../components/Login/LoginForm'
-
+// Import the AdminForm component
+import AdminForm from '../../components/Admin/AdminMenu/AdminMenu'
+import EmployeeList from "../../components/Admin/EmployeeList/EmployeeLists";
 function Employees() {
   // Destructure the auth hook
   const { isLogged, isAdmin } = useAuth();
@@ -13,7 +15,16 @@ function Employees() {
     if (isAdmin) {
       return (
         <div>
-          <h1>Employees Page</h1>
+          <div className="container-fluid admin-pages">
+            <div className="row">
+              <div className="col-md-3 admin-left-side">
+                <AdminForm />
+              </div>
+              <div className="col-md-9 admin-right-side">
+         <EmployeeList/>
+              </div>
+            </div>
+          </div>
         </div>
       );
     } else {
