@@ -9,10 +9,12 @@ const employeeRouter = require("./employee.routes");
 // Import the login routes
 const loginRoutes = require("./login.routes");
 // Add the install router to the main router
+const addCustomerRoutes = require('./customer.routes')
 router.use(installRouter);
 // Add the employee routes to the main router
 router.use(employeeRouter);
 // Add the login routes to the main router
 router.use(loginRoutes);
+router.use(addCustomerRoutes)
 // Export the router
 module.exports = router;
