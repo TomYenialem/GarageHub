@@ -1,9 +1,35 @@
-import React from 'react'
+import React from "react";
+// Import the auth hook
+
+import { useAuth } from "../../../Context/authContext";
+// Import the Login component
+import LoginForm from '../../components/Login/LoginForm'
 
 function Employees() {
-  return (
-    <div>Employees</div>
-  )
+  // Destructure the auth hook
+  const { isLogged, isAdmin } = useAuth();
+
+  if (isLogged) {
+    if (isAdmin) {
+      return (
+        <div>
+          <h1>Employees Page</h1>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h1>You are not authorized to access this page</h1>
+        </div>
+      );
+    }
+  } else {
+    return (
+      <div>
+        <LoginForm />
+      </div>
+    );
+  }
 }
 
-export default Employees
+export default Employees;

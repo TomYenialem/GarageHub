@@ -13,7 +13,7 @@ const createEmployee = async (formData, loggedInEmployeeToken) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      // 'x-access-token': loggedInEmployeeToken
+      'x-access-token': loggedInEmployeeToken
     },
     body: JSON.stringify(formData)
   };

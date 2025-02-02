@@ -1,15 +1,24 @@
 import React from "react";
+// Import the Link component from react-router-dom
+import { Link } from "react-router-dom";
 // Import the logo image
 import logo from "../../../assets/images/logo.png";
+// Import the login service to access the logout function
+import loginService from "../../../services/login.service";
 import { useAuth } from "../../../Context/authContext";
-import {Link} from 'react-router-dom';
+// Import the custom context hook
+
 
 function Header(props) {
   // Use the custom hook to access the data in the context
   const { isLogged, setIsLogged, employee } = useAuth();
+  // console.log(useAuth());
 
+  // Log out event handler function
   const logOut = () => {
-    localStorage.removeItem("employee");
+    // Call the logout function from the login service
+    loginService.logOut();
+    // Set the isLogged state to false
     setIsLogged(false);
   };
 
@@ -82,7 +91,7 @@ function Header(props) {
                 {isLogged ? (
                   <div className="link-btn">
                     <Link
-                      to="/ "
+                      to="/"
                       className="theme-btn btn-style-one blue"
                       onClick={logOut}
                     >
