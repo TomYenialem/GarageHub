@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 // impoer customer service
 import customers from '../../../../services/customers.service';
+import toast from 'react-hot-toast';
+// import toast from react hot-toast
+
 
 function AddCustomer() {
     const [customer_email, setEmail] = useState("");
@@ -63,18 +66,17 @@ function AddCustomer() {
         .then((data) => {
           // console.log(data);
           // If Error is returned from the API server, set the error message
+          console.log(data)
           if (data.error) {
             setServerError(data.error);
           } else {
             // Handle successful response
             setSuccess(true);
             setServerError("");
+            toast.success(data.message);
             // Redirect to the customers page after 2 seconds
             // For now, just redirect to the home page
-            setTimeout(() => {
-              // window.location.href = '/admin/customers';
-              window.location.href = "/";
-            }, 2000);
+            ;
           }
         })
         // Handle Catch
