@@ -8,12 +8,12 @@ const addCustomer = async (req, res) => {
     );
 
     if (checkEmail) {
-      return res.status(400).json({ message: "Email already exists" });
+      return res.status(400).json({ error: "Email already exists" });
     } else {
       const customerData = req.body;
       const newCustomer = await customerService.addCustomer(customerData);
       if (!newCustomer) {
-        return res.status(500).json({ message: "failed to add customer due to server" });
+        return res.status(500).json({ error: "failed to add customer due to server" });
       }
       res.status(201).json({
         message: "Customer added successfully",
@@ -22,10 +22,27 @@ const addCustomer = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
+const getAllCustomers=async(req,res)=>{
+  try {
+    const customers=await customerService.getAllCustomers()
+    if(!customers){
+      return res.status(500).json({ error: "Failed to get customers due to server" });
+    }
+    else{
+      res.status(200).json({ data:customers });
+    }
+    
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+
+}
 module.exports = {
   addCustomer,
+  getAllCustomers,
 };

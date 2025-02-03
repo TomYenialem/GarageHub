@@ -40,8 +40,23 @@ const addCustomer = async (customer) => {
 
   return returnDatas;
 };
+const getAllCustomers=async()=>{
+  // selelct all customers fro those two tables
+
+  try {
+    
+    const allCustomers =
+      "SELECT * FROM customer_identifier INNER JOIN  customer_info  ON customer_identifier.customer_id = customer_info.customer_id ORDER BY customer_identifier.customer_id DESC limit 10 "; 
+      const rows = await conn.query(allCustomers);
+      return rows;
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 module.exports = {
   checkIfCustomerExists,
   addCustomer,
+  getAllCustomers,
 };
