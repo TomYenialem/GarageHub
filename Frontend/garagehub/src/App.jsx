@@ -22,6 +22,7 @@ import Customers from "./markup/pages/admin/Customers";
 import Employees from "./markup/pages/admin/Employees";
 import PrivateAuthRoute from "./markup/components/Auth/PrivateAuthRoute";
 import CustomersList from "./markup/pages/admin/CustomersList";
+import CustomerProfileLists from "./markup/pages/admin/CustomerProfileLists";
 function App() {
   return (
     <>
@@ -63,6 +64,7 @@ function App() {
         />
         <Route path="/admin/employees" element={<Employees />} />
         <Route path="/admin/all_customers" element={<CustomersList />} />
+        <Route path="/admin/customer_profile" element={<CustomerProfileLists/>}/> 
       </Routes>
       <Toaster position="top-right" />
       <Footer />

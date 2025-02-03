@@ -6,6 +6,9 @@ const getAuth = async () => {
     employee.employee_role = decodedToken.employee_role;
     employee.employee_id = decodedToken.employee_id;
     employee.employee_first_name = decodedToken.employee_first_name;
+      employee.employee_last_name = decodedToken.employee_last_name;
+    employee.employee_email = decodedToken.employee_email;
+    employee.employee_phone = decodedToken.employee_phone;
     return employee;
   } else {
     return {};

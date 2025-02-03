@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
     const loggedInEmployee = getAuth();
     // console.log(loggedInEmployee);
     loggedInEmployee.then((response) => {
-      // console.log(response);
+      console.log(response);
       if (response.employee_token) {
         setIsLogged(true);
         // 3 is the employee_role for admin
