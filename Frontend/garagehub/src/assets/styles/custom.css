@@ -260,3 +260,8 @@ input:disabled {
 .change-status {
   cursor: pointer;
 }
+.delete_edit_icons{
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+}
