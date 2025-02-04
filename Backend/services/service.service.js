@@ -33,11 +33,25 @@ const deleteService=async(service)=>{
 
 }
 
+const editServices=async(id,service)=>{
+    try {
+        const editServices = "UPDATE common_services SET service_name=?, service_description=? WHERE service_id=?";
+        const result = await conn.query(editServices, [service.service_name,service.service_description,id]);
+        return result;
+        
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 
 
 module.exports={
     addNewSerive,
     getAllServcies,
     deleteService,
+    editServices,
+    
  
 }
