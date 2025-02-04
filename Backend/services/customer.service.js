@@ -46,7 +46,7 @@ const getAllCustomers=async()=>{
   try {
     
     const allCustomers =
-      "SELECT * FROM customer_identifier INNER JOIN  customer_info  ON customer_identifier.customer_id = customer_info.customer_id ORDER BY customer_identifier.customer_id DESC limit 10 "; 
+      "SELECT * FROM customer_identifier INNER JOIN customer_info  ON customer_identifier.customer_id = customer_info.customer_id ORDER BY customer_identifier.customer_id DESC limit 10 "; 
       const rows = await conn.query(allCustomers);
       return rows;
     

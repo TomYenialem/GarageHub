@@ -4,9 +4,13 @@ const express = require("express");
 const router = express.Router();
 // Import the install router
 const installRouter = require("./install.routes");
+// import vehicle routes
+ const vehicleRouter = require("./vehicle.routes");
 // Import the employee routes
 const employeeRouter = require("./employee.routes");
 // Import the login routes
+// add serivce routes
+ const serviceRouter = require("./service.routes");
 const loginRoutes = require("./login.routes");
 // Add the install router to the main router
 const addCustomerRoutes = require('./customer.routes')
@@ -16,5 +20,9 @@ router.use(employeeRouter);
 // Add the login routes to the main router
 router.use(loginRoutes);
 router.use(addCustomerRoutes)
-// Export the router
+router.use(vehicleRouter)
+router.use(serviceRouter)
+
+// Add the vehicle routes to the main router
+
 module.exports = router;
