@@ -7,6 +7,8 @@ const serviceController = require("../controllers/service.controller");
 // vehicle routes
 routes.post("/api/service", serviceController.addService);
 
-module.exports = routes
+routes.get("/api/service", serviceController.getAllServcies);
 
+routes.delete("/api/service/:id", serviceController.deleteService);
 
+module.exports = routes;

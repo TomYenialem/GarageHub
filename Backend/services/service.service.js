@@ -11,6 +11,33 @@ const addNewSerive=async(service)=>{
         console.log(error)
     }
 }
+const getAllServcies=async()=>{
+    try {
+        const getAllServices = "SELECT * FROM common_services";
+        const result = await conn.query(getAllServices);
+        return result;
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+const deleteService=async(service)=>{
+    try {
+        const deleteService = "DELETE FROM common_services WHERE service_id=?";
+        const result = await conn.query(deleteService, [service]);
+        return result;
+        
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+
+
 module.exports={
-    addNewSerive
+    addNewSerive,
+    getAllServcies,
+    deleteService,
+ 
 }
