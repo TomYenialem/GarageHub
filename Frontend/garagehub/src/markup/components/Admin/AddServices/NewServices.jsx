@@ -1,70 +1,150 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import  serv from '../../../../services/services.service'
-
-
-import toast from 'react-hot-toast';
-
+import serv from "../../../../services/services.service";
+import toast from "react-hot-toast";
 
 function NewServices() {
-    const [service_name,setServcie_name]=useState('')
-    const [service_description,setService_desciptions]=useState('')
-          const [serverError, setServerError] = useState("");
-const handleSubmit =(e)=>{ 
-  e.preventDefault();
-  const data = {
-    service_name:service_name,
-    service_description:service_description
-  }
-  try {
-    const newService = serv.addNewServices(data);
-    newService.then((res)=>  res.json().then((data)=>{
-      if(data.error){
-        setServerError(data.error);
-      }
-      else{
-        setServerError('')
-        toast.success('new server added')
-      }
-    }))
-  } catch (error) {
-    console.log(error)
-    const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          setServerError(resMessage);
-  }
+  const [service_name, setService_name] = useState("");
+  const [service_description, setService_description] = useState("");
+  const [serverError, setServerError] = useState("");
+  const [serviceDatas, setServiceDatas] = useState([]);
+  const [editingId, setEditingId] = useState(null); // Track edit mode
 
-}
+  // Fetch services on mount
+  const fetchDatas=()=>{
+ 
+      serv.getAllServcies().then((res) =>
+        res.json().then((data) => {
+          setServiceDatas(data.data);
+        })
+      );
+
+  }
+  useEffect(()=>{
+fetchDatas()
+  },[])
+
+  // Handle Add or Edit based on `editingId`
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = { service_name, service_description };
+
+    try {
+      if (editingId) {
+        // Edit existing service
+        const response = await serv.editService(editingId, data);
+        const result = await response.json();
+
+        if (result.error) {
+          setServerError(result.error);
+        } else {
+          toast.success("Service updated successfully");
+          setServiceDatas((prev) =>
+            prev.map((service) =>
+              service.service_id === editingId
+                ? { ...service, ...data }
+                : service
+            )
+          );
+          resetForm();
+          fetchDatas()
+          
+        }
+      } else {
+        // Add new service
+        const response = await serv.addNewServices(data);
+        const result = await response.json();
+
+        if (result.error) {
+          setServerError(result.error);
+        } else {
+          toast.success("New service added successfully");
+          setServiceDatas([...serviceDatas, result.data]);
+          resetForm();
+          fetchDatas()
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setServerError("Something went wrong. Please try again.");
+    }
+  };
+
+  // Delete service
+  const deleteServices = async (service_id) => {
+    try {
+      const response = await serv.deleteService(service_id);
+      const result = await response.json();
+
+      if (result.error) {
+        toast.error(result.error);
+      } else {
+        toast.success("Service deleted successfully");
+        setServiceDatas(
+          serviceDatas.filter((service) => service.service_id !== service_id)
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to delete service");
+    }
+  };
+
+  // Prepare form for editing
+  const editInputValues = (service) => {
+    setService_name(service.service_name);
+    setService_description(service.service_description);
+    setEditingId(service.service_id); // Set editing ID
+  };
+
+  // Reset form after submit or cancel
+  const resetForm = () => {
+    setService_name("");
+    setService_description("");
+    setEditingId(null);
+    setServerError("");
+  };
+
   return (
     <section className="contact-section">
       <div className="auto-container">
         <div className="col-md-10">
           <div className="contact-title">
-            <h4>Service we provide</h4>
+            <h4>Services We Provide</h4>
           </div>
-          <div className="row bg-white d-flex align-items-center p-1 ">
-            <div className="col-md-10">
-              <h5>Oil Change</h5>
-              <p>Every 5000km you should chage the oil of the car</p>
+
+          {/* Services List */}
+          {serviceDatas.map((service, index) => (
+            <div key={index} className="row bg-white d-flex p-2 mb-2">
+              <div className="col-md-10">
+                <h5>{service.service_name}</h5>
+                <p>{service.service_description}</p>
+              </div>
+              <div className="col-md-2 d-flex justify-content-center delete_edit_icons">
+                <span
+                  className="text-primary me-3"
+                  role="button"
+                  onClick={() => editInputValues(service)}
+                >
+                  <FaRegEdit />
+                </span>
+                <span
+                  className="text-danger"
+                  role="button"
+                  onClick={() => deleteServices(service.service_id)}
+                >
+                  <MdDelete />
+                </span>
+              </div>
             </div>
-            <div className="col-md-2 delete_edit_icons">
-              <span className="text-danger">
-                <FaRegEdit />
-              </span>
-              <span>
-                <MdDelete />
-              </span>
-            </div>
-          </div>
+          ))}
         </div>
-        <div className="servcie-box col-md-10 mt-5">
+
+        {/* Add or Edit Service Form */}
+        <div className="service-box col-md-10 mt-5">
           <div className="contact-title">
-            <h2>Add a New Service</h2>
+            <h2>{editingId ? "Edit Service" : "Add a New Service"}</h2>
           </div>
           <div className="row clearfix">
             <div className="form-column col-lg-10">
@@ -72,7 +152,10 @@ const handleSubmit =(e)=>{
                 <div className="contact-form">
                   <form onSubmit={handleSubmit}>
                     {serverError && (
-                      <div className="validation-error" role="alert">
+                      <div
+                        className="validation-error text-danger"
+                        role="alert"
+                      >
                         {serverError}
                       </div>
                     )}
@@ -83,32 +166,35 @@ const handleSubmit =(e)=>{
                           required
                           name="ServiceName"
                           value={service_name}
-                          onChange={(event) =>
-                            setServcie_name(event.target.value)
-                          }
-                          placeholder="Service_Name"
+                          onChange={(e) => setService_name(e.target.value)}
+                          placeholder="Service Name"
+                          className="form-control"
                         />
                       </div>
                       <div className="form-group col-md-10">
                         <textarea
                           type="text"
                           required
-                          name="service_describitions"
+                          name="service_description"
                           value={service_description}
-                          onChange={(event) =>
-                            setService_desciptions(event.target.value)
+                          onChange={(e) =>
+                            setService_description(e.target.value)
                           }
-                          placeholder="Service_Describitions"
+                          placeholder="Service Description"
+                          className="form-control"
+                          rows="3"
                         />
                       </div>
-                      <div className="form-group col-md-10">
+                      <div className="form-group col-md-12">
                         <button
                           className="theme-btn btn-style-one"
                           type="submit"
-                          data-loading-text="Please wait..."
                         >
-                          <span>Add New Services</span>
+                          <span>
+                            {editingId ? "Update Service" : "Add Service"}
+                          </span>
                         </button>
+                       
                       </div>
                     </div>
                   </form>
@@ -122,4 +208,4 @@ const handleSubmit =(e)=>{
   );
 }
 
-export default NewServices
+export default NewServices;
