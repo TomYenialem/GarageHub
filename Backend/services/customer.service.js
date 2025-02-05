@@ -54,9 +54,21 @@ const getAllCustomers=async()=>{
     console.log(error)
   }
 }
+const getSingleCustomer=async(id)=>{
+  try {
+    const singleCustomer =
+      "SELECT * FROM customer_identifier INNER JOIN customer_info  ON customer_identifier.customer_id = customer_info.customer_id WHERE customer_identifier.customer_id =? "; 
+    const rows = await conn.query(singleCustomer,[id]);
+    return rows;
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 module.exports = {
   checkIfCustomerExists,
   addCustomer,
   getAllCustomers,
+  getSingleCustomer,
 };

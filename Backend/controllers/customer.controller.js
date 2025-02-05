@@ -13,7 +13,9 @@ const addCustomer = async (req, res) => {
       const customerData = req.body;
       const newCustomer = await customerService.addCustomer(customerData);
       if (!newCustomer) {
-        return res.status(500).json({ error: "failed to add customer due to server" });
+        return res
+          .status(500)
+          .json({ error: "failed to add customer due to server" });
       }
       res.status(201).json({
         message: "Customer added successfully",
@@ -26,23 +28,37 @@ const addCustomer = async (req, res) => {
   }
 };
 
-const getAllCustomers=async(req,res)=>{
+const getAllCustomers = async (req, res) => {
   try {
-    const customers=await customerService.getAllCustomers()
-    if(!customers){
-      return res.status(500).json({ error: "Failed to get customers due to server" });
+    const customers = await customerService.getAllCustomers();
+    if (!customers) {
+      return res
+        .status(500)
+        .json({ error: "Failed to get customers due to server" });
+    } else {
+      res.status(200).json({ data: customers });
     }
-    else{
-      res.status(200).json({ data:customers });
-    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+const singleCustomer = async(req,res)=>{
+  try {
     
+    const {id}=req.params
+    const customer=await customerService.getSingleCustomer(id)
+    if(!customer){
+      return res.status(404).json({ error: "Customer not found" });
+    }
+    res.status(200).json({data:customer})
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: "Internal Server Error" });
   }
-
 }
 module.exports = {
   addCustomer,
   getAllCustomers,
+  singleCustomer,
 };
