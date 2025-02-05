@@ -17,7 +17,6 @@ import "./assets/styles/custom.css";
 import Header from "./markup/components/Header/Header";
 import Footer from "./markup/components/Footer/Footer";
 import Unautherized from "./markup/pages/Unautherized";
-import Order from "./markup/pages/admin/Orders";
 import Customers from "./markup/pages/admin/Customers";
 import Employees from "./markup/pages/admin/Employees";
 import PrivateAuthRoute from "./markup/components/Auth/PrivateAuthRoute";
@@ -25,6 +24,8 @@ import CustomersList from "./markup/pages/admin/CustomersList";
 import CustomerProfileLists from "./markup/pages/admin/CustomerProfileLists";
 import NotFound from "./markup/pages/NotFound";
 import AddNewServices from "./markup/pages/admin/AddNewServices";
+import OrdersPage from "./markup/pages/admin/OrdersPage";
+import AddVechile from "./markup/pages/admin/AddVechile";
 function App() {
   return (
     <>
@@ -44,7 +45,7 @@ function App() {
           path="/admin/orders"
           element={
             <PrivateAuthRoute roles={[1, 2, 3]}>
-              <Order />
+             <OrdersPage/>
             </PrivateAuthRoute>
           }
         />
@@ -69,8 +70,8 @@ function App() {
 
         <Route path ='/admin/services' element={<AddNewServices/>}/>
           <Route path="/admin/customer_profile" element={<CustomerProfileLists/>}/> 
-        <Route path="/admin/customer_profile" element={<CustomerProfileLists/>}/> 
-          <Route path="/admin/customer_profile" element={<CustomerProfileLists/>}/> 
+      <Route path ='/admin/add_vehicle' element={<AddVechile/>}/>
+          
         <Route path ='*' element={<NotFound/>} />
 
       </Routes>

@@ -265,3 +265,10 @@ input:disabled {
   display: flex;
   gap: 10px;
 }
+.edit{
+  cursor: pointer;
+}
+.arrow{
+  display: flex;
+  justify-content: end;
+}

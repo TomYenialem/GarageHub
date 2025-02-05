@@ -21,9 +21,22 @@ const getCustomer=async()=>{
     const response = await fetch(`${api_url}/api/customers`, options);
     return response
 }
+const singleCustomer=async(id)=>{
+    const options={
+        method:"GET",
+        headers:{
+            'Content-Type':'application/json'
+        }
+        
+    }
+    const response = await fetch(`${api_url}/api/customers/${id}`, options);
+    return response
+
+}
 const customers={
     addCustomers,
-    getCustomer
+    getCustomer,
+    singleCustomer
  
 }
 

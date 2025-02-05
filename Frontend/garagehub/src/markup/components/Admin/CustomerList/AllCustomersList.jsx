@@ -4,9 +4,10 @@ import customerService from "../../../../services/customers.service";
 import { format } from "date-fns";
 import { Table, Button } from "react-bootstrap";
 import MoreCustomers from "../../../pages/admin/MoreCustomers";
+import { useAuth } from "../../../../Context/authContext";
 
 function AllCustomersList() {
-  const [customers, setcustomers] = useState([]);
+  const {customers, setcustomers}=useAuth()
   // A state to serve as a flag to show the error message
   const [apiError, setApiError] = useState(false);
   const[search,setSearch]=useState('')
@@ -39,7 +40,7 @@ function AllCustomersList() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [customers]);
   const searchItmes = customers.filter(
     (item) =>
       item.customer_first_name.toLowerCase().includes(search.toLowerCase()) ||

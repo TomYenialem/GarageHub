@@ -12,18 +12,16 @@ function NewServices() {
   const [editingId, setEditingId] = useState(null); // Track edit mode
 
   // Fetch services on mount
-  const fetchDatas=()=>{
- 
-      serv.getAllServcies().then((res) =>
-        res.json().then((data) => {
-          setServiceDatas(data.data);
-        })
-      );
-
-  }
-  useEffect(()=>{
-fetchDatas()
-  },[])
+  const fetchDatas = () => {
+    serv.getAllServcies().then((res) =>
+      res.json().then((data) => {
+        setServiceDatas(data.data);
+      })
+    );
+  };
+  useEffect(() => {
+    fetchDatas();
+  }, []);
 
   // Handle Add or Edit based on `editingId`
   const handleSubmit = async (e) => {
@@ -48,8 +46,7 @@ fetchDatas()
             )
           );
           resetForm();
-          fetchDatas()
-          
+          fetchDatas();
         }
       } else {
         // Add new service
@@ -62,7 +59,7 @@ fetchDatas()
           toast.success("New service added successfully");
           setServiceDatas([...serviceDatas, result.data]);
           resetForm();
-          fetchDatas()
+          fetchDatas();
         }
       }
     } catch (error) {
@@ -194,7 +191,6 @@ fetchDatas()
                             {editingId ? "Update Service" : "Add Service"}
                           </span>
                         </button>
-                       
                       </div>
                     </div>
                   </form>
