@@ -5,6 +5,9 @@ import { format } from "date-fns";
 import { Table, Button } from "react-bootstrap";
 import MoreCustomers from "../../../pages/admin/MoreCustomers";
 import { useAuth } from "../../../../Context/authContext";
+import { FaRegEdit } from "react-icons/fa";
+import { FaExternalLinkAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function AllCustomersList() {
   const {customers, setcustomers}=useAuth()
@@ -115,8 +118,15 @@ function AllCustomersList() {
                             <td>{customer.active_customers ? "Yes" : "No"}</td>
 
                             <td>
-                              <div className="edit-delete-icons">
-                                edit | delete
+                              <div className="edit-link-icons ">
+                                <span className="text-danger">
+                                  <FaRegEdit />
+                                </span>
+                                <Link to={`/admin/customer_profile/${customer.customer_id}`}>
+                                  <span className="text-primary">
+                                    <FaExternalLinkAlt />
+                                  </span>
+                                </Link>
                               </div>
                             </td>
                           </tr>
@@ -139,7 +149,7 @@ function AllCustomersList() {
             </div>
             {/* add buttons for privious next gap */}
 
-           <MoreCustomers/>
+            <MoreCustomers />
           </section>
         </>
       )}

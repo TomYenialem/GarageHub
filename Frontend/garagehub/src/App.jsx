@@ -25,7 +25,7 @@ import CustomerProfileLists from "./markup/pages/admin/CustomerProfileLists";
 import NotFound from "./markup/pages/NotFound";
 import AddNewServices from "./markup/pages/admin/AddNewServices";
 import OrdersPage from "./markup/pages/admin/OrdersPage";
-import AddVechile from "./markup/pages/admin/AddVechile";
+
 function App() {
   return (
     <>
@@ -45,7 +45,7 @@ function App() {
           path="/admin/orders"
           element={
             <PrivateAuthRoute roles={[1, 2, 3]}>
-             <OrdersPage/>
+              <OrdersPage />
             </PrivateAuthRoute>
           }
         />
@@ -68,12 +68,14 @@ function App() {
         <Route path="/admin/employees" element={<Employees />} />
         <Route path="/admin/all_customers" element={<CustomersList />} />
 
-        <Route path ='/admin/services' element={<AddNewServices/>}/>
-          <Route path="/admin/customer_profile" element={<CustomerProfileLists/>}/> 
-      <Route path ='/admin/add_vehicle' element={<AddVechile/>}/>
-          
-        <Route path ='*' element={<NotFound/>} />
+        <Route path="/admin/services" element={<AddNewServices />} />
+        <Route
+          path="/admin/customer_profile/:customer_id"
+          element={<CustomerProfileLists />}
+        />
+      
 
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster position="top-right" />
       <Footer />

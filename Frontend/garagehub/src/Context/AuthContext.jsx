@@ -14,8 +14,11 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [employee, setEmployee] = useState(null);
     const [customers, setcustomers] = useState([]);
+      const [singleCustomer, setSingleCustomer] = useState([]);
 
-  const value = { isLogged, isAdmin, setIsAdmin, setIsLogged, employee ,customers, setcustomers};
+  const value = { isLogged, isAdmin, setIsAdmin, setIsLogged, employee ,customers, setcustomers,
+    singleCustomer,setSingleCustomer
+  };
 
   useEffect(() => {
     // Retrieve the logged in user from local storage

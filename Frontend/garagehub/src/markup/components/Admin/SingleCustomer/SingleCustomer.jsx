@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import singleCustomers from "../../../../services/customers.service"; 
 import { FaRegEdit } from "react-icons/fa";
-function SingleCustomer({ customer_id, onBack }) {
-  const [singleCustomer, setSingleCustomer] = useState([]);
+import { useAuth } from "../../../../Context/authContext";
+function SingleCustomer({ customer_id, onBack ,showBackButton=true}) {
+  const {singleCustomer, setSingleCustomer} = useAuth()
 
   useEffect(() => {
     const fetchSingleCustomer = async () => {
@@ -27,15 +28,19 @@ function SingleCustomer({ customer_id, onBack }) {
 
   return (
     <div className="customer-details container ">
-        <div className="arrow">
-
-      <button onClick={onBack} className="btn btn-danger mb-3">
-        <FaArrowLeft />
-      </button>
-        </div>
+      <div className="arrow">
+        {showBackButton && (
+          <button onClick={onBack} className="btn btn-danger mb-3 arrow">
+            <FaArrowLeft />
+          </button>
+        )}
+      </div>
 
       {singleCustomer.map((customer) => (
-        <div key={customer.customer_id} className="card p-4 shadow">
+        <div
+          key={customer.customer_id}
+          className={`${showBackButton &&'card p-4 shadow'}`}
+        >
           <div className="mb-3">
             <h2 className="fw-bold mb-3">
               {customer.customer_first_name} {customer.customer_last_name}
@@ -47,7 +52,8 @@ function SingleCustomer({ customer_id, onBack }) {
               <strong>Phone:</strong> {customer.customer_phone_number}
             </p>
             <p>
-              <strong>Active customer:</strong> {customer.active_customers ? "Yes" : "No"}
+              <strong>Active customer:</strong>{" "}
+              {customer.active_customers ? "Yes" : "No"}
             </p>
             <p className="edit ">
               <strong>
