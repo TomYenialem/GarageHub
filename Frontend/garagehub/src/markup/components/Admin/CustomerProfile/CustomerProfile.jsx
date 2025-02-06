@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { useAuth } from "../../../../Context/authContext";
 import AddVechile from "../../../pages/admin/AddVechile";
 import SingleCustomer from "../SingleCustomer/SingleCustomer";
 import { useParams } from "react-router-dom";
-
+import { useAuth } from "../../../../Context/AuthContext";
 
 function CustomerProfile() {
-  const { employee } = useAuth();
+  
   const [modal, setModal] = useState(false);
-  const {customer_id}=useParams()
-    const {singleCustomer} =useAuth();
+  // since it it used for customer edit information define it in context to use varaibles globally
+  // const [customerData, setCustomerData] = useState([]); 
+  const {customerData,setCustomerData}=useAuth()
+  console.log(customerData)
+  // Use state to hold customer data
+  const { customer_id } = useParams();
+
 
   return (
     <>
@@ -28,14 +32,26 @@ function CustomerProfile() {
 
           {/* Customer Details in the same row */}
           <div className="col-md-10">
-            <SingleCustomer customer_id={customer_id} showBackButton={false} />
+            {/* Pass the customerData to SingleCustomer */}
+            <SingleCustomer
+              customer_id={customer_id}
+              showBackButton={false}
+              customerData={(data) => setCustomerData(data)} // Set data to state
+            />
           </div>
         </div>
 
         <hr className="my-2" />
 
+        {/* Display Customer Info */}
+        <div className="row pt-3">
+         
+        </div>
+
+        <hr className="my-2" />
+
         {/* Cars Section */}
-        <div className="row align-items-center  pt-3">
+        <div className="row align-items-center pt-3">
           <div className="col-md-2 d-flex flex-column align-items-center text-center">
             <button
               className="theme-btn btn-style-one d-flex align-items-center justify-content-center"
@@ -47,10 +63,7 @@ function CustomerProfile() {
           </div>
           <div className="col-md-10 mb-5">
             <h3 className="bold mb-3">
-              Vehicle of{" "}
-              {singleCustomer.map((customer) => (
-                <span>{customer.customer_first_name}</span>
-              ))}
+              Vehicle of {customerData?.customer_first_name}
             </h3>
             <div className="table-responsive mb-2">
               <input
@@ -79,15 +92,13 @@ function CustomerProfile() {
                     >
                       X
                     </button>
-                    <AddVechile />
+                    <AddVechile customer_id={customer_id} />
                   </div>
                 </div>
               </div>
             )}
           </div>
         </div>
-
-        {/* Modal */}
 
         <hr className="my-2" />
 
@@ -103,12 +114,9 @@ function CustomerProfile() {
             <div className="vr my-1"></div>
           </div>
           <div className="col-md-10">
-            <h3 className="bold">Orders of {employee?.employee_first_name}</h3>
+            <h3 className="bold">Orders of {customerData?.customer_first_name}</h3>
             <h6 className="mb-0">
-              Recent Orders of{" "}
-              {singleCustomer.map((customer) => (
-                <span>{customer.customer_first_name}</span>
-              ))}
+              Recent Orders of {customerData?.customer_first_name}
             </h6>
           </div>
         </div>

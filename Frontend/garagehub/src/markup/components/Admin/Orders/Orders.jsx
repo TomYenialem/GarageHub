@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../../Context/authContext";
+import { useAuth } from "../../../../Context/AuthContext";
 import { format } from "date-fns";
 import { Table } from "react-bootstrap";
 import { FaHandPointer } from "react-icons/fa";

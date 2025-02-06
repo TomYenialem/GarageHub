@@ -123,11 +123,7 @@ function AddEmployeeForm(props) {
                 <form onSubmit={handleSubmit}>
                   <div className="row clearfix">
                     <div className="form-group col-md-12">
-                      {serverError && (
-                        <div className="validation-error" role="alert">
-                          {serverError}
-                        </div>
-                      )}
+                      
                       <input
                         type="email"
                         name="employee_email"

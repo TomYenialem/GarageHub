@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import vehicles from "../../../services/vehicle.service";
+import toast from 'react-hot-toast';
 
-function AddVechile() {
+function AddVechile({customer_id}) {
  const [vehicle_year, setVehicle_year] = useState("");
   const [vehicle_make,setVehicle_make] = useState("");
   const [vehicle_model,setVehicle_model] = useState("");
@@ -17,7 +19,50 @@ function AddVechile() {
   const [serverError, setServerError] = useState("");
 
 
-
+  const handleSubmit = (e) => {
+    // Prevent the default behavior of the form
+    e.preventDefault();
+    // Handle client side validations
+    
+    const payload = {
+      vehicle_year,
+      vehicle_make,
+      vehicle_model,
+      vehicle_type,
+      vehicle_mileage,
+      vehicle_tag,
+      vehicle_serial_number,
+      vehicle_color,
+    };
+    console.log("Payload before sending:", payload); 
+    // Pass the form data to the service
+    const serviceResponses = vehicles.addVehicles(customer_id, payload);
+ 
+  serviceResponses
+      .then((response) => response.json())
+      .then((data) => {
+        
+        if (data.error) {
+          setServerError(data.error);
+        } else {
+          // Handle successful response
+          setSuccess(true);
+          setServerError("");
+          toast.success(data.message);
+         
+        }
+      })
+      // Handle Catch
+      .catch((error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        setServerError(resMessage);
+      });
+  };
 
   return (
     <section className="contact-section">
@@ -29,7 +74,7 @@ function AddVechile() {
           <div className="form-column col-lg-7">
             <div className="inner-column">
               <div className="contact-form">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="row clearfix">
                     <div className="form-group col-md-12">
                       {serverError && (
@@ -97,7 +142,7 @@ function AddVechile() {
 
                     <div className="form-group col-md-12">
                       <input
-                        type="password"
+                        type="text"
                         name="vehicle_mileage"
                         value={vehicle_mileage}
                         onChange={(event) =>

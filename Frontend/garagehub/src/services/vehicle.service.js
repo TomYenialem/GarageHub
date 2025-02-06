@@ -10,7 +10,7 @@ const addVehicles=async(customer_id,vehicleData)=>{
         body:JSON.stringify(vehicleData)
     }
 
-    const response = await fetch(`${api_url}/api/addvehicle/${customer_id}`);
+    const response = await fetch(`${api_url}/api/addvehicle/${customer_id}`,options);
     return response
 
 }

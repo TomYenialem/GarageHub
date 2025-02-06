@@ -4,7 +4,7 @@ import customerService from "../../../../services/customers.service";
 import { format } from "date-fns";
 import { Table, Button } from "react-bootstrap";
 import MoreCustomers from "../../../pages/admin/MoreCustomers";
-import { useAuth } from "../../../../Context/authContext";
+import { useAuth } from "../../../../Context/AuthContext";
 import { FaRegEdit } from "react-icons/fa";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -120,9 +120,15 @@ function AllCustomersList() {
                             <td>
                               <div className="edit-link-icons ">
                                 <span className="text-danger">
-                                  <FaRegEdit />
+                                  <Link
+                                    to={`/admin/customer_edit/${customer.customer_id}`}
+                                  >
+                                    <FaRegEdit />
+                                  </Link>
                                 </span>
-                                <Link to={`/admin/customer_profile/${customer.customer_id}`}>
+                                <Link
+                                  to={`/admin/customer_profile/${customer.customer_id}`}
+                                >
                                   <span className="text-primary">
                                     <FaExternalLinkAlt />
                                   </span>

@@ -3,17 +3,19 @@ import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import singleCustomers from "../../../../services/customers.service"; 
 import { FaRegEdit } from "react-icons/fa";
-import { useAuth } from "../../../../Context/authContext";
-function SingleCustomer({ customer_id, onBack ,showBackButton=true}) {
-  const {singleCustomer, setSingleCustomer} = useAuth()
+function SingleCustomer({ customer_id, onBack ,showBackButton=true,customerData}) {
+   const [singleCustomer, setSingleCustomer] = useState([]);
+
 
   useEffect(() => {
     const fetchSingleCustomer = async () => {
       try {
         const response = await singleCustomers.singleCustomer(customer_id);
         const data = await response.json();
-        setSingleCustomer(data.data); // Assuming data.data is an array
-        console.log(data.data);
+        setSingleCustomer(data.data); 
+        customerData(data.data[0])
+        // Assuming data.data is an array
+        // console.log(data.data[0]);
       } catch (error) {
         console.error("Error fetching customer details:", error);
       }

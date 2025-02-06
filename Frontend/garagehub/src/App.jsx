@@ -25,6 +25,7 @@ import CustomerProfileLists from "./markup/pages/admin/CustomerProfileLists";
 import NotFound from "./markup/pages/NotFound";
 import AddNewServices from "./markup/pages/admin/AddNewServices";
 import OrdersPage from "./markup/pages/admin/OrdersPage";
+import EditCustomer from "./markup/pages/admin/EditCustomer";
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
           path="/admin/customer_profile/:customer_id"
           element={<CustomerProfileLists />}
         />
+        <Route path='/admin/customer_edit/:customer_id'element={<EditCustomer/>}/>
       
 
         <Route path="*" element={<NotFound />} />

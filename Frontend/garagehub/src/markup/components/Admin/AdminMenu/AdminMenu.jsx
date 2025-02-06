@@ -26,9 +26,7 @@ function AdminMenu(props) {
         <Link to="/admin/add_customers" className="list-group-item">
           Add customer
         </Link>
-        <Link to="/admin/add_vehicle" className="list-group-item">
-          Add Vehicles
-        </Link>
+       
         <Link to="/admin/all_customers" className="list-group-item">
           Customers
         </Link>
