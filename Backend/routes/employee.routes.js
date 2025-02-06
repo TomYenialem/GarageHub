@@ -17,5 +17,8 @@ router.post(
 router.get('/api/employees',
   [authMiddleware.authorization, authMiddleware.isAdmin],
   employeeController.getAllEmployees)
+
+  router.put('/api/employees/:id',employeeController.editEmployesInfo)
+  router.get("/api/employees/:id", employeeController.getSingleEmployeeInfo);
 // Export the router
 module.exports = router;

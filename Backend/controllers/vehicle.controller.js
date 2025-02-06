@@ -1,5 +1,4 @@
-
-const vehicleService=require('../services/vehicle.service') 
+const vehicleService = require("../services/vehicle.service");
 
 const addVehicle = async (req, res) => {
   try {
@@ -7,18 +6,16 @@ const addVehicle = async (req, res) => {
     const vehicleData = req.body;
 
     if (!customer_id || isNaN(customer_id)) {
-      return res.status(400).json({ message: "Invalid Customer ID" });
+      return res.status(400).json({ error: "Invalid Customer ID" });
     }
 
-    // Ensure customer_id is a number
-    const parsedCustomerId = parseInt(customer_id);
-
-    const vehicle = { ...vehicleData, customer_id: parsedCustomerId };
-
-    const newVehicleId = await vehicleService.addVehicleForCustomer(vehicle);
+    const newVehicleId = await vehicleService.addVehicleForCustomer(
+      customer_id,
+      vehicleData
+    );
 
     if (!newVehicleId) {
-      return res.status(400).json({ message: "Failed to add vehicle" });
+      return res.status(400).json({ error: "Failed to add vehicle" });
     }
 
     res.status(201).json({
@@ -27,7 +24,7 @@ const addVehicle = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in addVehicle:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 

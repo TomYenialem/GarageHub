@@ -49,7 +49,51 @@ try {
   });
 }
 }
+
+const editEmployesInfo=async(req,res)=>{
+  try {
+    const {id}=req.params
+    const data = req.body
+    const updatedEmployee=await employeeService.editEmployee(id,data)
+    if(!updatedEmployee){
+      return res.status(404).json({
+        error: "Employee not found!",
+      });
+    }
+   return res.status(200).json({
+      messge:'Employee updated successfully'
+
+    });
+    
+  } catch (error) {
+    console.log(error)
+   return res.status(500).json({
+      error: "Something went wrong!",
+    });
+  }
+
+}
+const getSingleEmployeeInfo=async(req,res)=>{
+  try {
+    const{id}=req.params
+    const employee=await employeeService.getSingleEmployee(id)
+    if(!employee){
+      return res.status(404).json({
+        error: "Employee not found!",
+      });
+    }
+    return res.status(200).json({
+      data:employee,
+    });
+    
+  } catch (error) {
+    console.log(error)
+  }
+
+}
 module.exports = {
   createEmployee,
-  getAllEmployees
+  getAllEmployees,
+  editEmployesInfo,
+  getSingleEmployeeInfo,
 };

@@ -66,9 +66,42 @@ const getSingleCustomer=async(id)=>{
   }
 }
 
+const editCustomer = async (customer_id,customer) => {
+  try {
+    const query = `
+      UPDATE customer_info 
+      INNER JOIN customer_identifier 
+      ON customer_info.customer_id = customer_identifier.customer_id 
+      SET 
+        customer_info.customer_first_name = ?, 
+        customer_info.customer_last_name = ?, 
+        customer_info.active_customer_status = ?, 
+        customer_identifier.customer_phone_number = ? 
+      WHERE customer_info.customer_id = ?;
+    `;
+
+    const rows = await conn.query(query, [
+      customer.customer_first_name,
+      customer.customer_last_name,
+      customer.active_customer_status,
+      customer.customer_phone_number,
+     customer_id,
+    ]);
+
+
+
+    return rows;
+  } catch (error) {
+    console.error("Error updating customer:", error);
+    throw error; 
+  }
+};
+
+
 module.exports = {
   checkIfCustomerExists,
   addCustomer,
   getAllCustomers,
   getSingleCustomer,
+  editCustomer,
 };

@@ -1,4 +1,5 @@
 // Import the query function from the db.config.js file
+const e = require("express");
 const conn = require("../config/db.config");
 // Import the bcrypt module
 const bcrypt = require("bcrypt");
@@ -78,10 +79,51 @@ async function getAllEmployees() {
   return rows;
 }
 
+const editEmployee = async (employee_id, employeesData) => {
+  try {
+    const query = `
+      UPDATE employee_info 
+      INNER JOIN employee ON employee_info.employee_id = employee.employee_id 
+      INNER JOIN employee_role ON employee.employee_id = employee_role.employee_id 
+      SET 
+        employee.active_employee = ?, 
+        employee_info.employee_first_name = ?, 
+        employee_info.employee_last_name = ?, 
+        employee_info.employee_phone = ?, 
+        employee_role.company_role_id = ?
+      WHERE employee.employee_id = ?`;
+
+    const employee = await conn.query(query, [
+      employeesData.active_employee,
+      employeesData.employee_first_name,
+      employeesData.employee_last_name,
+      employeesData.employee_phone,
+      employeesData.company_role_id,
+      employee_id,
+    ]);
+
+    return employee;
+  } catch (error) {
+    console.log("SQL Error:", error);
+  }
+};
+const getSingleEmployee=async(id)=>{
+try {
+  const query = `SELECT * FROM employee INNER JOIN employee_info ON employee.employee_id = employee_info.employee_id INNER JOIN employee_pass ON employee.employee_id = employee_pass.employee_id INNER JOIN employee_role ON employee.employee_id = employee_role.employee_id INNER JOIN company_roles ON employee_role.company_role_id = company_roles.company_role_id WHERE employee.employee_id = ?`;
+  const rows = await conn.query(query,[id]);
+  return rows
+  
+} catch (error) {
+  console.log(error)
+}
+}
+
 // Export the functions for use in the controller
 module.exports = {
   checkIfEmployeeExists,
   createEmployee,
   getEmployeeByEmail,
   getAllEmployees,
+  editEmployee,
+  getSingleEmployee,
 };

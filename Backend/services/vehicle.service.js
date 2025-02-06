@@ -1,6 +1,6 @@
 const conn = require("../config/db.config");
 
-const addVehicleForCustomer = async(vehicle) => {
+const addVehicleForCustomer = async(customer_id,vehicle) => {
   try {
     // Step 1: Get customer_id using customer_emai
 
@@ -13,7 +13,7 @@ const addVehicleForCustomer = async(vehicle) => {
         `;
 
     const values = [
-      vehicle.customer_id,
+     customer_id,
       vehicle.vehicle_year,
       vehicle.vehicle_make,
       vehicle.vehicle_model,

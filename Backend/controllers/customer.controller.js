@@ -45,7 +45,6 @@ const getAllCustomers = async (req, res) => {
 };
 const singleCustomer = async(req,res)=>{
   try {
-    
     const {id}=req.params
     const customer=await customerService.getSingleCustomer(id)
     if(!customer){
@@ -57,8 +56,24 @@ const singleCustomer = async(req,res)=>{
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+const editCustomerInfo=async(req,res)=>{
+  try {
+    const {id}=req.params
+    const customerData=req.body
+    const updatedCustomer=await customerService.editCustomer(id,customerData)
+    if(!updatedCustomer){
+      return res.status(404).json({ error: "Customer not found" });
+    }
+    
+    res.status(200).json({ message: "Customer updated successfully", customer: updatedCustomer });
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 module.exports = {
   addCustomer,
   getAllCustomers,
   singleCustomer,
+  editCustomerInfo,
 };
