@@ -30,9 +30,41 @@ const getAllemployess=async(token)=>{
     return response;
 }
 
+
+const getSingleEmployee=async(employee_id)=>{
+ const options={
+  method:'GET',
+  headers:{
+   'Content-Type':'application/json'
+  }
+  
+ }
+ const response= await fetch(`${api_url}/api/employees/${employee_id}`,options);
+ return response.json()
+}
+const editEmployee=async(employee_id,data)=>{
+ try {
+  
+  const options={
+    method: 'PUT',
+    headers:{
+   'Content-Type':'application/json'
+    },
+    body: JSON.stringify(data)
+
+  }
+  const response = await fetch(`${api_url}/api/employees/${employee_id}`,options)
+  return response.json()
+ } catch (error) {
+  console.log(error)
+ }
+}
 // Export all the functions 
 const employeeService = {
   createEmployee,
-  getAllemployess
+  getAllemployess,
+ getSingleEmployee,
+ editEmployee,
+
 }
 export default employeeService; 

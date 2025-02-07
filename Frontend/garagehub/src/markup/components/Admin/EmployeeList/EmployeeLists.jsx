@@ -2,11 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "react-bootstrap";
 // Import the auth hook
-import { useAuth } from "../../../../Context/authContext";
+
 // Import the date-fns library
 import { format } from "date-fns"; // To properly format the date on the table
 // Import the getAllEmployees function
 import employeeService from "../../../../services/employee.service";
+import { MdOutlineDelete } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../../../Context/authContext";
 
 // Create the EmployeesList component
 const EmployeesList = () => {
@@ -18,7 +22,7 @@ const EmployeesList = () => {
   // A state to store the error message
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
   // To get the logged in employee token
-  const { employee } = useAuth();
+  const { employee } = useAuth()
   let token = null; // To store the token
   if (employee) {
     token = employee.employee_token;
@@ -98,7 +102,18 @@ const EmployeesList = () => {
                       </td>
                       <td>{employee.company_role_name}</td>
                       <td>
-                        <div className="edit-delete-icons">edit | delete</div>
+                        <div className="edit-delete-icons">
+                          <Link
+                            to={`/admin/employee_edit/${employee.employee_id}`}
+                          >
+                            <span className="text-danger">
+                              <FaRegEdit />
+                            </span>
+                          </Link>
+                          <span className="text-primary">
+                            <MdOutlineDelete />
+                          </span>
+                        </div>
                       </td>
                     </tr>
                   ))}

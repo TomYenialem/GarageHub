@@ -279,3 +279,13 @@ input:disabled {
   gap: 10px;
   cursor: pointer;
 }
+.edit-delete-icons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.delete_edit_icons span{
+  color: red !important;
+}

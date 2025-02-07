@@ -2,15 +2,11 @@ import React, { useState } from "react";
 import AddVechile from "../../../pages/admin/AddVechile";
 import SingleCustomer from "../SingleCustomer/SingleCustomer";
 import { useParams } from "react-router-dom";
-import { useAuth } from "../../../../Context/AuthContext";
 
 function CustomerProfile() {
   
   const [modal, setModal] = useState(false);
-  // since it it used for customer edit information define it in context to use varaibles globally
-  // const [customerData, setCustomerData] = useState([]); 
-  const {customerData,setCustomerData}=useAuth()
-  console.log(customerData)
+  const [customerData, setCustomerData] = useState([]); 
   // Use state to hold customer data
   const { customer_id } = useParams();
 

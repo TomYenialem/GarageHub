@@ -4,10 +4,11 @@ import customerService from "../../../../services/customers.service";
 import { format } from "date-fns";
 import { Table, Button } from "react-bootstrap";
 import MoreCustomers from "../../../pages/admin/MoreCustomers";
-import { useAuth } from "../../../../Context/AuthContext";
+
 import { FaRegEdit } from "react-icons/fa";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../../Context/authContext";
 
 function AllCustomersList() {
   const {customers, setcustomers}=useAuth()
@@ -115,7 +116,7 @@ function AllCustomersList() {
                                 "MM - dd - yyyy | kk:mm"
                               )}
                             </td>
-                            <td>{customer.active_customers ? "Yes" : "No"}</td>
+                            <td>{customer.active_customer_status ? "Yes" : "No"}</td>
 
                             <td>
                               <div className="edit-link-icons ">

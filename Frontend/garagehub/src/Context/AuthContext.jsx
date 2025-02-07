@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [employee, setEmployee] = useState(null);
   const [customers, setcustomers] = useState([]);
- const [customerData, setCustomerData]=useState([])
+
 
   const value = {
     isLogged,
@@ -24,8 +24,6 @@ export const AuthProvider = ({ children }) => {
     employee,
     customers,
     setcustomers,
-    customerData,
-    setCustomerData
   };
 
   useEffect(() => {
@@ -33,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     const loggedInEmployee = getAuth();
     // console.log(loggedInEmployee);
     loggedInEmployee.then((response) => {
-      // console.log(response);
+      console.log(response);
       if (response.employee_token) {
         setIsLogged(true);
         // 3 is the employee_role for admin
