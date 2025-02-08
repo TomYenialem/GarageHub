@@ -14,8 +14,38 @@ const addVehicles=async(customer_id,vehicleData)=>{
     return response
 
 }
+const CustomerVehicle=async(customer_id)=>{
+    try {
+        const options={
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        
+        }
+        const response = await fetch(`${api_url}/api/addvehicle/${customer_id}`,options);
+        return response.json()
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+const singleVehicle=async(vehicle_id)=>{
+    try {
+        const options={
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        }
+        const response = await fetch(`${api_url}/api/getvehicle/${vehicle_id}`, options);
+        return response.json()
+        
+    } catch (error) {
+        
+    }
+}
 const vehicles={
-    addVehicles
+    addVehicles,
+    CustomerVehicle,
+    singleVehicle
+ 
 }
 
 export default vehicles;

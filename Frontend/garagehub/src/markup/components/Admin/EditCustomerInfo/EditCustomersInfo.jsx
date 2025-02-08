@@ -7,7 +7,7 @@ import SingleCustomer from "../SingleCustomer/SingleCustomer";
 
 function EditCustomersInfo() {
   const { customer_id } = useParams();
-  const[customerData,setCustomerData]= useState()
+  const [customerData, setCustomerData] = useState();
   const navigate=useNavigate()
   
 
@@ -135,7 +135,7 @@ function EditCustomersInfo() {
                         style={{ marginRight: "8px" }}
                         checked={active_customer_status === 1}
                         onChange={(e) =>
-                        setActiveCustomeer(e.target.checked ? 1 : 0)
+                          setActiveCustomeer(e.target.checked ? 1 : 0)
                         }
                       />
                       <label htmlFor="active_employee">

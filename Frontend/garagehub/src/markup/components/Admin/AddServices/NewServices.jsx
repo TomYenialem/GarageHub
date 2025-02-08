@@ -3,27 +3,15 @@ import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import serv from "../../../../services/services.service";
 import toast from "react-hot-toast";
+import { useAuth } from "../../../../Context/AuthContext";
 
 function NewServices() {
   const [service_name, setService_name] = useState("");
   const [service_description, setService_description] = useState("");
   const [serverError, setServerError] = useState("");
-  const [serviceDatas, setServiceDatas] = useState([]);
-  const [editingId, setEditingId] = useState(null); // Track edit mode
-
-  // Fetch services on mount
-  const fetchDatas = () => {
-    serv.getAllServcies().then((res) =>
-      res.json().then((data) => {
-        setServiceDatas(data.data);
-      })
-    );
-  };
-  useEffect(() => {
-    fetchDatas();
-  }, []);
-
-  // Handle Add or Edit based on `editingId`
+ 
+  const [editingId, setEditingId] = useState(null); 
+  const { serviceDatas, setServiceDatas } = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { service_name, service_description };

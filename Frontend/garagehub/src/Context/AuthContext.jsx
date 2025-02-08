@@ -5,6 +5,7 @@ import getAuth from "../util/auth";
 // Create a context object
 const AuthContext = React.createContext();
 // Create a custom hook to use the context
+import serv from '../services/services.service'
 export const useAuth = () => {
   return useContext(AuthContext);
 };
@@ -14,8 +15,19 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [employee, setEmployee] = useState(null);
   const [customers, setcustomers] = useState([]);
+   const [serviceDatas, setServiceDatas] = useState([]);
+   
 
-
+ const fetchDatas = () => {
+   serv.getAllServcies().then((res) =>
+     res.json().then((data) => {
+       setServiceDatas(data.data);
+     })
+   );
+ };
+ useEffect(() => {
+   fetchDatas();
+ }, []);
   const value = {
     isLogged,
     isAdmin,
@@ -24,6 +36,8 @@ export const AuthProvider = ({ children }) => {
     employee,
     customers,
     setcustomers,
+    serviceDatas,
+    setServiceDatas,
   };
 
   useEffect(() => {

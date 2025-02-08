@@ -27,6 +27,7 @@ import AddNewServices from "./markup/pages/admin/AddNewServices";
 import OrdersPage from "./markup/pages/admin/OrdersPage";
 import EditCustomer from "./markup/pages/admin/EditCustomer";
 import EditEmployee from "./markup/pages/admin/EditEmployee";
+import FinalOrderPage from "./markup/pages/admin/FinalOrderPage";
 
 function App() {
   return (
@@ -82,6 +83,10 @@ function App() {
         <Route
           path="/admin/employee_edit/:employee_id"
           element={<EditEmployee />}
+        />
+        <Route
+          path="/admin/orders/:vehicle_id"
+          element={<FinalOrderPage/>}
         />
 
         <Route path="*" element={<NotFound />} />

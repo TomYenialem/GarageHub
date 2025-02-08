@@ -9,7 +9,7 @@ function AddVechile({customer_id}) {
   const [vehicle_type, setVehicle_type] = useState("");
   const [vehicle_mileage, setVehicle_mileage] = useState("");
   const [vehicle_tag, setVehicle_tag] = useState('');
-  const [vehicle_serial_number, setvehicle_serial_number] = useState("");
+  const [vehicle_serial, setvehicle_serial_number] = useState("");
   const [vehicle_color,setVehicle_color]=useState('')
   // Errors
   const [emailError, setEmailError] = useState("");
@@ -31,7 +31,7 @@ function AddVechile({customer_id}) {
       vehicle_type,
       vehicle_mileage,
       vehicle_tag,
-      vehicle_serial_number,
+      vehicle_serial,
       vehicle_color,
     };
     console.log("Payload before sending:", payload); 
@@ -164,7 +164,7 @@ function AddVechile({customer_id}) {
                       <input
                         type="text"
                         name="vehicle_serial_number"
-                        value={vehicle_serial_number}
+                        value={vehicle_serial}
                         onChange={(event) =>
                           setvehicle_serial_number(event.target.value)
                         }

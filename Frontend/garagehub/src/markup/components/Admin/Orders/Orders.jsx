@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { Table } from "react-bootstrap";
 import { FaHandPointer } from "react-icons/fa";
 import SingleCustomer from "../SingleCustomer/SingleCustomer";
+import GetSingleVehicle from "../GetSinngelVehicle/GetSingleVehicle";
 
 function Orders() {
   const [search, setSearch] = useState("");
@@ -37,10 +38,15 @@ function Orders() {
 
         {/* If customer is selected, show SingleCustomer component */}
         {selectedCustomerId ? (
-          <SingleCustomer
-            customer_id={selectedCustomerId}
-            onBack={() => setSelectedCustomerId(null)}
-          />
+          <>
+            <SingleCustomer
+             
+              customer_id={selectedCustomerId}
+              onBack={() => setSelectedCustomerId(null)}
+            />
+            <GetSingleVehicle customer_id={selectedCustomerId} />
+            <></>
+          </>
         ) : (
           <>
             <div className="table-responsive mb-4">
