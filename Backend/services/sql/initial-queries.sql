@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `employee_role` (
 CREATE TABLE IF NOT EXISTS `orders` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `customer_id` int(11 ) NOT NULL,
   `vehicle_id` int(11) NOT NULL,
   `order_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `active_order` int(11) NOT NULL,

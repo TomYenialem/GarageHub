@@ -27,7 +27,41 @@ const addVehicle = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+const singelVehicleInfo=async(req,res)=>{
+  try {
+    const { customer_id } = req.params;
+    const vehicles = await vehicleService.customerVehicle(customer_id);
+    if(!vehicles){
+      return res.status(400).json({ error: "Failed to fetch vehicle" });
+    }
+    return res.status(200).json({
+    data: vehicles
+    })
+    
+  } catch (error) {
+    console.log(error)
+     res.status(500).json({ error: "Internal Server Error" });
+  }
 
+}
+
+const eachVehicleInfo=async(req,res)=>{
+  try {
+    const { vehicle_id } = req.params;
+    const vehicle = await vehicleService.singleVehicle(vehicle_id);
+    if(!vehicle){
+      return res.status(400).json({ error: "Failed to fetch vehicle" });
+    }
+    return res.status(200).json({
+    data: vehicle
+    })
+    
+  } catch (error) {
+    
+  }
+}
 module.exports = {
   addVehicle,
+  singelVehicleInfo,
+  eachVehicleInfo,
 };

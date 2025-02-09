@@ -14,6 +14,7 @@ const employeeRouter = require("./employee.routes");
 const loginRoutes = require("./login.routes");
 // Add the install router to the main router
 const addCustomerRoutes = require('./customer.routes')
+const orderRoutes = require("./orders.routes");
 router.use(installRouter);
 // Add the employee routes to the main router
 router.use(employeeRouter);
@@ -22,6 +23,7 @@ router.use(loginRoutes);
 router.use(addCustomerRoutes)
 router.use(vehicleRouter)
 router.use(serviceRouter)
+router.use(orderRoutes)
 
 // Add the vehicle routes to the main router
 

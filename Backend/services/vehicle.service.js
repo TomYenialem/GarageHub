@@ -32,8 +32,30 @@ const addVehicleForCustomer = async(customer_id,vehicle) => {
   }
 };
 
+const customerVehicle=async(customer_id)=>{
+  try {
+    const Vehicle = "SELECT * FROM customer_vehicle_info WHERE customer_id = ?";
+    const result = await conn.query(Vehicle,[customer_id])
+    return result
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+const singleVehicle=async(vehicle_id)=>{
+  try {
+    const vehicle = "SELECT * FROM customer_vehicle_info WHERE vehicle_id = ?";
+    const result = await conn.query(vehicle,[vehicle_id])
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   addVehicleForCustomer,
+  customerVehicle,
+  singleVehicle,
 };
+
 
 // Example Usage

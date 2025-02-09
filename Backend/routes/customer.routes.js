@@ -8,7 +8,7 @@ routes.get('/api/customers',customer.getAllCustomers)
 
 routes.get('/api/customers/:id',customer.singleCustomer)
 
-routes.put("/customers/:id", customer.editCustomerInfo);  
+routes.put("/api/customers/:id", customer.editCustomerInfo);  
 
 
 // ✅ No /api here
