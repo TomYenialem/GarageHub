@@ -37,9 +37,28 @@ const getAllOrders=async()=>{
         console.log(error)
     }
 }
+const editOrders=async(order_id,orders)=>{
+    try {
+        const options={
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(orders)
+        }
+        const response = await fetch(`${api_url}/api/editorders/${order_id}`, options);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json()
+    } catch (error) {
+        console.log(error)
+    }
+}
 const orders={
     sendOrderInfo,
     getAllOrders,
+    editOrders,
  };
 
 

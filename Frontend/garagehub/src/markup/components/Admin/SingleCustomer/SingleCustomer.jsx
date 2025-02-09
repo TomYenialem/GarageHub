@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import singleCustomers from "../../../../services/customers.service"; 
 import { FaRegEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 function SingleCustomer({ customer_id, onBack ,showBackButton=true,customerData}) {
    const [singleCustomer, setSingleCustomer] = useState([]);
 
@@ -57,11 +58,13 @@ function SingleCustomer({ customer_id, onBack ,showBackButton=true,customerData}
               <strong>Active customer:</strong>{" "}
               {customer.active_customers ? "Yes" : "No"}
             </p>
-            <p className="edit ">
+            <Link to={`/admin/customer_edit/${customer.customer_id}`}>
+            <p>
               <strong>
-                Edit Customer: <FaRegEdit className="text-danger" />
+                Edit Customer: <FaRegEdit className="" />
               </strong>
             </p>
+            </Link>
           </div>
         </div>
       ))}

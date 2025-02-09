@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import customerService
-import customerService from "../../../../services/customers.service";
+
 import { format } from "date-fns";
 import { Table, Button } from "react-bootstrap";
 import MoreCustomers from "../../../pages/admin/MoreCustomers";
@@ -12,40 +12,15 @@ import { useAuth } from "../../../../Context/AuthContext";
 
 
 function AllCustomersList() {
-  const {customers, setcustomers}=useAuth()
+  const { customers, apiError, apiErrorMessage } = useAuth();
   // A state to serve as a flag to show the error message
-  const [apiError, setApiError] = useState(false);
+
   const[search,setSearch]=useState('')
   // A state to store the error message
-  const [apiErrorMessage, setApiErrorMessage] = useState(null);
+
   
 
-  useEffect(() => {
-    // Call the getAllcustomers function
-    const allcustomers = customerService.getCustomer();
-    allcustomers
-      .then((res) => {
-        if (!res.ok) {
-          setApiError(true);
-          if (res.status === 401) {
-            setApiErrorMessage("Please login again");
-          } else if (res.status === 403) {
-            setApiErrorMessage("You are not authorized to view this page");
-          } else {
-            setApiErrorMessage("Please try again later");
-          }
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (data.data.length !== 0) {
-          setcustomers(data.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [customers]);
+
   const searchItmes = customers.filter(
     (item) =>
       item.customer_first_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -53,10 +28,7 @@ function AllCustomersList() {
       item.customer_email.toLowerCase().includes(search.toLowerCase()) ||
       item.customer_phone_number.toLowerCase().includes(search.toLowerCase())
   );
-  // add function to show the next items after clicke the button
-  const showNextItems = () => {
-   
-  };
+  // add function to show the next items after clicke the butto
   return (
     <>
       {apiError ? (

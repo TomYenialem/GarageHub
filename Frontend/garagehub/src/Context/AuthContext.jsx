@@ -6,6 +6,7 @@ import getAuth from "../util/auth";
 const AuthContext = React.createContext();
 // Create a custom hook to use the context
 import serv from '../services/services.service'
+ import customerService from "../services/customers.service"
 export const useAuth = () => {
   return useContext(AuthContext);
 };
@@ -16,8 +17,10 @@ export const AuthProvider = ({ children }) => {
   const [employee, setEmployee] = useState(null);
   const [customers, setcustomers] = useState([]);
    const [serviceDatas, setServiceDatas] = useState([]);
+     const [apiErrorMessage, setApiErrorMessage] = useState(null);
+       const [apiError, setApiError] = useState(false);
    
-
+// for both servies page and final order pages
  const fetchDatas = () => {
    serv.getAllServcies().then((res) =>
      res.json().then((data) => {
@@ -28,6 +31,37 @@ export const AuthProvider = ({ children }) => {
  useEffect(() => {
    fetchDatas();
  }, []);
+
+//  function for both customer list and new order customer list
+  useEffect(() => {
+    // Call the getAllcustomers function
+    const allcustomers = customerService.getCustomer();
+    allcustomers
+      .then((res) => {
+        if (!res.ok) {
+          setApiError(true);
+          if (res.status === 401) {
+            setApiErrorMessage("Please login again");
+          } else if (res.status === 403) {
+            setApiErrorMessage("You are not authorized to view this page");
+          } else {
+            setApiErrorMessage("Please try again later");
+          }
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data.data.length !== 0) {
+          setcustomers(data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [customers]);
+
+
+
   const value = {
     isLogged,
     isAdmin,
@@ -38,7 +72,9 @@ export const AuthProvider = ({ children }) => {
     setcustomers,
     serviceDatas,
     setServiceDatas,
-    fetchDatas
+    fetchDatas,
+    apiError,
+    apiErrorMessage
   };
 
   useEffect(() => {

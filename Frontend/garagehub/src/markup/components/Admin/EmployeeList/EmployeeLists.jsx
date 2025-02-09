@@ -1,35 +1,26 @@
-// Import the necessary components
 import React, { useState, useEffect } from "react";
-import { Table, Button } from "react-bootstrap";
-// Import the auth hook
-
-// Import the date-fns library
-import { format } from "date-fns"; // To properly format the date on the table
-// Import the getAllEmployees function
-import employeeService from "../../../../services/employee.service";
+import { Table, Button, Modal } from "react-bootstrap"; // Import Modal
 import { MdOutlineDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import employeeService from "../../../../services/employee.service";
 import { useAuth } from "../../../../Context/authContext";
+import toast from "react-hot-toast";
 
-// Create the EmployeesList component
 const EmployeesList = () => {
-  // Create all the states we need to store the data
-  // Create the employees state to store the employees data
   const [employees, setEmployees] = useState([]);
-  // A state to serve as a flag to show the error message
   const [apiError, setApiError] = useState(false);
-  // A state to store the error message
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
-  // To get the logged in employee token
-  const { employee } = useAuth()
-  let token = null; // To store the token
+  const { employee } = useAuth();
+  const [showModal, setShowModal] = useState(false); // State to show/hide modal
+  const [employeeToDelete, setEmployeeToDelete] = useState(null); // Store employee ID to delete
+
+  let token = null;
   if (employee) {
     token = employee.employee_token;
   }
 
-  useEffect(() => {
-    // Call the getAllEmployees function
+  const fetchEmployesData = () => {
     const allEmployees = employeeService.getAllemployess(token);
     allEmployees
       .then((res) => {
@@ -54,7 +45,31 @@ const EmployeesList = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    fetchEmployesData();
   }, []);
+
+  const handleDeleteClick = (id) => {
+    setEmployeeToDelete(id);
+    setShowModal(true); 
+  };
+
+  const deleteEmployee = () => {
+    if (employeeToDelete) {
+      const employee = employeeService.deleteEmploye(employeeToDelete);
+      employee.then((data) => {
+        if (data.error) {
+          toast.error(data.error);
+        } else {
+          toast.success(data.message);
+          fetchEmployesData(); // Refresh employees list
+        }
+      });
+      setShowModal(false); // Close modal after deletion
+    }
+  };
 
   return (
     <>
@@ -94,12 +109,7 @@ const EmployeesList = () => {
                       <td>{employee.employee_last_name}</td>
                       <td>{employee.employee_email}</td>
                       <td>{employee.employee_phone}</td>
-                      <td>
-                        {format(
-                          new Date(employee.added_date),
-                          "MM - dd - yyyy | kk:mm"
-                        )}
-                      </td>
+                      <td>{new Date(employee.added_date).toLocaleString()}</td>
                       <td>{employee.company_role_name}</td>
                       <td>
                         <div className="edit-delete-icons">
@@ -111,7 +121,11 @@ const EmployeesList = () => {
                             </span>
                           </Link>
                           <span className="text-primary">
-                            <MdOutlineDelete />
+                            <MdOutlineDelete
+                              onClick={() =>
+                                handleDeleteClick(employee.employee_id)
+                              }
+                            />
                           </span>
                         </div>
                       </td>
@@ -121,11 +135,28 @@ const EmployeesList = () => {
               </Table>
             </div>
           </section>
+
+          {/* Confirmation Modal */}
+          <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Deletion</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this employee?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowModal(false)}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={deleteEmployee}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </>
       )}
     </>
   );
 };
 
-// Export the EmployeesList component
 export default EmployeesList;

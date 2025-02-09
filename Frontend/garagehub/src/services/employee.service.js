@@ -59,12 +59,29 @@ const editEmployee=async(employee_id,data)=>{
   console.log(error)
  }
 }
+const deleteEmploye=async(id)=>{
+  try {
+    const options={
+      method: 'DELETE',
+      headers:{
+       'Content-Type':'application/json'
+      }
+    }
+    const response = await fetch(`${api_url}/api/employees/${id}`,options)
+   return response.json()
+    
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
 // Export all the functions 
 const employeeService = {
   createEmployee,
   getAllemployess,
  getSingleEmployee,
  editEmployee,
+ deleteEmploye
 
 }
 export default employeeService; 

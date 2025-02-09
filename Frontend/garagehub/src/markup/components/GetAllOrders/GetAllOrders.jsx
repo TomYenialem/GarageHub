@@ -112,16 +112,21 @@ function GetAllOrders() {
                             In Progress
                           </span>
                         ) : (
-                          <span className="bg-success rounded text-white px-3">
-                            Completed
-                          </span>
+                          order.order_status ===
+                          2 && (
+                            <span className="bg-success rounded text-white px-3">
+                              Completed
+                            </span>
+                          )
                         )}
                       </td>
 
                       <td>
                         <div className="edit-link-icons">
                           <span className="text-danger">
-                            <Link to={`/admin/order_edit/${order.order_id}`}>
+                            <Link
+                              to={`/admin/edit_orders/${order.order_id}`}
+                            >
                               <FaRegEdit />
                             </Link>
                           </span>
