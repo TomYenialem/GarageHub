@@ -117,6 +117,24 @@ try {
   console.log(error)
 }
 }
+const deleteEmployee = async (id) => {
+  try {
+    // Delete related records first
+    await conn.query(`DELETE FROM employee_info WHERE employee_id = ?`, [id]);
+    await conn.query(`DELETE FROM employee_pass WHERE employee_id = ?`, [id]);
+    await conn.query(`DELETE FROM employee_role WHERE employee_id = ?`, [id]);
+    await conn.query(`DELETE FROM orders WHERE employee_id = ?`, [id]); // If employees are assigned to orders
+
+    // Now, delete the employee
+    const query = `DELETE FROM employee WHERE employee_id = ?`;
+    const rows = await conn.query(query, [id]);
+
+    return rows.affectedRows > 0; // Return true if an employee was deleted, false otherwise
+  } catch (error) {
+    console.error("Error deleting employee:", error);
+    throw error; // Re-throw the error so the controller can handle it
+  }
+};
 
 // Export the functions for use in the controller
 module.exports = {
@@ -126,4 +144,5 @@ module.exports = {
   getAllEmployees,
   editEmployee,
   getSingleEmployee,
+  deleteEmployee,
 };

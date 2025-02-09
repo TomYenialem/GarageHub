@@ -35,65 +35,84 @@ async function createEmployee(req, res, next) {
     }
   }
 }
-async function getAllEmployees(req,res){
-try {
-  const allEmployees=await employeeService.getAllEmployees();
-  res.status(200).json({
-    data:allEmployees,
-  })
-  
-} catch (error) {
-  console.log(error);
-  res.status(500).json({
-    error: "Something went wrong!",
-  });
-}
-}
-
-const editEmployesInfo=async(req,res)=>{
+async function getAllEmployees(req, res) {
   try {
-    const {id}=req.params
-    const data = req.body
-    const updatedEmployee=await employeeService.editEmployee(id,data)
-    if(!updatedEmployee){
-      return res.status(404).json({
-        error: "Employee not found!",
-      });
-    }
-   return res.status(200).json({
-      messge:'Employee updated successfully'
-
+    const allEmployees = await employeeService.getAllEmployees();
+    res.status(200).json({
+      data: allEmployees,
     });
-    
   } catch (error) {
-    console.log(error)
-   return res.status(500).json({
+    console.log(error);
+    res.status(500).json({
       error: "Something went wrong!",
     });
   }
-
 }
-const getSingleEmployeeInfo=async(req,res)=>{
+
+const editEmployesInfo = async (req, res) => {
   try {
-    const{id}=req.params
-    const employee=await employeeService.getSingleEmployee(id)
-    if(!employee){
+    const { id } = req.params;
+    const data = req.body;
+    const updatedEmployee = await employeeService.editEmployee(id, data);
+    if (!updatedEmployee) {
       return res.status(404).json({
         error: "Employee not found!",
       });
     }
     return res.status(200).json({
-      data:employee,
+      messge: "Employee updated successfully",
     });
-    
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    return res.status(500).json({
+      error: "Something went wrong!",
+    });
   }
+};
+const getSingleEmployeeInfo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const employee = await employeeService.getSingleEmployee(id);
+    if (!employee) {
+      return res.status(404).json({
+        error: "Employee not found!",
+      });
+    }
+    return res.status(200).json({
+      data: employee,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+const deleteEmployees = async (req, res) => {
+  const { id } = req.params;
 
-}
+  try {
+    // Now, delete the employee
+    const deleteEmployeeRequest = await employeeService.deleteEmployee(id);
+
+    if (!deleteEmployeeRequest) {
+      return res.status(404).json({
+        error: "Employee not found!",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Employee deleted successfully!",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      error: "An error occurred while deleting the employee.",
+    });
+  }
+};
+
 module.exports = {
   createEmployee,
   getAllEmployees,
   editEmployesInfo,
   getSingleEmployeeInfo,
+  deleteEmployees,
 };

@@ -20,5 +20,6 @@ router.get('/api/employees',
 
   router.put('/api/employees/:id',employeeController.editEmployesInfo)
   router.get("/api/employees/:id", employeeController.getSingleEmployeeInfo);
+  router.delete("/api/employees/:id", employeeController.deleteEmployees);
 // Export the router
 module.exports = router;
