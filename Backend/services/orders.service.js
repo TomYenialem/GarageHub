@@ -25,13 +25,14 @@ const sendOrders = async (order) => {
 
     // Step 2: Insert into `order_info` table
     const insertOrderInfoQuery = `
-      INSERT INTO order_info (order_id, order_total_price, additional_requests_completed)
-      VALUES (?,  ?, ?)`;
+      INSERT INTO order_info (order_id, order_total_price, additional_requests_completed,additional_request)
+      VALUES (?,  ?, ?,?)`;
 
     const orderInfoResult = await conn.query(insertOrderInfoQuery, [
       order_id,
-      order.order_total_price || 0, // Default price = 0 if not provided
+      order.order_total_price,
       order.additional_requests_completed || 0,
+      order.additional_request || "", 
     ]);
 
     if (orderInfoResult.affectedRows !== 1) {
@@ -78,4 +79,19 @@ const sendOrders = async (order) => {
   }
 };
 
-module.exports = { sendOrders };
+const getAllOrders=async()=>{
+  try {
+    const allOrders =
+      `SELECT * FROM orders 
+      INNER JOIN  order_info  ON orders.order_id=order_info.order_id
+      INNER JOIN order_services ON order_services.order_id=orders.order_id 
+      INNER JOIN order_status ON order_status.order_id=orders.order_id `;
+      
+    const result = await conn.query(allOrders);
+    return result;
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+module.exports = { sendOrders,getAllOrders };
