@@ -18,9 +18,29 @@ const sendOrderInfo=async(orderData)=>{
         return null;
     }
 }
+const getAllOrders=async()=>{
+    try {
+        const options={
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        const response = await fetch(`${api_url}/api/getorders`, options);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response
 
-const orders={
-    sendOrderInfo
+        
+    } catch (error) {
+        console.log(error)
+    }
 }
+const orders={
+    sendOrderInfo,
+    getAllOrders,
+ };
+
 
 export default orders;

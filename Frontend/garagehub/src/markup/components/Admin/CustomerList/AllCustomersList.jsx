@@ -8,7 +8,8 @@ import MoreCustomers from "../../../pages/admin/MoreCustomers";
 import { FaRegEdit } from "react-icons/fa";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../../Context/authContext";
+import { useAuth } from "../../../../Context/AuthContext";
+
 
 function AllCustomersList() {
   const {customers, setcustomers}=useAuth()

@@ -28,6 +28,7 @@ import OrdersPage from "./markup/pages/admin/OrdersPage";
 import EditCustomer from "./markup/pages/admin/EditCustomer";
 import EditEmployee from "./markup/pages/admin/EditEmployee";
 import FinalOrderPage from "./markup/pages/admin/FinalOrderPage";
+import GetAllOrdersInfo from "./markup/pages/admin/GetAllOrdersInfo";
 
 function App() {
   return (
@@ -88,6 +89,7 @@ function App() {
           path="/admin/orders/:vehicle_id"
           element={<FinalOrderPage/>}
         />
+        <Route path='/admin/all_orders'element={<GetAllOrdersInfo/>}/>
 
         <Route path="*" element={<NotFound />} />
       </Routes>
