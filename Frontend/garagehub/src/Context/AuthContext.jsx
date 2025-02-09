@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }) => {
     setcustomers,
     serviceDatas,
     setServiceDatas,
+    fetchDatas
   };
 
   useEffect(() => {

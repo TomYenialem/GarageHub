@@ -6,10 +6,15 @@ import SingleCustomer from "../SingleCustomer/SingleCustomer";
 import { useAuth } from "../../../../Context/AuthContext";
 import AdditionalServices from "../AdditionalServices/AdditionalServices";
 
+
 function EachVehicleInfo() {
-  const { serviceDatas } = useAuth();
+  const { serviceDatas,employee } = useAuth();
+  // console.log(employee)
+  const [selectedServices, setSelectedServices] = useState([]);
   const { vehicle_id } = useParams();
   const [vehicleInfo, setVehicleInfo] = useState({});
+        //  console.log(vehicleInfo);
+
 
   const eachVehicleInfo = async () => {
     try {
@@ -24,6 +29,15 @@ function EachVehicleInfo() {
     eachVehicleInfo();
   }, [vehicle_id]);
 
+  const checkedService=(service_id,ischecked)=>{
+    if(ischecked){ 
+      setSelectedServices([...selectedServices, service_id]);
+    }
+    else{
+      setSelectedServices(selectedServices.filter(id=>id!==service_id));
+    }
+
+  }
   return (
     <>
       <div>
@@ -77,6 +91,7 @@ function EachVehicleInfo() {
                       type="checkbox"
                       className="form-check-input me-3"
                       id={`service-${index}`}
+                      onChange={(E)=>checkedService(service.service_id, E.target.checked)}
                     />
                   </div>
                 </div>
@@ -86,7 +101,12 @@ function EachVehicleInfo() {
             <p className="text-muted">No services available.</p>
           )}
           <div>
-            <AdditionalServices/>
+            <AdditionalServices
+              employee_id={employee?.employee_id}
+              customer_id={vehicleInfo.customer_id}
+              vehicle_id={vehicleInfo.vehicle_id}
+              selectedServices={selectedServices}
+            />
           </div>
         </div>
       </div>

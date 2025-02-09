@@ -11,7 +11,7 @@ function NewServices() {
   const [serverError, setServerError] = useState("");
  
   const [editingId, setEditingId] = useState(null); 
-  const { serviceDatas, setServiceDatas } = useAuth();
+  const { serviceDatas, setServiceDatas,fetchDatas } = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { service_name, service_description };

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 // import employee.service.js
 import employeeService from "../../../../services/employee.service";
+import { useAuth } from "../../../../Context/AuthContext";
 // Import the useAuth hook
-import { useAuth } from "../../../../Context/authContext";
+
 
 function AddEmployeeForm(props) {
   const [employee_email, setEmail] = useState("");
