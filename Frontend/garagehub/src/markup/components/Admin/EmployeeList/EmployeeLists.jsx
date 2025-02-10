@@ -4,14 +4,15 @@ import { MdOutlineDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import employeeService from "../../../../services/employee.service";
-import { useAuth } from "../../../../Context/authContext";
+
 import toast from "react-hot-toast";
+import { useAuth } from "../../../../Context/AuthContext";
 
 const EmployeesList = () => {
   const [employees, setEmployees] = useState([]);
   const [apiError, setApiError] = useState(false);
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
-  const { employee } = useAuth();
+  const { employee } = useAuth()
   const [showModal, setShowModal] = useState(false); // State to show/hide modal
   const [employeeToDelete, setEmployeeToDelete] = useState(null); // Store employee ID to delete
 

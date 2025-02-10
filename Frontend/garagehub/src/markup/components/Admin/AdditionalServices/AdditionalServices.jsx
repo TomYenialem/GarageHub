@@ -1,22 +1,28 @@
 import React, { useState } from "react";
 import orders from "../../../../services/order.service";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function AdditionalServices({
   employee_id,
   customer_id,
   vehicle_id,
   selectedServices,
-}) {
+
+}) 
+
+{
   const [order_description, setServiceDescription] = useState("");
   const [order_total_price, setPrice] = useState("");
   const [active_order, setActive_order] = useState(1);
   const [order_status, setOrderStatus] = useState(0);
   const [serviceCompleted, setServiceCompleted] = useState(0);
   const [serverError, setServerError] = useState("");
+     const navigate = useNavigate();
 
   const submitOrders = async (e) => {
     e.preventDefault();
+ 
     try {
       // Prepare the order data
       const datas = {
@@ -28,7 +34,7 @@ function AdditionalServices({
         active_order,
         order_status,
         order_services: selectedServices.map((serviceId) => ({
-          service_id: serviceId, 
+          service_id: serviceId,
           service_completed: serviceCompleted, // Default to 0 (not completed)
         })),
       };
@@ -46,6 +52,7 @@ function AdditionalServices({
         setServerError("");
         setServiceDescription("");
         setPrice("");
+        navigate("/admin/all_orders");
       }
     } catch (error) {
       console.log(error);
@@ -90,7 +97,6 @@ function AdditionalServices({
                       <div className="form-group col-md-10">
                         <textarea
                           type="text"
-                       
                           name="service_description"
                           value={order_description}
                           onChange={(e) =>
@@ -115,8 +121,12 @@ function AdditionalServices({
 
                       <div className="form-group col-md-12">
                         <button
-                          className="theme-btn btn-style-one"
+                          className="theme-btn btn-style-one disabled-btn"
                           type="submit"
+                          disabled={
+                            selectedServices.length === 0 ||
+                            order_total_price === ""
+                          }
                         >
                           Submit Order
                         </button>

@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import AddVechile from "../../../pages/admin/AddVechile";
 import SingleCustomer from "../SingleCustomer/SingleCustomer";
 import { useParams } from "react-router-dom";
+import GetSingleVehicle from "../GetSinngelVehicle/GetSingleVehicle";
+import GetSingleOrder from "../GetSingleOrder/GetSingleOrder";
 
 function CustomerProfile() {
+
+  const [vehicleData,setVehicleData]=useState([])
   
   const [modal, setModal] = useState(false);
   const [customerData, setCustomerData] = useState([]); 
@@ -60,15 +64,15 @@ function CustomerProfile() {
           <div className="col-md-10 mb-5">
             <h3 className="bold mb-3">
               Vehicle of {customerData?.customer_first_name}
-            </h3>
-            <div className="table-responsive mb-2">
-              <input
-                type="text"
-                className="form-control search-input p-3"
-                placeholder="No Vehicle Found"
-                aria-label="Search"
-              />
-            </div>
+            </h3>{
+              vehicleData.length>0 ? <>
+              
+              <GetSingleVehicle customer_id={customer_id} vehicleData={(data)=>setVehicleData(data)}/>
+              </>
+              :
+              <p className="text-center text-danger bold">No Vehicle Found</p>
+            }
+          
             <button
               className="theme-btn btn-style-one mt-2"
               onClick={() => setModal(true)}
@@ -112,7 +116,7 @@ function CustomerProfile() {
           <div className="col-md-10">
             <h3 className="bold">Orders of {customerData?.customer_first_name}</h3>
             <h6 className="mb-0">
-              Recent Orders of {customerData?.customer_first_name}
+             <GetSingleOrder customer_id={customerData.customer_id}/>
             </h6>
           </div>
         </div>

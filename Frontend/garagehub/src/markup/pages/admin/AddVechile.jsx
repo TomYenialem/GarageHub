@@ -1,29 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import vehicles from "../../../services/vehicle.service";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function AddVechile({customer_id}) {
- const [vehicle_year, setVehicle_year] = useState("");
-  const [vehicle_make,setVehicle_make] = useState("");
-  const [vehicle_model,setVehicle_model] = useState("");
+function AddVechile({ customer_id }) {
+  const [vehicle_year, setVehicle_year] = useState("");
+  const [vehicle_make, setVehicle_make] = useState("");
+  const [vehicle_model, setVehicle_model] = useState("");
   const [vehicle_type, setVehicle_type] = useState("");
   const [vehicle_mileage, setVehicle_mileage] = useState("");
-  const [vehicle_tag, setVehicle_tag] = useState('');
+  const [vehicle_tag, setVehicle_tag] = useState("");
   const [vehicle_serial, setvehicle_serial_number] = useState("");
-  const [vehicle_color,setVehicle_color]=useState('')
-  // Errors
-  const [emailError, setEmailError] = useState("");
-  const [firstNameRequired, setFirstNameRequired] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [vehicle_color, setVehicle_color] = useState("");
   const [serverError, setServerError] = useState("");
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check if the request came from another route (by looking for 'from' in location.state)
+  const previousPath = location.state?.from || null;
 
   const handleSubmit = (e) => {
-    // Prevent the default behavior of the form
     e.preventDefault();
-    // Handle client side validations
-    
+
     const payload = {
       vehicle_year,
       vehicle_make,
@@ -34,25 +33,34 @@ function AddVechile({customer_id}) {
       vehicle_serial,
       vehicle_color,
     };
-    console.log("Payload before sending:", payload); 
+
     // Pass the form data to the service
     const serviceResponses = vehicles.addVehicles(customer_id, payload);
- 
-  serviceResponses
+
+    serviceResponses
       .then((response) => response.json())
       .then((data) => {
-        
         if (data.error) {
           setServerError(data.error);
         } else {
-          // Handle successful response
-          setSuccess(true);
+          // Reset all fields after successful submission
+          setvehicle_serial_number("");
+          setVehicle_color("");
+          setVehicle_make("");
+          setVehicle_model("");
+          setVehicle_tag("");
+          setVehicle_type("");
+          setVehicle_year("");
+          setVehicle_mileage("");
           setServerError("");
           toast.success(data.message);
-         
+
+          // Navigate back if `previousPath` exists, otherwise stay on the current route
+          if (previousPath) {
+            navigate(previousPath); // Navigate back to the previous route
+          }
         }
       })
-      // Handle Catch
       .catch((error) => {
         const resMessage =
           (error.response &&
@@ -91,27 +99,18 @@ function AddVechile({customer_id}) {
                         }
                         placeholder="vehicle_year"
                       />
-                      {emailError && (
-                        <div className="validation-error" role="alert">
-                          {emailError}
-                        </div>
-                      )}
                     </div>
+
                     <div className="form-group col-md-12">
                       <input
                         type="text"
-                        name="vehicle_made"
+                        name="vehicle_make"
                         value={vehicle_make}
                         onChange={(event) =>
                           setVehicle_make(event.target.value)
                         }
-                        placeholder="vehicle_made"
+                        placeholder="vehicle_make"
                       />
-                      {firstNameRequired && (
-                        <div className="validation-error" role="alert">
-                          {firstNameRequired}
-                        </div>
-                      )}
                     </div>
 
                     <div className="form-group col-md-12">
@@ -151,6 +150,7 @@ function AddVechile({customer_id}) {
                         placeholder="vehicle_mileage"
                       />
                     </div>
+
                     <div className="form-group col-md-12">
                       <input
                         type="text"
@@ -160,6 +160,7 @@ function AddVechile({customer_id}) {
                         placeholder="vehicle_tag"
                       />
                     </div>
+
                     <div className="form-group col-md-12">
                       <input
                         type="text"
@@ -171,6 +172,7 @@ function AddVechile({customer_id}) {
                         placeholder="vehicle_serial_number"
                       />
                     </div>
+
                     <div className="form-group col-md-12">
                       <input
                         type="text"
@@ -184,11 +186,7 @@ function AddVechile({customer_id}) {
                     </div>
 
                     <div className="form-group col-md-12">
-                      <button
-                        className="theme-btn btn-style-one"
-                        type="submit"
-                        data-loading-text="Please wait..."
-                      >
+                      <button className="theme-btn btn-style-one" type="submit">
                         <span>Add Vehicle</span>
                       </button>
                     </div>
@@ -203,4 +201,4 @@ function AddVechile({customer_id}) {
   );
 }
 
-export default AddVechile
+export default AddVechile;

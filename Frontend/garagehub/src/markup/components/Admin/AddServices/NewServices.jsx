@@ -4,8 +4,10 @@ import { FaRegEdit } from "react-icons/fa";
 import serv from "../../../../services/services.service";
 import toast from "react-hot-toast";
 import { useAuth } from "../../../../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function NewServices() {
+  const navigate=useNavigate()
   const [service_name, setService_name] = useState("");
   const [service_description, setService_description] = useState("");
   const [serverError, setServerError] = useState("");
@@ -66,6 +68,7 @@ function NewServices() {
         toast.error(result.error);
       } else {
         toast.success("Service deleted successfully");
+     
         setServiceDatas(
           serviceDatas.filter((service) => service.service_id !== service_id)
         );

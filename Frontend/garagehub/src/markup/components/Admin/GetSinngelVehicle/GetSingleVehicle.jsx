@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import vehicles from '../../../../services/vehicle.service'
+import React, { useEffect, useState } from "react";
+import vehicles from "../../../../services/vehicle.service";
 import { Table } from "react-bootstrap";
-import{Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { FaHandPointer } from "react-icons/fa";
+import customers from "../../../../services/customers.service";
 
-function GetSingleVehicle({customer_id}) {
-    const[vehicleInfo,setVehicleInfo]=useState([])
-    const fetchSingleVehicle =()=>{
-        const vehcielsInfo = vehicles.CustomerVehicle(customer_id);
-        vehcielsInfo.then((data)=>{
-            setVehicleInfo(data.data)
-            console.log(data.data)
+function GetSingleVehicle({ customer_id,vehicleData}) {
 
-        })
+  const [vehicleInfo, setVehicleInfo] = useState([]);
+  const fetchSingleVehicle = () => {
+    const vehcielsInfo = vehicles.CustomerVehicle(customer_id);
+    vehcielsInfo.then((data) => {
+      setVehicleInfo(data.data);
+      vehicleData(data.data);
+    });
+  };
+  useEffect(() => {
+    fetchSingleVehicle();
+  }, [customer_id]);
 
-    }
-    useEffect(()=>{
-     fetchSingleVehicle()
-    },[customer_id])
-  
   return (
     <>
       <Table striped bordered hover>
         <thead>
-          <tr>
+          {/* <tr>
             <th>Year</th>
             <th>Make</th>
             <th>Model</th>
@@ -32,7 +32,7 @@ function GetSingleVehicle({customer_id}) {
             <th>Color</th>
             <th>mileage</th>
             <th>Choose</th>
-          </tr>
+          </tr> */}
         </thead>
         <tbody>
           {vehicleInfo.length > 0 ? (
@@ -62,8 +62,15 @@ function GetSingleVehicle({customer_id}) {
             <tr>
               <td colSpan="8" className="text-center">
                 <h1 className="text-center mt-4">No Vehicle Found!</h1>
-                <Link to="/dashboard/vehicles" className="btn btn-primary">
-                  Back to Vehicles
+                <Link
+                  to={`/admin/customer_profile/${customer_id}`}
+                >
+                  <button
+                    className="theme-btn btn-style-one disabled-btn"
+                    type="submit"
+                  >
+                    Add Vehicle
+                  </button>
                 </Link>
               </td>
             </tr>
@@ -74,4 +81,4 @@ function GetSingleVehicle({customer_id}) {
   );
 }
 
-export default GetSingleVehicle
+export default GetSingleVehicle;

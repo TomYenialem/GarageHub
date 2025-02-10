@@ -89,9 +89,12 @@ function EachVehicleInfo() {
                   <div>
                     <input
                       type="checkbox"
+                      required
                       className="form-check-input me-3"
                       id={`service-${index}`}
-                      onChange={(E)=>checkedService(service.service_id, E.target.checked)}
+                      onChange={(e) =>
+                        checkedService(service.service_id, e.target.checked)
+                      }
                     />
                   </div>
                 </div>
@@ -106,6 +109,7 @@ function EachVehicleInfo() {
               customer_id={vehicleInfo.customer_id}
               vehicle_id={vehicleInfo.vehicle_id}
               selectedServices={selectedServices}
+              setSelectedServices={setSelectedServices}
             />
           </div>
         </div>

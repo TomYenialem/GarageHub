@@ -55,10 +55,30 @@ const editOrders=async(order_id,orders)=>{
         console.log(error)
     }
 }
+const singleOrder=async(order_id)=>{
+    try {
+        const options={
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        const response = await fetch(
+          `${api_url}/api/singleorder/${order_id}`,
+          options
+        );
+       
+        return response.json()
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
 const orders={
     sendOrderInfo,
     getAllOrders,
     editOrders,
+    singleOrder,
  };
 
 

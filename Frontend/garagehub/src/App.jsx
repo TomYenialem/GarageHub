@@ -1,4 +1,4 @@
-import { Router, Route, Routes } from "react-router-dom";
+import { Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 // impoer react toaster
 import { Toaster } from "react-hot-toast";
@@ -30,8 +30,16 @@ import EditEmployee from "./markup/pages/admin/EditEmployee";
 import FinalOrderPage from "./markup/pages/admin/FinalOrderPage";
 import GetAllOrdersInfo from "./markup/pages/admin/GetAllOrdersInfo";
 import EditOrders from "./markup/pages/admin/EditOrders";
+import { useEffect } from "react";
+import GetSingleOrder from "./markup/components/Admin/GetSingleOrder/GetSingleOrder";
 
 function App() {
+   const {pathname}=useLocation()
+   console.log(pathname)
+   useEffect(()=>{
+    window.scrollTo({top:0,behavior:'smooth'});
+
+   },[pathname])
   return (
     <>
       <Header />
@@ -65,7 +73,7 @@ function App() {
         <Route
           path="/admin/add-employee"
           element={
-            <PrivateAuthRoute roles={[3]}>
+            <PrivateAuthRoute roles={[1, 2, 3]}>
               <AddEmployee />
             </PrivateAuthRoute>
           }
@@ -89,6 +97,7 @@ function App() {
         <Route path="/admin/orders/:vehicle_id" element={<FinalOrderPage />} />
         <Route path="/admin/all_orders" element={<GetAllOrdersInfo />} />
         <Route path="/admin/edit_orders/:order_id" element={<EditOrders />} />
+        <Route path="/admin/single_order/:order_id" element={<GetSingleOrder/>} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

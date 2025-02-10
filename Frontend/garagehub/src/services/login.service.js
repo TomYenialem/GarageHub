@@ -9,7 +9,7 @@ const logIn = async (formData) => {
     body: JSON.stringify(formData),
   };
   console.log("About to send request");
-  console.log(requestOptions.body);
+  // console.log(requestOptions.body);
   const response = await fetch(`${api_url}/api/employee/login`, requestOptions);
   return response;
 };
