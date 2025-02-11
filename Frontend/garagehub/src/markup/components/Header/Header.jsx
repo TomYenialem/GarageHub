@@ -84,6 +84,9 @@ function Header(props) {
                         <li>
                           <a href="/contact">Contact Us</a>
                         </li>
+                        <li>
+                          <Link to="/admin">Admin</Link>
+                        </li>
                       </ul>
                     </div>
                   </nav>
