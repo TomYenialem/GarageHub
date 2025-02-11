@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import vehicles from "../../../services/vehicle.service";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 
-function AddVechile({ customer_id }) {
+function AddVechile({ customer_id, onVehicleAdded, existingVehicle }) {
   const [vehicle_year, setVehicle_year] = useState("");
   const [vehicle_make, setVehicle_make] = useState("");
   const [vehicle_model, setVehicle_model] = useState("");
@@ -14,11 +14,30 @@ function AddVechile({ customer_id }) {
   const [vehicle_color, setVehicle_color] = useState("");
   const [serverError, setServerError] = useState("");
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const isEditing=Boolean(existingVehicle)
+  const isEditing = !!existingVehicle;
 
-  // Check if the request came from another route (by looking for 'from' in location.state)
-  const previousPath = location.state?.from || null;
+  // same as let isEditing;
+
+  // if (existingVehicle) {
+  //   isEditing = true;
+  // } else {
+  //   isEditing = false;
+  // }
+  // console.log(existingVehicle)
+
+  useEffect(() => {
+    if (isEditing) {
+      setVehicle_year(existingVehicle.vehicle_year || "");
+      setVehicle_make(existingVehicle.vehicle_make || "");
+      setVehicle_model(existingVehicle.vehicle_model || "");
+      setVehicle_type(existingVehicle.vehicle_type || "");
+      setVehicle_mileage(existingVehicle.vehicle_mileage || "");
+      setVehicle_tag(existingVehicle.vehicle_tag || "");
+     setvehicle_serial_number(existingVehicle.vehicle_serial || "");
+      setVehicle_color(existingVehicle.vehicle_color || "");
+    }
+  }, [existingVehicle]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,17 +52,19 @@ function AddVechile({ customer_id }) {
       vehicle_serial,
       vehicle_color,
     };
+   
 
-    // Pass the form data to the service
-    const serviceResponses = vehicles.addVehicles(customer_id, payload);
-
-    serviceResponses
-      .then((response) => response.json())
+    let response;
+    if (isEditing) {
+      response = vehicles.editVehicle(existingVehicle.vehicle_id, payload);
+    }
+    response = vehicles.addVehicles(customer_id, payload);
+    response
+      .then((res) => res.json())
       .then((data) => {
         if (data.error) {
           setServerError(data.error);
         } else {
-          // Reset all fields after successful submission
           setvehicle_serial_number("");
           setVehicle_color("");
           setVehicle_make("");
@@ -54,11 +75,7 @@ function AddVechile({ customer_id }) {
           setVehicle_mileage("");
           setServerError("");
           toast.success(data.message);
-
-          // Navigate back if `previousPath` exists, otherwise stay on the current route
-          if (previousPath) {
-            navigate(previousPath); // Navigate back to the previous route
-          }
+          onVehicleAdded();
         }
       })
       .catch((error) => {
@@ -76,7 +93,7 @@ function AddVechile({ customer_id }) {
     <section className="contact-section">
       <div className="auto-container">
         <div className="contact-title">
-          <h2>Add a new vehicle</h2>
+          <h2>{isEditing ? "Edit Vehicle" : "Add a new vehicle"}</h2>
         </div>
         <div className="row clearfix">
           <div className="form-column col-lg-7">
@@ -187,7 +204,7 @@ function AddVechile({ customer_id }) {
 
                     <div className="form-group col-md-12">
                       <button className="theme-btn btn-style-one" type="submit">
-                        <span>Add Vehicle</span>
+                        <span>{isEditing ? "Update" : "Add Vehicle"}</span>
                       </button>
                     </div>
                   </div>

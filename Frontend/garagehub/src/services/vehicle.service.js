@@ -23,7 +23,7 @@ const CustomerVehicle=async(customer_id)=>{
         }
         const response = await fetch(`${api_url}/api/addvehicle/${customer_id}`,options);
         return response.json()
-        
+    
     } catch (error) {
         console.log(error)
     }
@@ -41,10 +41,29 @@ const singleVehicle=async(vehicle_id)=>{
         
     }
 }
+
+const editVehicle=async(vehicle_id,data)=>{
+    try {
+        const options={
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body:JSON.stringify(data),
+        }
+        const response = await fetch(
+          `${api_url}/api/editvehicl/ ${vehicle_id}`,
+          options
+        );
+        return response.json()
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
 const vehicles={
     addVehicles,
     CustomerVehicle,
-    singleVehicle
+    singleVehicle,
+    editVehicle
  
 }
 

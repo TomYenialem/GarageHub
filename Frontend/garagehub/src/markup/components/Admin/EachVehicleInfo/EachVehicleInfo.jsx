@@ -5,6 +5,7 @@ import { FaRegEdit } from "react-icons/fa";
 import SingleCustomer from "../SingleCustomer/SingleCustomer";
 import { useAuth } from "../../../../Context/AuthContext";
 import AdditionalServices from "../AdditionalServices/AdditionalServices";
+import { Link } from "react-router-dom";
 
 
 function EachVehicleInfo() {
@@ -61,9 +62,11 @@ function EachVehicleInfo() {
         </p>
 
         <p className="edit">
-          <strong>
-            Edit Vehicle: <FaRegEdit />
-          </strong>
+          <Link to={`/admin/edit_vehicle/${vehicleInfo.vehicle_id}`}>
+            <strong>
+              Edit Vehicle: <FaRegEdit />
+            </strong>
+          </Link>
         </p>
       </div>
 

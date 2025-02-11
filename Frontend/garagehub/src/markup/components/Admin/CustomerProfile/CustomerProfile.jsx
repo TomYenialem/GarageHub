@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import AddVechile from "../../../pages/admin/AddVechile";
 import SingleCustomer from "../SingleCustomer/SingleCustomer";
 import { useParams } from "react-router-dom";
@@ -6,14 +6,15 @@ import GetSingleVehicle from "../GetSinngelVehicle/GetSingleVehicle";
 import GetSingleOrder from "../GetSingleOrder/GetSingleOrder";
 
 function CustomerProfile() {
+  const [vehicleData, setVehicleData] = useState([]);
+  console.log(vehicleData);
+    // const fetchSingleVehicleRef = useRef(null);
 
-  const [vehicleData,setVehicleData]=useState([])
-  
   const [modal, setModal] = useState(false);
-  const [customerData, setCustomerData] = useState([]); 
+  const [customerData, setCustomerData] = useState([]);
   // Use state to hold customer data
   const { customer_id } = useParams();
-
+    const fetchSingleVehicleRef = useRef(null)
 
   return (
     <>
@@ -44,9 +45,7 @@ function CustomerProfile() {
         <hr className="my-2" />
 
         {/* Display Customer Info */}
-        <div className="row pt-3">
-         
-        </div>
+        <div className="row pt-3"></div>
 
         <hr className="my-2" />
 
@@ -64,15 +63,16 @@ function CustomerProfile() {
           <div className="col-md-10 mb-5">
             <h3 className="bold mb-3">
               Vehicle of {customerData?.customer_first_name}
-            </h3>{
-              vehicleData.length>0 ? <>
-              
-              <GetSingleVehicle customer_id={customer_id} vehicleData={(data)=>setVehicleData(data)}/>
-              </>
-              :
-              <p className="text-center text-danger bold">No Vehicle Found</p>
-            }
-          
+            </h3>
+
+            <>
+              <GetSingleVehicle
+                customer_id={customerData?.customer_id}
+                vehicleData={(data) => setVehicleData(data)}
+                showBtn={false}
+              />
+            </>
+
             <button
               className="theme-btn btn-style-one mt-2"
               onClick={() => setModal(true)}
@@ -92,7 +92,11 @@ function CustomerProfile() {
                     >
                       X
                     </button>
-                    <AddVechile customer_id={customer_id} />
+                    <AddVechile
+                      customer_id={customer_id}
+                      onVehicleAdded={() =>   setModal(false)
+                    }
+                    />
                   </div>
                 </div>
               </div>
@@ -114,9 +118,11 @@ function CustomerProfile() {
             <div className="vr my-1"></div>
           </div>
           <div className="col-md-10">
-            <h3 className="bold">Orders of {customerData?.customer_first_name}</h3>
+            <h3 className="bold">
+              Orders of {customerData?.customer_first_name}
+            </h3>
             <h6 className="mb-0">
-             <GetSingleOrder customer_id={customerData.customer_id}/>
+              <GetSingleOrder customer_id={customerData.customer_id} />
             </h6>
           </div>
         </div>

@@ -31,7 +31,9 @@ import FinalOrderPage from "./markup/pages/admin/FinalOrderPage";
 import GetAllOrdersInfo from "./markup/pages/admin/GetAllOrdersInfo";
 import EditOrders from "./markup/pages/admin/EditOrders";
 import { useEffect } from "react";
-import GetSingleOrder from "./markup/components/Admin/GetSingleOrder/GetSingleOrder";
+import EditVehicles from "./markup/pages/admin/EditVehicles";
+import Admin from "./markup/pages/admin/Admin/Admin";
+
 
 function App() {
    const {pathname}=useLocation()
@@ -46,6 +48,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path ='/admin' element={<Admin/>}/>
         <Route
           path="/unauthorized"
           element={
@@ -97,8 +100,10 @@ function App() {
         <Route path="/admin/orders/:vehicle_id" element={<FinalOrderPage />} />
         <Route path="/admin/all_orders" element={<GetAllOrdersInfo />} />
         <Route path="/admin/edit_orders/:order_id" element={<EditOrders />} />
-        <Route path="/admin/single_order/:order_id" element={<GetSingleOrder/>} />
-
+        <Route
+          path="/admin/edit_vehicle/:vehicle_id"
+          element={<EditVehicles />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster position="top-right" />

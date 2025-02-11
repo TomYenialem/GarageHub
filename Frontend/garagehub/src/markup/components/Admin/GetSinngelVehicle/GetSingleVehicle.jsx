@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { FaHandPointer } from "react-icons/fa";
 import customers from "../../../../services/customers.service";
 
-function GetSingleVehicle({ customer_id,vehicleData}) {
+function GetSingleVehicle({ customer_id,vehicleData,showBtn=true,SingleVehicle}) {
 
   const [vehicleInfo, setVehicleInfo] = useState([]);
   const fetchSingleVehicle = () => {
@@ -18,6 +18,8 @@ function GetSingleVehicle({ customer_id,vehicleData}) {
   useEffect(() => {
     fetchSingleVehicle();
   }, [customer_id]);
+
+
 
   return (
     <>
@@ -60,18 +62,19 @@ function GetSingleVehicle({ customer_id,vehicleData}) {
             ))
           ) : (
             <tr>
+      
               <td colSpan="8" className="text-center">
-                <h1 className="text-center mt-4">No Vehicle Found!</h1>
-                <Link
-                  to={`/admin/customer_profile/${customer_id}`}
-                >
-                  <button
-                    className="theme-btn btn-style-one disabled-btn"
-                    type="submit"
-                  >
-                    Add Vehicle
-                  </button>
-                </Link>
+                <h3 className="text-center mt-4">No Vehicle Found!</h3>
+                {showBtn && (
+                  <Link to={`/admin/customer_profile/${customer_id}`}>
+                    <button
+                      className="theme-btn btn-style-one disabled-btn"
+                      type="submit"
+                    >
+                      Add Vehicle
+                    </button>
+                  </Link>
+                )}
               </td>
             </tr>
           )}

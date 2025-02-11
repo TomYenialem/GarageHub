@@ -1,41 +1,47 @@
-import React, { useEffect, useState } from 'react'
-import orders from '../../../../services/order.service'
+import React, { useEffect, useState } from "react";
+import orders from "../../../../services/order.service";
 import { Table, Button, Modal } from "react-bootstrap";
 
-function GetSingleOrder({customer_id}) {
-    const[orderData,setOrder]=useState([])
- 
-    const fetchSingleOrder=()=>{
-        try {
-            const response =  orders.singleOrder(customer_id)
-            response.then((data)=>{
-                if(data.error){
-                    console.log(data.error)
-                }
-                setOrder(data)
-            })
-            
-        } catch (error) {
-            
+function GetSingleOrder({ customer_id }) {
+  console.log(customer_id)
+  const [orderData, setOrder] = useState([]);
+
+  const fetchSingleOrder = () => {
+    try {
+      const response = orders.singleOrder(customer_id);
+      response.then((data) => {
+        if (data.error) {
+          console.log(data.error);
         }
+  else{
+    setOrder(data.data);
+    
+  }
+      });
+    } catch (error) {
+      console.log(error);
     }
-    useEffect(()=>{
-fetchSingleOrder()
-    },[])
+  };
+  useEffect(() => {
+    fetchSingleOrder();
+  }, [customer_id]);
+  
   return (
     <div>
       <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Vehicle</th>
-            <th>Order Date</th>
-            <th>Received By</th>
-            <th>Order Status</th>
-           
-          </tr>
-        </thead>
+        {orderData.length > 0 && (
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Vehicle</th>
+              <th>Order Date</th>
+              <th>Received By</th>
+              <th>Order Status</th>
+            </tr>
+          </thead>
+        )}
+
         <tbody>
           {orderData.length > 0 ? (
             orderData.map((order, index) => (
@@ -60,9 +66,7 @@ fetchSingleOrder()
                   {order.vehicle_mileage})
                 </td>
 
-                <td>
-                  {format(new Date(order.order_date), "MM-dd-yyyy | HH:mm")}
-                </td>
+                <td>{(new Date(order.order_date), "MM-dd-yyyy | HH:mm")}</td>
 
                 <td>
                   {order.employee_first_name} {order.employee_last_name}
@@ -100,4 +104,4 @@ fetchSingleOrder()
   );
 }
 
-export default GetSingleOrder
+export default GetSingleOrder;

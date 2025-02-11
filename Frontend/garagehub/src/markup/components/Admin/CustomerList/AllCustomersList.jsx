@@ -89,7 +89,7 @@ function AllCustomersList() {
                                 "MM - dd - yyyy | kk:mm"
                               )}
                             </td>
-                            <td>{customer.active_customer_status ? "Yes" : "No"}</td>
+                            <td>{customer.active_customer_status ? <p className="text-success">Yes</p> :<><p className="text-danger">No</p></>}</td>
 
                             <td>
                               <div className="edit-link-icons ">
@@ -97,7 +97,7 @@ function AllCustomersList() {
                                   <Link
                                     to={`/admin/customer_edit/${customer.customer_id}`}
                                   >
-                                    <FaRegEdit />
+                                    <FaRegEdit  className="text-danger"/>
                                   </Link>
                                 </span>
                                 <Link

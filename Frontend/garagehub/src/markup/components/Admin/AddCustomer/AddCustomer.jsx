@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 // impoer customer service
 import customers from '../../../../services/customers.service';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 // import toast from react hot-toast
 
 
@@ -11,6 +12,7 @@ function AddCustomer() {
       const [customer_last_name, setLastName] = useState("");
       const [customer_phone_number, setPhoneNumber] = useState("");
       const [active_customer_status, setActive_customer] = useState(1);
+      const navigate=useNavigate()
    
       // Errors
       const [emailError, setEmailError] = useState("");
@@ -74,9 +76,9 @@ function AddCustomer() {
             setSuccess(true);
             setServerError("");
             toast.success(data.message);
+            navigate("/admin/all_customers");
             // Redirect to the customers page after 2 seconds
             // For now, just redirect to the home page
-            ;
           }
         })
         // Handle Catch
