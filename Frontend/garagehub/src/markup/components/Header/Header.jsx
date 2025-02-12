@@ -73,19 +73,19 @@ function Header(props) {
                     >
                       <ul className="navigation">
                         <li className="dropdown">
-                          <a href="/">Home</a>
+                          <Link to={"/"}>Home</Link>
                         </li>
                         <li className="dropdown">
-                          <a href="/about">About Us</a>
+                          <Link to={"/about"}>About Us</Link>
                         </li>
                         <li className="dropdown">
                           <Link to={'/service'}>Services</Link>
                         </li>
                         <li>
-                          <a href="/contact">Contact Us</a>
+                          <Link to={"/contact"}>Contact Us</Link>
                         </li>
                         <li>
-                          <Link to="/admin">Admin</Link>
+                          <Link to={"/admin"}>Admin</Link>
                         </li>
                       </ul>
                     </div>

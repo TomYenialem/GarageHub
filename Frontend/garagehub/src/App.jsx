@@ -35,6 +35,7 @@ import EditVehicles from "./markup/pages/admin/EditVehicles";
 import Admin from "./markup/pages/admin/Admin/Admin";
 import About from "./markup/pages/About";
 import Services from "./markup/pages/Services";
+import Contact from "./markup/pages/Contact";
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/service" element={<Services />} />
+        <Route path="/contact" element={<Contact />} />
         <Route
           path="/unauthorized"
           element={
