@@ -33,6 +33,8 @@ import EditOrders from "./markup/pages/admin/EditOrders";
 import { useEffect } from "react";
 import EditVehicles from "./markup/pages/admin/EditVehicles";
 import Admin from "./markup/pages/admin/Admin/Admin";
+import About from "./markup/pages/About";
+import Services from "./markup/pages/Services";
 
 
 function App() {
@@ -48,7 +50,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path ='/admin' element={<Admin/>}/>
+        <Route path="/about" element={<About />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/service" element={<Services />} />
         <Route
           path="/unauthorized"
           element={

@@ -79,7 +79,7 @@ function Header(props) {
                           <a href="/about">About Us</a>
                         </li>
                         <li className="dropdown">
-                          <a href="/services">Services</a>
+                          <Link to={'/service'}>Services</Link>
                         </li>
                         <li>
                           <a href="/contact">Contact Us</a>
