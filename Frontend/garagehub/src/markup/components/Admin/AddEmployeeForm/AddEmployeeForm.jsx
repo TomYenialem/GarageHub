@@ -2,6 +2,7 @@ import React, { useState } from "react";
 // import employee.service.js
 import employeeService from "../../../../services/employee.service";
 import { useAuth } from "../../../../Context/AuthContext";
+import { PulseLoader } from "react-spinners";
 // Import the useAuth hook
 
 
@@ -19,6 +20,8 @@ function AddEmployeeForm(props) {
   const [passwordError, setPasswordError] = useState("");
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState("");
+  const [loading, setLoading] = useState(false);
+  
 
   // Create a variable to hold the user's token
   let loggedInEmployeeToken = "";
@@ -124,7 +127,6 @@ function AddEmployeeForm(props) {
                 <form onSubmit={handleSubmit}>
                   <div className="row clearfix">
                     <div className="form-group col-md-12">
-                      
                       <input
                         type="email"
                         name="employee_email"
@@ -209,9 +211,20 @@ function AddEmployeeForm(props) {
                       <button
                         className="theme-btn btn-style-one"
                         type="submit"
-                        data-loading-text="Please wait..."
+                        disabled={loading}
                       >
-                        <span>Add employee</span>
+                        <span>
+                          {loading ? (
+                            <div>
+                              <span>please wait </span>
+                              <span>
+                                <PulseLoader size={10} color={"#123abc"} />
+                              </span>
+                            </div>
+                          ) : (
+                            "Add Employee"
+                          )}
+                        </span>
                       </button>
                     </div>
                   </div>

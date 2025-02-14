@@ -5,9 +5,11 @@ import serv from "../../../../services/services.service";
 import toast from "react-hot-toast";
 import { useAuth } from "../../../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
 
 function NewServices() {
   const navigate=useNavigate()
+   const [loading, setLoading] = useState(false);
   const [service_name, setService_name] = useState("");
   const [service_description, setService_description] = useState("");
   const [serverError, setServerError] = useState("");
@@ -177,9 +179,19 @@ function NewServices() {
                         <button
                           className="theme-btn btn-style-one"
                           type="submit"
+                          disabled={loading}
                         >
                           <span>
-                            {editingId ? "Update Service" : "Add Service"}
+                            {loading ? (
+                              <div>
+                                <span>please wait </span>
+                                <span>
+                                  <PulseLoader size={10} color={"#123abc"} />
+                                </span>
+                              </div>
+                            ) : (
+                              "Add Employee"
+                            )}
                           </span>
                         </button>
                       </div>

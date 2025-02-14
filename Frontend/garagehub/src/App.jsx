@@ -36,15 +36,14 @@ import Admin from "./markup/pages/admin/Admin/Admin";
 import About from "./markup/pages/About";
 import Services from "./markup/pages/Services";
 import Contact from "./markup/pages/Contact";
-
+import CustomerOrder from "./markup/pages/CustomerOrder";
 
 function App() {
-   const {pathname}=useLocation()
-   console.log(pathname)
-   useEffect(()=>{
-    window.scrollTo({top:0,behavior:'smooth'});
-
-   },[pathname])
+  const { pathname } = useLocation();
+  console.log(pathname);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
   return (
     <>
       <Header />
@@ -55,6 +54,8 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/service" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/customer_order/:order_id" element={<CustomerOrder />} />
+
         <Route
           path="/unauthorized"
           element={
@@ -110,6 +111,7 @@ function App() {
           path="/admin/edit_vehicle/:vehicle_id"
           element={<EditVehicles />}
         />
+      
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster position="top-right" />

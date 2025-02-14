@@ -55,7 +55,7 @@ const editOrders = async (order_id, orders) => {
     console.log(error);
   }
 };
-const singleOrder = async (customer_id) => {
+const singleOrder = async (order_id) => {
   try {
     const options = {
       method: "GET",
@@ -64,7 +64,7 @@ const singleOrder = async (customer_id) => {
       },
     };
     const response = await fetch(
-      `${api_url}/api/singleorder/${customer_id}`,
+      `${api_url}/api/singleorder/${order_id}`,
       options
     );
     return response.json();

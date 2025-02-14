@@ -6,12 +6,12 @@ import LoginForm from '../../components/Login/LoginForm'
 // Import the AdminForm component
 import AdminForm from '../../components/Admin/AdminMenu/AdminMenu'
 import EmployeeList from "../../components/Admin/EmployeeList/EmployeeLists";
-import { useAuth } from "../../../Context/authContext";
+import { useAuth } from "../../../Context/AuthContext";
+
 function Employees() {
   // Destructure the auth hook
-  const { isLogged, isAdmin } = useAuth();
-
-  if (isLogged) {
+  const { isLogged, isAdmin } = useAuth
+  if (isLogged) { 
     if (isAdmin) {
       return (
         <div>

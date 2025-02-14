@@ -293,3 +293,27 @@ input:disabled {
   cursor: not-allowed;
   opacity: 0.6; /* Optional: Make it look disabled */
 }
+.center_loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.status-badge {
+  min-width: 120px; /* Ensures uniform width */
+  display: inline-block;
+  text-align: center;
+}
+.btn-style-one:disabled{
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+.customer_order{
+  background-color: #a2a5ad;
+}
+.sub_order{
+padding-top: 50px;
+}
+.custmoer_servcie_list {
+  background-color: red;
+}
