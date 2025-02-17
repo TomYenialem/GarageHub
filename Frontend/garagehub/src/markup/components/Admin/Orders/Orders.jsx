@@ -31,22 +31,24 @@ function Orders() {
 
   return (
     <section className="contact-section">
-      <div className="auto-container">
-        <div className="contact-title">
+      <div className="auto-container ">
+        <div className="contact-title mb-1">
           <h2>Create a new order</h2>
         </div>
 
         {/* If customer is selected, show SingleCustomer component */}
         {selectedCustomerId ? (
-          <>
+          <div>
             <SingleCustomer
-             
               customer_id={selectedCustomerId}
               onBack={() => setSelectedCustomerId(null)}
             />
-            <GetSingleVehicle customer_id={selectedCustomerId} />
+            <div className="mt-4 p-4 bg-white shadow rounded">
+              <h4 className="fw-bold mb-3">Choose A Vehicle</h4>
+              <GetSingleVehicle customer_id={selectedCustomerId} />
+            </div>
             <></>
-          </>
+          </div>
         ) : (
           <>
             <div className="table-responsive mb-4">
@@ -61,7 +63,7 @@ function Orders() {
             </div>
 
             {showCustomers ? (
-              <div className="form-group col-md-12">
+              <div className="form-group col-md-10">
                 <button className="theme-btn btn-style-one">
                   <Link to={"/admin/add_customers"}>
                     <span>Add customer</span>
@@ -69,7 +71,7 @@ function Orders() {
                 </button>
               </div>
             ) : (
-              <Table striped bordered hover>
+              <Table striped bordered hover className=" ">
                 <thead>
                   <tr>
                     <th>First Name</th>

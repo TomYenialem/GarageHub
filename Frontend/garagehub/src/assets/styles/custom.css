@@ -317,3 +317,34 @@ padding-top: 50px;
 .custmoer_servcie_list {
   background-color: red;
 }
+.text-white{
+  color: white;
+}
+.form-check-input{
+cursor: pointer;
+font-size: 24px;
+}
+.add_vehilces{
+  position: relative;
+}
+.closes{
+  position: absolute;
+  top: 50px;
+  right: 20px;
+}
+.closes button{
+  padding: 0px 10px;
+  color: white;
+  border-radius: 4px;
+}
+.vehicle_modal{
+
+  width: 100%;
+  margin: 0 auto;
+}
+
+.confirm_modal{
+
+  margin-top: 100px;
+  margin-left: 150px;
+}

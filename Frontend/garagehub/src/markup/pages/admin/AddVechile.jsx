@@ -3,7 +3,7 @@ import vehicles from "../../../services/vehicle.service";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 
-function AddVechile({ customer_id, onVehicleAdded, existingVehicle }) {
+function AddVechile({ customer_id,onVehicleAdded,  existingVehicle }) {
   const [vehicle_year, setVehicle_year] = useState("");
   const [vehicle_make, setVehicle_make] = useState("");
   const [vehicle_model, setVehicle_model] = useState("");
@@ -13,6 +13,8 @@ function AddVechile({ customer_id, onVehicleAdded, existingVehicle }) {
   const [vehicle_serial, setvehicle_serial_number] = useState("");
   const [vehicle_color, setVehicle_color] = useState("");
   const [serverError, setServerError] = useState("");
+  const navigate=useNavigate()
+
 
   // const isEditing=Boolean(existingVehicle)
   const isEditing = !!existingVehicle;
@@ -43,6 +45,7 @@ function AddVechile({ customer_id, onVehicleAdded, existingVehicle }) {
     e.preventDefault();
 
     const payload = {
+      customer_id: isEditing ? existingVehicle?.customer_id : "",
       vehicle_year,
       vehicle_make,
       vehicle_model,
@@ -51,14 +54,15 @@ function AddVechile({ customer_id, onVehicleAdded, existingVehicle }) {
       vehicle_tag,
       vehicle_serial,
       vehicle_color,
-    };
-   
+    };       
 
     let response;
     if (isEditing) {
       response = vehicles.editVehicle(existingVehicle.vehicle_id, payload);
+    }else{
+      response = vehicles.addVehicles(customer_id, payload);
+
     }
-    response = vehicles.addVehicles(customer_id, payload);
     response
       .then((res) => res.json())
       .then((data) => {
@@ -75,7 +79,16 @@ function AddVechile({ customer_id, onVehicleAdded, existingVehicle }) {
           setVehicle_mileage("");
           setServerError("");
           toast.success(data.message);
-          onVehicleAdded();
+          navigate(0)
+          // window.location.reload();
+          if(!isEditing){
+            onVehicleAdded()
+ 
+          }
+          if(isEditing){
+            navigate(-1)
+          }
+        
         }
       })
       .catch((error) => {
@@ -96,7 +109,7 @@ function AddVechile({ customer_id, onVehicleAdded, existingVehicle }) {
           <h2>{isEditing ? "Edit Vehicle" : "Add a new vehicle"}</h2>
         </div>
         <div className="row clearfix">
-          <div className="form-column col-lg-7">
+          <div className="form-column col-lg-10">
             <div className="inner-column">
               <div className="contact-form">
                 <form onSubmit={handleSubmit}>

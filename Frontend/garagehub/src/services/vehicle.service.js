@@ -50,11 +50,10 @@ const editVehicle=async(vehicle_id,data)=>{
             body:JSON.stringify(data),
         }
         const response = await fetch(
-          `${api_url}/api/editvehicl/ ${vehicle_id}`,
+          `${api_url}/api/editvehicle/ ${vehicle_id}`,
           options
         );
-        return response.json()
-        
+        return response
     } catch (error) {
         console.log(error)
     }

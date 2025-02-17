@@ -6,13 +6,14 @@ import logo from "../../../assets/images/logo.png";
 // Import the login service to access the logout function
 import loginService from "../../../services/login.service";
 import { useAuth } from "../../../Context/AuthContext";
+import { use } from "react";
 
 // Import the custom context hook
 
 
 function Header(props) {
   // Use the custom hook to access the data in the context
-  const { isLogged, setIsLogged, employee } = useAuth()
+  const { isLogged, setIsLogged, employee } =useAuth()
   // console.log(useAuth());
 
   // Log out event handler function

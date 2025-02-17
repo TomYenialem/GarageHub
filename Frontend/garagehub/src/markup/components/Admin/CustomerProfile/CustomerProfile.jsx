@@ -1,20 +1,25 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useEffect } from "react";
 import AddVechile from "../../../pages/admin/AddVechile";
 import SingleCustomer from "../SingleCustomer/SingleCustomer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import GetSingleVehicle from "../GetSinngelVehicle/GetSingleVehicle";
 import GetSingleOrder from "../GetSingleOrder/GetSingleOrder";
-
+import vehicles from "../../../../services/vehicle.service";
 function CustomerProfile() {
+  const navigate = useNavigate();
+    const { customer_id } = useParams();
   const [vehicleData, setVehicleData] = useState([]);
-  console.log(vehicleData);
-    // const fetchSingleVehicleRef = useRef(null);
-
   const [modal, setModal] = useState(false);
   const [customerData, setCustomerData] = useState([]);
-  // Use state to hold customer data
-  const { customer_id } = useParams();
-    const fetchSingleVehicleRef = useRef(null)
+    const fetchSingleVehicle = () => {
+      vehicles.CustomerVehicle(customer_id).then((data) => {
+        setVehicleData(data.data);
+      });
+    };
+
+    useEffect(() => {
+      fetchSingleVehicle();
+    }, [customer_id]);
 
   return (
     <>
@@ -82,21 +87,23 @@ function CustomerProfile() {
           </div>
           <div>
             {modal && (
-              <div className="col-md-8">
-                <div className="modal-overlay">
-                  <div className="modal-content position-relative p-4 bg-white rounded shadow">
-                    {/* Close Button */}
-                    <button
-                      className="btn-close  top-0 left-0 end-0 m-2"
-                      onClick={() => setModal(false)}
-                    >
-                      X
-                    </button>
-                    <AddVechile
-                      customer_id={customer_id}
-                      onVehicleAdded={() =>   setModal(false)
-                    }
-                    />
+              <div className="col-md-8 vehicle_modal">
+                <div className="modal-overlay mx-auto">
+                  <div className="modal-content mb-5">
+                    <div className="add_vehilces mb-4">
+                      <AddVechile
+                        customer_id={customer_id}
+                        onVehicleAdded={() => {setModal(false);fetchSingleVehicle();}}
+                      />
+                      <div className="closes">
+                        <button
+                          className="btn-close  bg-danger"
+                          onClick={() => setModal(false)}
+                        >
+                          X
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

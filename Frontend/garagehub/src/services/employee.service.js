@@ -5,30 +5,58 @@ console.log("API URL:", api_url);
 
 
 // A function to send post request to create a new employee 
-const createEmployee = async (formData, loggedInEmployeeToken) => {
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-access-token': loggedInEmployeeToken
-    },
-    body: JSON.stringify(formData)
-  };
-  console.log(requestOptions);
-  const response = await fetch(`${api_url}/api/employee`, requestOptions);
-  return response;
-}
-const getAllemployess=async(token)=>{
-   const requestOptions = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-access-token': token
+const createEmployee = async (formData) => {
+  try {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+       
+      },
+      body: JSON.stringify(formData),
+    };
+
+    console.log("🔍 Sending Request to:", `${api_url}/api/employee`);
+    console.log("📝 Request Options:", requestOptions);
+
+    const response = await fetch(`${api_url}/api/employee`, requestOptions);
+
+    console.log("📥 Response Status:", response.status);
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.log("⚠️ Backend Error:", errorData);
+      throw new Error(errorData);
     }
-   }
-   const response= await fetch(`${api_url}/api/employees`,requestOptions);
-    return response;
-}
+
+    return response.json();
+  } catch (error) {
+    console.error("❌ Fetch Error:", error);
+    throw error;
+  }
+};
+
+const getAllemployess = async () => {
+  try {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const response = await fetch(`${api_url}/api/employees`, requestOptions);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json(); // ✅ Await JSON parsing
+    return data; // ✅ Return parsed data
+  } catch (error) {
+    console.error("Error fetching employees:", error);
+    return []; // ✅ Return empty array to prevent crashes
+  }
+};
 
 
 const getSingleEmployee=async(employee_id)=>{

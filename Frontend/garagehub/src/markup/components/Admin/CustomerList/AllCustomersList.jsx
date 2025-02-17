@@ -129,7 +129,7 @@ function AllCustomersList() {
             </div>
             {/* add buttons for privious next gap */}
 
-            <MoreCustomers />
+            {/* <MoreCustomers /> */}
           </section>
         </>
       )}

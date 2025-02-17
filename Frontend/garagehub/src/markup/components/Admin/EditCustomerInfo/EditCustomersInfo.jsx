@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import updateCustomers from "../../../../services/customers.service";
 import toast from "react-hot-toast";
 
 import SingleCustomer from "../SingleCustomer/SingleCustomer";
+import { PulseLoader } from "react-spinners";
 
 function EditCustomersInfo() {
   const { customer_id } = useParams();
   const [customerData, setCustomerData] = useState();
+    const [loading, setLoading] = useState(false);
   const navigate=useNavigate()
   
 
@@ -17,7 +19,6 @@ function EditCustomersInfo() {
   const [customer_phone_number, setPhoneNumber] = useState("");
   const [active_customer_status, setActiveCustomeer] = useState(1);
   const [serverError, setServerError] = useState("");
-
 
   // ✅ Load customer data when available
   useEffect(() => {
@@ -35,12 +36,12 @@ function EditCustomersInfo() {
     const data = {
       customer_first_name,
       customer_last_name,
-
       customer_phone_number,
       active_customer_status,
     };
 
     const edit = updateCustomers.editCustomerInfo(customer_id, data);
+    setLoading(true);
     try {
       edit.then((data) => {
         if (data.error) {
@@ -49,13 +50,16 @@ function EditCustomersInfo() {
         } else {
           setServerError("");
           toast.success("employees updated successfully");
-          navigate(-1);
+          navigate(-1)
         }
       });
     } catch (error) {
       const resMessage =
         error.response?.data?.message || error.message || error.toString();
       setServerError(resMessage);
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -133,7 +137,7 @@ function EditCustomersInfo() {
                         name="active_employee"
                         id="active_employee"
                         style={{ marginRight: "8px" }}
-                        checked={active_customer_status === 1}
+                        checked={active_customer_status===1}
                         onChange={(e) =>
                           setActiveCustomeer(e.target.checked ? 1 : 0)
                         }
@@ -145,8 +149,23 @@ function EditCustomersInfo() {
 
                     {/* Submit Button */}
                     <div className="form-group col-md-12">
-                      <button className="theme-btn btn-style-one" type="submit">
-                        <span>Update</span>
+                      <button
+                        className="theme-btn btn-style-one"
+                        type="submit"
+                        disabled={loading}
+                      >
+                        <span>
+                          {loading ? (
+                            <div>
+                              <span>please wait </span>
+                              <span>
+                                <PulseLoader size={10} color={"#123abc"} />
+                              </span>
+                            </div>
+                          ) : (
+                            "Update"
+                          )}
+                        </span>
                       </button>
                     </div>
                   </div>

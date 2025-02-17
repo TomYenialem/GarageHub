@@ -19,6 +19,10 @@ function NewServices() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { service_name, service_description };
+    if(!service_description || ! service_name){
+      toast.error("Please fill all fields");
+      return;
+    }
 
     try {
       if (editingId) {
@@ -190,7 +194,7 @@ function NewServices() {
                                 </span>
                               </div>
                             ) : (
-                              "Add Employee"
+                              "update"
                             )}
                           </span>
                         </button>

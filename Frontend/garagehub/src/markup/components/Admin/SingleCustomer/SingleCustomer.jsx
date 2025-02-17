@@ -4,7 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import singleCustomers from "../../../../services/customers.service"; 
 import { FaRegEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
-function SingleCustomer({ customer_id, onBack ,showBackButton=true,customerData}) {
+function  SingleCustomer({ customer_id, onBack ,showBackButton=true,customerData}) {
    const [singleCustomer, setSingleCustomer] = useState([]);
 
 
@@ -16,7 +16,7 @@ function SingleCustomer({ customer_id, onBack ,showBackButton=true,customerData}
         setSingleCustomer(data.data); 
         customerData(data.data[0])
         // Assuming data.data is an array
-        // console.log(data.data[0]);
+        console.log(data.data[0]);
       } catch (error) {
         console.error("Error fetching customer details:", error);
       }
@@ -42,7 +42,7 @@ function SingleCustomer({ customer_id, onBack ,showBackButton=true,customerData}
       {singleCustomer.map((customer) => (
         <div
           key={customer.customer_id}
-          className={`${showBackButton &&'card p-4 shadow'}`}
+          className={`${showBackButton && "card p-4 shadow"}`}
         >
           <div className="mb-3">
             <h2 className="fw-bold mb-3">
@@ -56,14 +56,14 @@ function SingleCustomer({ customer_id, onBack ,showBackButton=true,customerData}
             </p>
             <p>
               <strong>Active customer:</strong>{" "}
-              {customer.active_customers ? "Yes" : "No"}
+              {customer.active_customer_status  ? "Yes" : "No"}
             </p>
             <Link to={`/admin/customer_edit/${customer.customer_id}`}>
-            <p>
-              <strong>
-                Edit Customer: <FaRegEdit className="" />
-              </strong>
-            </p>
+              <p>
+                <strong>
+                  Edit Customer: <FaRegEdit className="" />
+                </strong>
+              </p>
             </Link>
           </div>
         </div>

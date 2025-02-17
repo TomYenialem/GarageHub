@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import customers from '../../../../services/customers.service';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import {PulseLoader} from 'react-spinners'
 // import toast from react hot-toast
 
 
@@ -12,6 +13,7 @@ function AddCustomer() {
       const [customer_last_name, setLastName] = useState("");
       const [customer_phone_number, setPhoneNumber] = useState("");
       const [active_customer_status, setActive_customer] = useState(1);
+      const [loading, setLoading] = useState(false);
       const navigate=useNavigate()
    
       // Errors
@@ -19,24 +21,21 @@ function AddCustomer() {
       const [firstNameRequired, setFirstNameRequired] = useState("");
       const [success, setSuccess] = useState(false);
       const [serverError, setServerError] = useState("");
-    const handleSubmit = (e) => {
-      // Prevent the default behavior of the form
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      // Handle client side validations
-      let valid = true; // Flag
-      // First name is required
+      setLoading(true); 
+      let valid = true;
+
       if (!customer_first_name) {
         setFirstNameRequired("First name is required");
         valid = false;
       } else {
         setFirstNameRequired("");
       }
-      // Email is required
+
       if (!customer_email) {
         setEmailError("Email is required");
         valid = false;
-      } else if (!customer_email.includes("@")) {
-        setEmailError("Invalid email format");
       } else {
         const regex = /^\S+@\S+\.\S+$/;
         if (!regex.test(customer_email)) {
@@ -46,52 +45,45 @@ function AddCustomer() {
           setEmailError("");
         }
       }
-      // Password has to be at least 6 characters long
-     
-      // If the form is not valid, do not submit
+
       if (!valid) {
+        setLoading(false);
         return;
       }
+
       const formData = {
         customer_first_name,
         customer_last_name,
         customer_email,
-       customer_phone_number,
+        customer_phone_number,
         active_customer_status,
-   
       };
-      // Pass the form data to the service
-      const newCustoemr = customers.addCustomers(formData);
 
-      newCustoemr
-        .then((response) => response.json())
-        .then((data) => {
-          // console.log(data);
-          // If Error is returned from the API server, set the error message
-          console.log(data)
-          if (data.error) {
-            setServerError(data.error);
-          } else {
-            // Handle successful response
-            setSuccess(true);
-            setServerError("");
-            toast.success(data.message);
-            navigate("/admin/all_customers");
-            // Redirect to the customers page after 2 seconds
-            // For now, just redirect to the home page
-          }
-        })
-        // Handle Catch
-        .catch((error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          setServerError(resMessage);
-        });
+      try {
+        const response = await customers.addCustomers(formData);
+        const data = await response.json();
+
+        if (data.error) {
+          setServerError(data.error);
+        } else {
+          setSuccess(true);
+          setServerError("");
+          toast.success(data.message);
+          navigate("/admin/all_customers");
+        }
+      } catch (error) {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        setServerError(resMessage);
+      } finally {
+        setLoading(false); 
+      }
     };
+
   return (
     <section className="contact-section">
       <div className="auto-container">
@@ -164,9 +156,20 @@ function AddCustomer() {
                       <button
                         className="theme-btn btn-style-one"
                         type="submit"
-                        data-loading-text="Please wait..."
+                        disabled={loading}
                       >
-                        <span>Add Customer</span>
+                        <span>
+                          {loading ? (
+                            <div>
+                              <span>please wait </span>
+                              <span>
+                                <PulseLoader size={10} color={"#123abc"} />
+                              </span>
+                            </div>
+                          ) : (
+                            "Add Customer"
+                          )}
+                        </span>
                       </button>
                     </div>
                   </div>

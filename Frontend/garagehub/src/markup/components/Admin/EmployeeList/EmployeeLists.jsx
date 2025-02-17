@@ -16,37 +16,29 @@ const EmployeesList = () => {
   const [showModal, setShowModal] = useState(false); // State to show/hide modal
   const [employeeToDelete, setEmployeeToDelete] = useState(null); // Store employee ID to delete
 
-  let token = null;
-  if (employee) {
-    token = employee.employee_token;
-  }
+  // let token = null;
+  // if (employee) {
+  //   token = employee.employee_token;
+  // }
 
-  const fetchEmployesData = () => {
-    const allEmployees = employeeService.getAllemployess(token);
-    allEmployees
-      .then((res) => {
-        if (!res.ok) {
-          console.log(res.status);
-          setApiError(true);
-          if (res.status === 401) {
-            setApiErrorMessage("Please login again");
-          } else if (res.status === 403) {
-            setApiErrorMessage("You are not authorized to view this page");
-          } else {
-            setApiErrorMessage("Please try again later");
-          }
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (data.data.length !== 0) {
-          setEmployees(data.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+const fetchEmployesData =  () => {
+  try {
+    const data =  employeeService.getAllemployess();
+  
+
+  data.then((data)=>{
+    setEmployees(data.data);
+    setApiError(false);
+    setApiErrorMessage(null);
+  })
+  } catch (err) {
+    console.error("Error fetching employees:", err);
+    setApiError(true);
+    setApiErrorMessage("An unexpected error occurred.");
+  }
+};
+
+
 
   useEffect(() => {
     fetchEmployesData();
@@ -89,7 +81,7 @@ const EmployeesList = () => {
               <div className="contact-title">
                 <h2>Employees</h2>
               </div>
-              <Table striped bordered hover>
+              <Table striped bordered hover className="table-responsive">
                 <thead>
                   <tr>
                     <th>Active</th>
@@ -105,7 +97,15 @@ const EmployeesList = () => {
                 <tbody>
                   {employees.map((employee) => (
                     <tr key={employee.employee_id}>
-                      <td>{employee.active_employee ? "Yes" : "No"}</td>
+                      <td>{employee.active_employee ? 
+                    <div className="text-success">
+                      Yes
+                    </div>:
+                    <div className="text-danger">
+                      No
+                    </div>}
+
+                      </td>
                       <td>{employee.employee_first_name}</td>
                       <td>{employee.employee_last_name}</td>
                       <td>{employee.employee_email}</td>
@@ -138,7 +138,7 @@ const EmployeesList = () => {
           </section>
 
           {/* Confirmation Modal */}
-          <Modal show={showModal} onHide={() => setShowModal(false)}>
+          <Modal show={showModal} onHide={() => setShowModal(false)} className="confirm_modal">
             <Modal.Header closeButton>
               <Modal.Title>Confirm Deletion</Modal.Title>
             </Modal.Header>

@@ -1,118 +1,69 @@
 import React, { useState } from "react";
-// import employee.service.js
 import employeeService from "../../../../services/employee.service";
 import { useAuth } from "../../../../Context/AuthContext";
 import { PulseLoader } from "react-spinners";
-// Import the useAuth hook
-
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function AddEmployeeForm(props) {
   const [employee_email, setEmail] = useState("");
   const [employee_first_name, setFirstName] = useState("");
   const [employee_last_name, setLastName] = useState("");
-  const [employee_phone, setPhoneNumber] = useState("");
+  const [employee_phone, setPhoneNumber] = useState(null);
   const [employee_password, setPassword] = useState("");
   const [active_employee, setActive_employee] = useState(1);
   const [company_role_id, setCompany_role_id] = useState(1);
+
   // Errors
   const [emailError, setEmailError] = useState("");
   const [firstNameRequired, setFirstNameRequired] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState("");
-  const [loading, setLoading] = useState(false);
-  
+  const [loading, setLoading] = useState(false); 
+  const  navigates=useNavigate()
 
-  // Create a variable to hold the user's token
   let loggedInEmployeeToken = "";
-  // Destructure the auth hook and get the token
   const { employee } = useAuth();
   if (employee && employee.employee_token) {
     loggedInEmployeeToken = employee.employee_token;
   }
 
-  const handleSubmit = (e) => {
-    // Prevent the default behavior of the form
-    e.preventDefault();
-    // Handle client side validations
-    let valid = true; // Flag
-    // First name is required
-    if (!employee_first_name) {
-      setFirstNameRequired("First name is required");
-      valid = false;
-    } else {
-      setFirstNameRequired("");
-    }
-    // Email is required
-    if (!employee_email) {
-      setEmailError("Email is required");
-      valid = false;
-    } else if (!employee_email.includes("@")) {
-      setEmailError("Invalid email format");
-    } else {
-      const regex = /^\S+@\S+\.\S+$/;
-      if (!regex.test(employee_email)) {
-        setEmailError("Invalid email format");
-        valid = false;
-      } else {
-        setEmailError("");
+ const handleSubmit = (e) => {
+   e.preventDefault();
+   setLoading(true);
+
+   const formData = {
+     employee_email,
+     employee_first_name,
+     employee_last_name,
+     employee_phone: employee_phone || "", // Ensure it's not null
+     employee_password,
+     active_employee: Number(active_employee), // Ensure number type
+     company_role_id: Number(company_role_id), // Ensure number type
+   };
+
+   console.log("🚀 Sending FormData:", formData); // Debug log
+
+   employeeService
+     .createEmployee(formData)
+    .then((data)=>{
+      if(data.error){
+        return setServerError(error)
       }
-    }
-    // Password has to be at least 6 characters long
-    if (!employee_password || employee_password.length < 6) {
-      setPasswordError("Password must be at least 6 characters long");
-      valid = false;
-    } else {
-      setPasswordError("");
-    }
-    // If the form is not valid, do not submit
-    if (!valid) {
-      return;
-    }
-    const formData = {
-      employee_email,
-      employee_first_name,
-      employee_last_name,
-      employee_phone,
-      employee_password,
-      active_employee,
-      company_role_id,
-    };
-    // Pass the form data to the service
-    const newEmployee = employeeService.createEmployee(
-      formData,
-      loggedInEmployeeToken
-    );
-    newEmployee
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-        // If Error is returned from the API server, set the error message
-        if (data.error) {
-          setServerError(data.error);
-        } else {
-          // Handle successful response
-          setSuccess(true);
-          setServerError("");
-          // Redirect to the employees page after 2 seconds
-          // For now, just redirect to the home page
-          setTimeout(() => {
-            // window.location.href = '/admin/employees';
-            window.location.href = "/";
-          }, 2000);
-        }
-      })
-      // Handle Catch
-      .catch((error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        setServerError(resMessage);
-      });
-  };
+      toast.success(data.message);
+      navigates("/admin/employees");
+
+    }) 
+     .catch((error) => {
+       setServerError(error.message);
+       console.error("❌ Request Error:", error);
+     })
+     .finally(() => {
+       setLoading(false);
+     });
+ };
+
 
   return (
     <section className="contact-section">
@@ -127,6 +78,11 @@ function AddEmployeeForm(props) {
                 <form onSubmit={handleSubmit}>
                   <div className="row clearfix">
                     <div className="form-group col-md-12">
+                      {serverError && (
+                        <div className="validation-error" role="alert">
+                          {serverError}
+                        </div>
+                      )}
                       <input
                         type="email"
                         name="employee_email"
@@ -211,15 +167,13 @@ function AddEmployeeForm(props) {
                       <button
                         className="theme-btn btn-style-one"
                         type="submit"
-                        disabled={loading}
+                        disabled={loading} // ✅ Disable button when loading
                       >
                         <span>
                           {loading ? (
                             <div>
                               <span>please wait </span>
-                              <span>
-                                <PulseLoader size={10} color={"#123abc"} />
-                              </span>
+                              <PulseLoader size={10} color={"#123abc"} />
                             </div>
                           ) : (
                             "Add Employee"
@@ -227,6 +181,9 @@ function AddEmployeeForm(props) {
                         </span>
                       </button>
                     </div>
+
+                   
+                   
                   </div>
                 </form>
               </div>

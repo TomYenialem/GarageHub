@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import orders from "../../../../services/order.service";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import {PulseLoader} from 'react-spinners'
 
 function AdditionalServices({
   employee_id,
@@ -18,11 +19,13 @@ function AdditionalServices({
   const [order_status, setOrderStatus] = useState(0);
   const [serviceCompleted, setServiceCompleted] = useState(0);
   const [serverError, setServerError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
      const navigate = useNavigate();
 
   const submitOrders = async (e) => {
     e.preventDefault();
- 
+    setIsLoading(true);
+   
     try {
       // Prepare the order data
       const datas = {
@@ -55,6 +58,7 @@ function AdditionalServices({
         navigate("/admin/all_orders");
       }
     } catch (error) {
+
       console.log(error);
       const resMessage =
         (error.response &&
@@ -64,19 +68,17 @@ function AdditionalServices({
         error.toString();
       setServerError(resMessage);
     }
+    finally{
+      setIsLoading(false);
+    }
   };
 
   return (
-    <section className="contact-section">
+    <section className="contact-section mb-5">
       <div className="auto-container">
-        <div className="col-md-10">
-          <div className="contact-title">
-            <h4>Services We Provide</h4>
-          </div>
-        </div>
 
         {/* Add or Edit Service Form */}
-        <div className="service-box col-md-10 mt-5">
+        <div className="service-box col-md-12 mt-5">
           <div className="contact-title">
             <h2>Additional Request</h2>
           </div>
@@ -93,17 +95,18 @@ function AdditionalServices({
                         {serverError}
                       </div>
                     )}
-                    <div className="row clearfix">
+                    <div className="row clearfix ">
                       <div className="form-group col-md-10">
                         <textarea
                           type="text"
                           name="service_description"
                           value={order_description}
+                          style={{ borderBottom: "2px solid red" }}
                           onChange={(e) =>
                             setServiceDescription(e.target.value)
                           }
                           placeholder="Service Description"
-                          className="form-control"
+                          className="form-control  shadow-lg"
                           rows="3"
                         />
                       </div>
@@ -115,20 +118,34 @@ function AdditionalServices({
                           value={order_total_price}
                           onChange={(e) => setPrice(e.target.value)}
                           placeholder="Price"
-                          className="form-control"
+                          className="form-control  shadow-sm "
+                          style={{ borderBottom: "2px solid red" }}
                         />
                       </div>
 
                       <div className="form-group col-md-12">
+                     
                         <button
                           className="theme-btn btn-style-one disabled-btn"
                           type="submit"
                           disabled={
                             selectedServices.length === 0 ||
-                            order_total_price === ""
+                            order_total_price === ""||
+                            isLoading
                           }
                         >
-                          Submit Order
+                          {
+                            isLoading? (
+                              <div>
+                                <span>please wait </span>
+                                <span>
+                                  <PulseLoader size={10} color={"#123abc"} />
+                                </span>
+                              </div>
+                            ) : (
+                              "Add Service"
+                            )}
+                          
                         </button>
                       </div>
                     </div>

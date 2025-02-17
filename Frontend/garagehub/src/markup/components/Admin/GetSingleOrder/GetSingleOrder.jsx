@@ -92,11 +92,11 @@ function GetSingleOrder({ customer_id }) {
               </tr>
             ))
           ) : (
-            <tr>
-              <td colSpan="7" className="text-center">
-                <h4 className="text-center mt-4">No Orders Found!</h4>
-              </td>
-            </tr>
+           
+         
+                <h4 className="text-center mt-4 p-3">No Orders Found!</h4>
+            
+       
           )}
         </tbody>
       </Table>

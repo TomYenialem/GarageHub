@@ -18,8 +18,10 @@ const getCustomer=async()=>{
         }
         
     }
-    const response = await fetch(`${api_url}/api/customers`, options);
-    return response
+   const response = await fetch(
+     `${api_url}/api/customers`,options
+   );
+return response
 }
 const singleCustomer=async(id)=>{
     const options={
