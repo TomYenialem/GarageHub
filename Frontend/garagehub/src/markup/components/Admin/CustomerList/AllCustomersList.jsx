@@ -16,6 +16,10 @@ function AllCustomersList() {
   // A state to serve as a flag to show the error message
 
   const[search,setSearch]=useState('')
+  const [currentPage, setCurrentPage] = useState(1);
+  const customersPerPage = 10;
+
+
   // A state to store the error message
 
   
@@ -28,6 +32,17 @@ function AllCustomersList() {
       item.customer_email.toLowerCase().includes(search.toLowerCase()) ||
       item.customer_phone_number.toLowerCase().includes(search.toLowerCase())
   );
+  const indexOfLastCustomer = currentPage * customersPerPage;
+
+
+  const indexOfFirstCustomer = indexOfLastCustomer - customersPerPage;
+
+  const currentCustomers = searchItmes.slice(
+    indexOfFirstCustomer,
+    indexOfLastCustomer
+  );
+  console.log(currentCustomers)
+  const totalPages = Math.ceil(searchItmes.length / customersPerPage);
   // add function to show the next items after clicke the butto
   return (
     <>
@@ -58,7 +73,7 @@ function AllCustomersList() {
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
-              <Table striped bordered hover>
+              <Table striped bordered hover className="table-responsive">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -73,9 +88,9 @@ function AllCustomersList() {
                 </thead>
                 <tbody>
                   <>
-                    {searchItmes.length > 0 ? (
+                    {currentCustomers.length > 0 ? (
                       <>
-                        {searchItmes?.map((customer) => (
+                        {currentCustomers?.map((customer) => (
                           <tr key={customer.customer_id}>
                             <td>{customer.customer_id}</td>
                             <td>{customer.customer_first_name}</td>
@@ -89,7 +104,15 @@ function AllCustomersList() {
                                 "MM - dd - yyyy | kk:mm"
                               )}
                             </td>
-                            <td>{customer.active_customer_status ? <p className="text-success">Yes</p> :<><p className="text-danger">No</p></>}</td>
+                            <td>
+                              {customer.active_customer_status ? (
+                                <p className="text-success">Yes</p>
+                              ) : (
+                                <>
+                                  <p className="text-danger">No</p>
+                                </>
+                              )}
+                            </td>
 
                             <td>
                               <div className="edit-link-icons ">
@@ -97,7 +120,7 @@ function AllCustomersList() {
                                   <Link
                                     to={`/admin/customer_edit/${customer.customer_id}`}
                                   >
-                                    <FaRegEdit  className="text-danger"/>
+                                    <FaRegEdit className="text-danger" />
                                   </Link>
                                 </span>
                                 <Link
@@ -129,7 +152,11 @@ function AllCustomersList() {
             </div>
             {/* add buttons for privious next gap */}
 
-            {/* <MoreCustomers /> */}
+            <MoreCustomers
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={setCurrentPage}
+            />
           </section>
         </>
       )}
