@@ -10,12 +10,11 @@ const employeeController = require("../controllers/employee.controller");
 // Create a route to handle the add employee request on post
 router.post(
   "/api/employee",
-  [authMiddleware.authorization, authMiddleware.isAdmin],
+  // [authMiddleware.authorization, authMiddleware.isAdmin],
 
   employeeController.createEmployee
 );
 router.get('/api/employees',
-  [authMiddleware.authorization, authMiddleware.isAdmin],
   employeeController.getAllEmployees)
 
   router.put('/api/employees/:id',employeeController.editEmployesInfo)

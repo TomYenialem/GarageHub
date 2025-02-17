@@ -8,6 +8,7 @@ const vehicleController = require("../controllers/vehicle.controller");
 routes.post("/api/addvehicle/:customer_id", vehicleController.addVehicle);
 routes.get("/api/addvehicle/:customer_id", vehicleController.singelVehicleInfo)
 routes.get("/api/getvehicle/:vehicle_id",vehicleController.eachVehicleInfo)
+routes.put("/api/editvehicle/:vehicle_id", vehicleController.editVehicles);
 
 module.exports = routes
 

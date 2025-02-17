@@ -10,6 +10,7 @@ try {
             message:"No token provided"
         })
     }
+    console.log(token)
  jwt.verify(token,process.env.JWT_SECRET,(err,decoded)=>{
     if(err){
         return res.status(403).json({
@@ -40,7 +41,7 @@ const isAdmin = async (req, res, next) => {
 
   const employee_email = req.employee_email;
   const employee = await emailService.getEmployeeByEmail(employee_email);
-  if (employee[0].company_role_id === 3) {
+  if (employee[0].company_role_id === 1||2||3) {
     next();
   } else {
     return res.status(403).send({

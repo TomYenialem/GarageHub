@@ -60,8 +60,29 @@ const eachVehicleInfo=async(req,res)=>{
     
   }
 }
+const editVehicles=async(req,res)=>{
+  try {
+    const { vehicle_id } = req.params;
+    const vehicleData = req.body;
+    const vehicle = await vehicleService.editVehicleInfo(vehicle_id, vehicleData);
+    if(!vehicle){
+      return res.status(400).json({ error: "Failed to edit vehicle" });
+    }
+    return res.status(200).json({
+    message: "Vehicle edited successfully",
+    data: vehicle
+    })
+    
+  } catch (error) {
+    console.log(error)
+     res.status(500).json({ error: "Internal Server Error" });
+    
+  }
+}
 module.exports = {
   addVehicle,
   singelVehicleInfo,
   eachVehicleInfo,
+  editVehicles,
+ 
 };
