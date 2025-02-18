@@ -28,8 +28,11 @@ const api_url = import.meta.env.VITE_API_URL;
           'Content-Type':'application/json'
         }
     }
-    const response = await fetch(`${api_url}/api/service/${service_id}`, options);
-    return response
+    const response = await fetch(
+      `${api_url}/api/service/${service_id}`,
+      options
+    );
+    return response.json()
   }
 
   const editService=async(id,service)=>{

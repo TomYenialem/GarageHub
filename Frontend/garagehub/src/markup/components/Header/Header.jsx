@@ -1,12 +1,13 @@
 import React from "react";
 // Import the Link component from react-router-dom
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // Import the logo image
 import logo from "../../../assets/images/logo.png";
 // Import the login service to access the logout function
 import loginService from "../../../services/login.service";
 import { useAuth } from "../../../Context/AuthContext";
 import { use } from "react";
+import toast from "react-hot-toast";
 
 // Import the custom context hook
 
@@ -14,6 +15,7 @@ import { use } from "react";
 function Header(props) {
   // Use the custom hook to access the data in the context
   const { isLogged, setIsLogged, employee } =useAuth()
+  const navigate=useNavigate()
   // console.log(useAuth());
 
   // Log out event handler function
@@ -23,6 +25,15 @@ function Header(props) {
     // Set the isLogged state to false
     setIsLogged(false);
   };
+
+  const chekAdmin=()=>{
+    if( isLogged){
+      navigate('/admin')
+    }else{
+      toast.error(' Your are not Autorized for admin panel ')
+      navigate('/login')
+    }
+  }
 
   return (
     <div>
@@ -85,8 +96,8 @@ function Header(props) {
                         <li>
                           <Link to={"/contact"}>Contact Us</Link>
                         </li>
-                        <li>
-                          <Link to={"/admin"}>Admin</Link>
+                        <li onClick={chekAdmin}>
+                         <Link>Admin</Link>
                         </li>
                       </ul>
                     </div>

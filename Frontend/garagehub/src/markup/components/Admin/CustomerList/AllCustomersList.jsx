@@ -9,10 +9,12 @@ import { FaRegEdit } from "react-icons/fa";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../../Context/AuthContext";
+import { PulseLoader } from "react-spinners";
+
 
 
 function AllCustomersList() {
-  const { customers, apiError, apiErrorMessage } = useAuth();
+  const { customers, apiError, apiErrorMessage,loading } = useAuth();
   // A state to serve as a flag to show the error message
 
   const[search,setSearch]=useState('')
@@ -46,118 +48,126 @@ function AllCustomersList() {
   // add function to show the next items after clicke the butto
   return (
     <>
-      {apiError ? (
-        <section className="contact-section">
-          <div className="auto-container">
-            <div className="contact-title">
-              <h2>{apiErrorMessage}</h2>
-            </div>
-          </div>
-        </section>
+      {loading ? (
+        <div className="center_loader">
+          <PulseLoader size={10} color={"#123abc"} />
+        </div>
       ) : (
         <>
-          <section className="contact-section">
-            <div className="auto-container">
-              <div className="contact-title">
-                <h2>customers</h2>
+          {apiError ? (
+            <section className="contact-section">
+              <div className="auto-container">
+                <div className="contact-title">
+                  <h2>{apiErrorMessage}</h2>
+                </div>
               </div>
-              {/* boostrap table */}
-              <div className="table-responsive mb-4">
-                <input
-                  type="text"
-                  className="form-control search-input"
-                  placeholder="Search by name, email, or phone number"
-                  aria-label="Search"
-                  aria-describedby="basic-addon2"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+            </section>
+          ) : (
+            <>
+              <section className="contact-section">
+                <div className="auto-container">
+                  <div className="contact-title">
+                    <h2>customers</h2>
+                  </div>
+                  {/* boostrap table */}
+                  <div className="table-responsive mb-4">
+                    <input
+                      type="text"
+                      className="form-control search-input"
+                      placeholder="Search by name, email, or phone number"
+                      aria-label="Search"
+                      aria-describedby="basic-addon2"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                  </div>
+                  <Table striped bordered hover className="table-responsive">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Added Date</th>
+                        <th>Active</th>
+                        <th>Edit/Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <>
+                        {currentCustomers.length > 0 ? (
+                          <>
+                            {currentCustomers?.map((customer) => (
+                              <tr key={customer.customer_id}>
+                                <td>{customer.customer_id}</td>
+                                <td>{customer.customer_first_name}</td>
+                                <td>{customer.customer_last_name}</td>
+                                <td>{customer.customer_email}</td>
+
+                                <td>{customer.customer_phone_number}</td>
+                                <td>
+                                  {format(
+                                    new Date(customer.customer_added_date),
+                                    "MM - dd - yyyy | kk:mm"
+                                  )}
+                                </td>
+                                <td>
+                                  {customer.active_customer_status ? (
+                                    <p className="text-success">Yes</p>
+                                  ) : (
+                                    <>
+                                      <p className="text-danger">No</p>
+                                    </>
+                                  )}
+                                </td>
+
+                                <td>
+                                  <div className="edit-link-icons ">
+                                    <span className="text-danger">
+                                      <Link
+                                        to={`/admin/customer_edit/${customer.customer_id}`}
+                                      >
+                                        <FaRegEdit className="text-danger" />
+                                      </Link>
+                                    </span>
+                                    <Link
+                                      to={`/admin/customer_profile/${customer.customer_id}`}
+                                    >
+                                      <span className="text-primary">
+                                        <FaExternalLinkAlt />
+                                      </span>
+                                    </Link>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </>
+                        ) : (
+                          <>
+                            <tr>
+                              <td colSpan="8" className="text-center">
+                                <h1 className="text-center mt-4">
+                                  No Result Found!
+                                </h1>
+                              </td>
+                            </tr>
+                          </>
+                        )}
+                      </>
+                    </tbody>
+                  </Table>
+                </div>
+                {/* add buttons for privious next gap */}
+
+                <MoreCustomers
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  setCurrentPage={setCurrentPage}
                 />
-              </div>
-              <Table striped bordered hover className="table-responsive">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Added Date</th>
-                    <th>Active</th>
-                    <th>Edit/Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <>
-                    {currentCustomers.length > 0 ? (
-                      <>
-                        {currentCustomers?.map((customer) => (
-                          <tr key={customer.customer_id}>
-                            <td>{customer.customer_id}</td>
-                            <td>{customer.customer_first_name}</td>
-                            <td>{customer.customer_last_name}</td>
-                            <td>{customer.customer_email}</td>
-
-                            <td>{customer.customer_phone_number}</td>
-                            <td>
-                              {format(
-                                new Date(customer.customer_added_date),
-                                "MM - dd - yyyy | kk:mm"
-                              )}
-                            </td>
-                            <td>
-                              {customer.active_customer_status ? (
-                                <p className="text-success">Yes</p>
-                              ) : (
-                                <>
-                                  <p className="text-danger">No</p>
-                                </>
-                              )}
-                            </td>
-
-                            <td>
-                              <div className="edit-link-icons ">
-                                <span className="text-danger">
-                                  <Link
-                                    to={`/admin/customer_edit/${customer.customer_id}`}
-                                  >
-                                    <FaRegEdit className="text-danger" />
-                                  </Link>
-                                </span>
-                                <Link
-                                  to={`/admin/customer_profile/${customer.customer_id}`}
-                                >
-                                  <span className="text-primary">
-                                    <FaExternalLinkAlt />
-                                  </span>
-                                </Link>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </>
-                    ) : (
-                      <>
-                        <tr>
-                          <td colSpan="8" className="text-center">
-                            <h1 className="text-center mt-4">
-                              No Result Found!
-                            </h1>
-                          </td>
-                        </tr>
-                      </>
-                    )}
-                  </>
-                </tbody>
-              </Table>
-            </div>
-            {/* add buttons for privious next gap */}
-
-            <MoreCustomers
-              currentPage={currentPage}
-              totalPages={totalPages}
-              setCurrentPage={setCurrentPage}
-            />
-          </section>
+              </section>
+            </>
+          )}
         </>
       )}
     </>

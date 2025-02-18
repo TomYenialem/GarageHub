@@ -5,20 +5,21 @@ import toast from "react-hot-toast";
 
 import SingleCustomer from "../SingleCustomer/SingleCustomer";
 import { PulseLoader } from "react-spinners";
+import { useAuth } from "../../../../Context/AuthContext";
 
 function EditCustomersInfo() {
   const { customer_id } = useParams();
   const [customerData, setCustomerData] = useState();
     const [loading, setLoading] = useState(false);
   const navigate=useNavigate()
-  
-
+  const {isAdmin}=useAuth()
   // State variables for form fields
   const [customer_first_name, setFirstName] = useState("");
   const [customer_last_name, setLastName] = useState("");
   const [customer_phone_number, setPhoneNumber] = useState("");
   const [active_customer_status, setActiveCustomeer] = useState(1);
   const [serverError, setServerError] = useState("");
+
 
   // ✅ Load customer data when available
   useEffect(() => {
@@ -33,6 +34,13 @@ function EditCustomersInfo() {
   // ✅ Handle form submission
   const handleForm = async (e) => {
     e.preventDefault();
+       if (!isAdmin) {
+         toast.error("You don't have permission to edit this page");
+         navigate(-1)
+         return;
+  
+       }
+       setLoading(true);
     const data = {
       customer_first_name,
       customer_last_name,
@@ -41,7 +49,7 @@ function EditCustomersInfo() {
     };
 
     const edit = updateCustomers.editCustomerInfo(customer_id, data);
-    setLoading(true);
+    
     try {
       edit.then((data) => {
         if (data.error) {
@@ -63,6 +71,7 @@ function EditCustomersInfo() {
     }
   };
 
+ 
   return (
     <section className="contact-section">
       <div className="auto-container">

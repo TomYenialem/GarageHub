@@ -7,11 +7,14 @@ const AuthContext = React.createContext();
 // Create a custom hook to use the context
 import serv from '../services/services.service'
  import customerService from "../services/customers.service"
+
+
 export const useAuth = () => {
   return useContext(AuthContext);
 };
 // Create a provider component
 export const AuthProvider = ({ children }) => {
+   const [loading, setLoading] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [employee, setEmployee] = useState(null);
@@ -34,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
 //  function for both customer list and new order customer list
   useEffect(() => {
-    // Call the getAllcustomers function
+    setLoading(true)
     const allcustomers = customerService.getCustomer();
     allcustomers
       .then((res) => {
@@ -57,6 +60,9 @@ export const AuthProvider = ({ children }) => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -74,7 +80,8 @@ export const AuthProvider = ({ children }) => {
     setServiceDatas,
     fetchDatas,
     apiError,
-    apiErrorMessage
+    apiErrorMessage,
+    loading
   };
 
   useEffect(() => {
