@@ -3,8 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import updateEmployee from "../../.././../services/employee.service";
 import toast from "react-hot-toast";
 import SingleEmployee from "../SingleEmployee/SingleEmployee";
+import { PulseLoader } from "react-spinners";
+
+import { useAuth } from '../../../../Context/AuthContext'
 function EditEmployeeInfo() {
-  const { employee_id } = useParams();
+  const { employee_id} = useParams();
+  const {isAdmin}=useAuth()
 
   const [employee_first_name, setFirstName] = useState("");
   const [employee_last_name, setLastName] = useState("");
@@ -13,9 +17,15 @@ function EditEmployeeInfo() {
   const [company_role_id, setCompany_role_id] = useState(1);
   const [serverError, setServerError] = useState("");
   const [employeeData, setEmployeeData] = useState({});
+  const[loading,setLoading]=useState(false)
   const navigate=useNavigate()
   const handlelForm = (e) => {
     e.preventDefault();
+    if(!isAdmin){
+      toast.error("Only Admin can edit employees")
+      return;
+    }
+    setLoading(true)
     const data = {
       employee_first_name,
       employee_last_name,
@@ -39,6 +49,9 @@ function EditEmployeeInfo() {
       const resMessage =
         error.response?.data?.message || error.message || error.toString();
       setServerError(resMessage);
+    }
+    finally{
+      setLoading(false)
     }
   };
   useEffect(() => {
@@ -148,8 +161,23 @@ function EditEmployeeInfo() {
 
                     {/* Submit Button */}
                     <div className="form-group col-md-12">
-                      <button className="theme-btn btn-style-one" type="submit">
-                        <span>Update</span>
+                      <button
+                        className="theme-btn btn-style-one"
+                        type="submit"
+                        disabled={loading}
+                      >
+                        <span>
+                          {loading ? (
+                            <div>
+                              <span>please wait </span>
+                              <span>
+                                <PulseLoader size={10} color={"#123abc"} />
+                              </span>
+                            </div>
+                          ) : (
+                            "Update"
+                          )}
+                        </span>
                       </button>
                     </div>
                   </div>

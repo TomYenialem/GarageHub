@@ -36,35 +36,41 @@ export const AuthProvider = ({ children }) => {
  }, []);
 
 //  function for both customer list and new order customer list
-  useEffect(() => {
-    setLoading(true)
-    const allcustomers = customerService.getCustomer();
-    allcustomers
-      .then((res) => {
-        if (!res.ok) {
-          setApiError(true);
-          if (res.status === 401) {
-            setApiErrorMessage("Please login again");
-          } else if (res.status === 403) {
-            setApiErrorMessage("You are not authorized to view this page");
-          } else {
-            setApiErrorMessage("Please try again later");
-          }
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (data.data.length !== 0) {
-          setcustomers(data.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+
+    function getAllCustomerList() {
+ setLoading(true);
+ const allcustomers = customerService.getCustomer();
+ allcustomers
+   .then((res) => {
+     if (!res.ok) {
+       setApiError(true);
+       if (res.status === 401) {
+         setApiErrorMessage("Please login again");
+       } else if (res.status === 403) {
+         setApiErrorMessage("You are not authorized to view this page");
+       } else {
+         setApiErrorMessage("Please try again later");
+       }
+     }
+     return res.json();
+   })
+   .then((data) => {
+     if (data.data.length !== 0) {
+       setcustomers(data.data);
+     }
+   })
+   .catch((err) => {
+     console.log(err);
+   })
+   .finally(() => {
+     setLoading(false);
+   });
+
+    }
+   
+useEffect(()=>{
+getAllCustomerList()
+},[])
 
 
 
@@ -81,7 +87,8 @@ export const AuthProvider = ({ children }) => {
     fetchDatas,
     apiError,
     apiErrorMessage,
-    loading
+    loading,
+    getAllCustomerList
   };
 
   useEffect(() => {

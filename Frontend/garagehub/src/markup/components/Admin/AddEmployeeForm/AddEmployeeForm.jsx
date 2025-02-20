@@ -24,7 +24,7 @@ function AddEmployeeForm(props) {
   const  navigates=useNavigate()
 
   let loggedInEmployeeToken = "";
-  const { employee } = useAuth();
+  const { employee,isAdmin } = useAuth();
   if (employee && employee.employee_token) {
     loggedInEmployeeToken = employee.employee_token;
   }
@@ -32,6 +32,10 @@ function AddEmployeeForm(props) {
  const handleSubmit = (e) => {
    e.preventDefault();
    setLoading(true);
+   if(!isAdmin){
+     toast.error("You are not authorized to perform this action.");
+     return setLoading(false);
+   }
 
    const formData = {
      employee_email,

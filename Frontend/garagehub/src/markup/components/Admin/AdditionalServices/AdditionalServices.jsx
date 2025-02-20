@@ -3,6 +3,7 @@ import orders from "../../../../services/order.service";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import {PulseLoader} from 'react-spinners'
+import { useAuth } from "../../../../Context/AuthContext";
 
 function AdditionalServices({
   employee_id,
@@ -20,12 +21,17 @@ function AdditionalServices({
   const [serviceCompleted, setServiceCompleted] = useState(0);
   const [serverError, setServerError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const {isAdmin}=useAuth()
      const navigate = useNavigate();
 
   const submitOrders = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-   
+   if(!isAdmin){
+     toast.error("You must be an admin to access this page.");
+     setIsLoading(false);
+     return;
+   }
     try {
       // Prepare the order data
       const datas = {

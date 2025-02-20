@@ -1,51 +1,43 @@
 import React, { useState, useEffect } from "react";
-// import customerService
-
 import { format } from "date-fns";
 import { Table, Button } from "react-bootstrap";
 import MoreCustomers from "../../../pages/admin/MoreCustomers";
-
-import { FaRegEdit } from "react-icons/fa";
-import { FaExternalLinkAlt } from "react-icons/fa";
+import { FaRegEdit, FaExternalLinkAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../../Context/AuthContext";
 import { PulseLoader } from "react-spinners";
 
-
-
 function AllCustomersList() {
-  const { customers, apiError, apiErrorMessage,loading } = useAuth();
-  // A state to serve as a flag to show the error message
+  const { customers, apiError, apiErrorMessage, loading, getAllCustomerList } =
+    useAuth();
+  
 
-  const[search,setSearch]=useState('')
+  const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const customersPerPage = 10;
 
-
-  // A state to store the error message
-
-  
-
-
-  const searchItmes = customers.filter(
+  // Filter customers based on search input
+  const searchItems = customers.filter(
     (item) =>
       item.customer_first_name.toLowerCase().includes(search.toLowerCase()) ||
       item.customer_last_name.toLowerCase().includes(search.toLowerCase()) ||
       item.customer_email.toLowerCase().includes(search.toLowerCase()) ||
       item.customer_phone_number.toLowerCase().includes(search.toLowerCase())
   );
+  // which helps to fetch the datas again
+    useEffect(() => {
+      getAllCustomerList();
+    }, []);
+
+  // Pagination logic
   const indexOfLastCustomer = currentPage * customersPerPage;
-
-
   const indexOfFirstCustomer = indexOfLastCustomer - customersPerPage;
-
-  const currentCustomers = searchItmes.slice(
+  const currentCustomers = searchItems.slice(
     indexOfFirstCustomer,
     indexOfLastCustomer
   );
-  console.log(currentCustomers)
-  const totalPages = Math.ceil(searchItmes.length / customersPerPage);
-  // add function to show the next items after clicke the butto
+  const totalPages = Math.ceil(searchItems.length / customersPerPage);
+
   return (
     <>
       {loading ? (
@@ -67,9 +59,9 @@ function AllCustomersList() {
               <section className="contact-section">
                 <div className="auto-container">
                   <div className="contact-title">
-                    <h2>customers</h2>
+                    <h2>Customers</h2>
                   </div>
-                  {/* boostrap table */}
+                  {/* Search input */}
                   <div className="table-responsive mb-4">
                     <input
                       type="text"
@@ -81,6 +73,7 @@ function AllCustomersList() {
                       onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>
+                  {/* Customers table */}
                   <Table striped bordered hover className="table-responsive">
                     <thead>
                       <tr>
@@ -95,71 +88,60 @@ function AllCustomersList() {
                       </tr>
                     </thead>
                     <tbody>
-                      <>
-                        {currentCustomers.length > 0 ? (
-                          <>
-                            {currentCustomers?.map((customer) => (
-                              <tr key={customer.customer_id}>
-                                <td>{customer.customer_id}</td>
-                                <td>{customer.customer_first_name}</td>
-                                <td>{customer.customer_last_name}</td>
-                                <td>{customer.customer_email}</td>
-
-                                <td>{customer.customer_phone_number}</td>
-                                <td>
-                                  {format(
-                                    new Date(customer.customer_added_date),
-                                    "MM - dd - yyyy | kk:mm"
-                                  )}
-                                </td>
-                                <td>
-                                  {customer.active_customer_status ? (
-                                    <p className="text-success">Yes</p>
-                                  ) : (
-                                    <>
-                                      <p className="text-danger">No</p>
-                                    </>
-                                  )}
-                                </td>
-
-                                <td>
-                                  <div className="edit-link-icons ">
-                                    <span className="text-danger">
-                                      <Link
-                                        to={`/admin/customer_edit/${customer.customer_id}`}
-                                      >
-                                        <FaRegEdit className="text-danger" />
-                                      </Link>
-                                    </span>
-                                    <Link
-                                      to={`/admin/customer_profile/${customer.customer_id}`}
-                                    >
-                                      <span className="text-primary">
-                                        <FaExternalLinkAlt />
-                                      </span>
-                                    </Link>
-                                  </div>
-                                </td>
-                              </tr>
-                            ))}
-                          </>
-                        ) : (
-                          <>
-                            <tr>
-                              <td colSpan="8" className="text-center">
-                                <h1 className="text-center mt-4">
-                                  No Result Found!
-                                </h1>
-                              </td>
-                            </tr>
-                          </>
-                        )}
-                      </>
+                      {currentCustomers.length > 0 ? (
+                        currentCustomers.map((customer) => (
+                          <tr key={customer.customer_id}>
+                            <td>{customer.customer_id}</td>
+                            <td>{customer.customer_first_name}</td>
+                            <td>{customer.customer_last_name}</td>
+                            <td>{customer.customer_email}</td>
+                            <td>{customer.customer_phone_number}</td>
+                            <td>
+                              {format(
+                                new Date(customer.customer_added_date),
+                                "MM - dd - yyyy | kk:mm"
+                              )}
+                            </td>
+                            <td>
+                              {customer.active_customer_status ? (
+                                <p className="text-success">Yes</p>
+                              ) : (
+                                <p className="text-danger">No</p>
+                              )}
+                            </td>
+                            <td>
+                              <div className="edit-link-icons">
+                                <span className="text-danger">
+                                  <Link
+                                    to={`/admin/customer_edit/${customer.customer_id}`}
+                                  >
+                                    <FaRegEdit className="text-danger" />
+                                  </Link>
+                                </span>
+                                <Link
+                                  to={`/admin/customer_profile/${customer.customer_id}`}
+                                >
+                                  <span className="text-primary">
+                                    <FaExternalLinkAlt />
+                                  </span>
+                                </Link>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="8" className="text-center">
+                            <h1 className="text-center mt-4">
+                              No Result Found!
+                            </h1>
+                          </td>
+                        </tr>
+                      )}
                     </tbody>
                   </Table>
                 </div>
-                {/* add buttons for privious next gap */}
-
+                {/* Pagination */}
                 <MoreCustomers
                   currentPage={currentPage}
                   totalPages={totalPages}

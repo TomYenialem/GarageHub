@@ -36,7 +36,6 @@ function EditCustomersInfo() {
     e.preventDefault();
        if (!isAdmin) {
          toast.error("You don't have permission to edit this page");
-         navigate(-1)
          return;
   
        }

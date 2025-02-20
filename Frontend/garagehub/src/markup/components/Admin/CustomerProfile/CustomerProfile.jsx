@@ -5,12 +5,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import GetSingleVehicle from "../GetSinngelVehicle/GetSingleVehicle";
 import GetSingleOrder from "../GetSingleOrder/GetSingleOrder";
 import vehicles from "../../../../services/vehicle.service";
+import SingleCustomerAllorders from "../SingleCustomerAllorders/SingleCustomerAllorders";
 function CustomerProfile() {
   const navigate = useNavigate();
     const { customer_id } = useParams();
   const [vehicleData, setVehicleData] = useState([]);
   const [modal, setModal] = useState(false);
   const [customerData, setCustomerData] = useState([]);
+  console.log(customerData)
     const fetchSingleVehicle = () => {
       vehicles.CustomerVehicle(customer_id).then((data) => {
         setVehicleData(data.data);
@@ -23,11 +25,11 @@ function CustomerProfile() {
 
   return (
     <>
-      <div className="container mt-4">
+      <div className="container mt-4 m-3">
         {/* Info Section */}
-        <div className="row align-items-center ">
+        <div className="row align-items-center customer_pro ">
           {/* Move "Info" button into the same row as customer details */}
-          <div className="col-md-2 d-flex flex-column align-items-center text-center">
+          <div className="col-md-1 d-flex flex-column align-items-center text-center">
             <button
               className="theme-btn btn-style-one d-flex align-items-center justify-content-center"
               style={{ borderRadius: "50%", width: "80px", height: "80px" }}
@@ -37,7 +39,7 @@ function CustomerProfile() {
           </div>
 
           {/* Customer Details in the same row */}
-          <div className="col-md-10">
+          <div className="col-md-11">
             {/* Pass the customerData to SingleCustomer */}
             <SingleCustomer
               customer_id={customer_id}
@@ -56,7 +58,7 @@ function CustomerProfile() {
 
         {/* Cars Section */}
         <div className="row align-items-center pt-3">
-          <div className="col-md-2 d-flex flex-column align-items-center text-center">
+          <div className="col-md-1 d-flex flex-column align-items-center text-center">
             <button
               className="theme-btn btn-style-one d-flex align-items-center justify-content-center"
               style={{ borderRadius: "50%", width: "80px", height: "80px" }}
@@ -65,7 +67,7 @@ function CustomerProfile() {
             </button>
             <div className="vr my-1" style={{ height: "100px" }}></div>
           </div>
-          <div className="col-md-10 mb-5">
+          <div className="col-md-11 mb-5">
             <h3 className="bold mb-3">
               Vehicle of {customerData?.customer_first_name}
             </h3>
@@ -115,7 +117,7 @@ function CustomerProfile() {
 
         {/* Orders Section */}
         <div className="row align-items-center p-3">
-          <div className="col-md-2 d-flex flex-column align-items-center text-center">
+          <div className="col-md-1 d-flex flex-column align-items-center text-center">
             <button
               className="theme-btn btn-style-one d-flex align-items-center justify-content-center"
               style={{ borderRadius: "50%", width: "80px", height: "80px" }}
@@ -124,12 +126,12 @@ function CustomerProfile() {
             </button>
             <div className="vr my-1"></div>
           </div>
-          <div className="col-md-10">
+          <div className="col-md-11">
             <h3 className="bold">
               Orders of {customerData?.customer_first_name}
             </h3>
             <h6 className="mb-0">
-              <GetSingleOrder customer_id={customerData.customer_id} />
+             <SingleCustomerAllorders customer_id={customerData.customer_id}/>
             </h6>
           </div>
         </div>

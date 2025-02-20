@@ -1,44 +1,49 @@
-import React, { useState } from 'react'
-import AdminMenu from '../../components/Admin/AdminMenu/AdminMenu';
-import {  Modal, Button, Form } from "react-bootstrap";
-import { useNavigate, useParams } from 'react-router-dom';
-import orders from '../../../services/order.service';
-import toast from 'react-hot-toast';
+import React, { useState } from "react";
+import AdminMenu from "../../components/Admin/AdminMenu/AdminMenu";
+import { Modal, Button, Form } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
+import orders from "../../../services/order.service";
+import toast from "react-hot-toast";
 import { PulseLoader } from "react-spinners";
+import { useAuth } from "../../../Context/AuthContext";
 
 function EditOrders() {
-  const[loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   const [order_status, setorder_status] = useState(0);
-    const [serverError, setServerError] = useState("");
-  const navigate=useNavigate()
-const{order_id}=useParams()
+  const [serverError, setServerError] = useState("");
+  const { isAdmin } = useAuth();
+  const navigate = useNavigate();
+  const { order_id } = useParams();
   const editOrdersInfo = (e) => {
     e.preventDefault();
-    const update={
-     order_status
+    if (!isAdmin) {
+      toast.error("You must be an admin to access this page");
+      return;
     }
+    const update = {
+      order_status,
+    };
     setLoading(true);
     try {
       const editOrders = orders.editOrders(order_id, update);
       editOrders.then((data) => {
         if (data.error) {
           setServerError(data.error);
-          setLoading(false)
+          setLoading(false);
         } else {
           toast.success("Order updated successfully");
           navigate(-1);
           setServerError("");
-          setLoading(false)
+          setLoading(false);
         }
       });
     } catch (error) {
       console.log(error);
-    }
-    finally{
+    } finally {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="container-fluid admin-pages">
       <div className="row">
@@ -88,7 +93,7 @@ const{order_id}=useParams()
                                 {loading ? (
                                   <div>
                                     <span>please wait </span>
-                                    <  span>
+                                    <span>
                                       <PulseLoader
                                         size={10}
                                         color={"#123abc"}
@@ -115,4 +120,4 @@ const{order_id}=useParams()
   );
 }
 
-export default EditOrders
+export default EditOrders;

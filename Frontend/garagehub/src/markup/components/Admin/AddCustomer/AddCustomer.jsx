@@ -1,88 +1,93 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 // impoer customer service
-import customers from '../../../../services/customers.service';
-import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import {PulseLoader} from 'react-spinners'
+import customers from "../../../../services/customers.service";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
+import { useAuth } from "../../../../Context/AuthContext";
 // import toast from react hot-toast
 
-
 function AddCustomer() {
-    const [customer_email, setEmail] = useState("");
-      const [customer_first_name, setFirstName] = useState("");
-      const [customer_last_name, setLastName] = useState("");
-      const [customer_phone_number, setPhoneNumber] = useState("");
-      const [active_customer_status, setActive_customer] = useState(1);
-      const [loading, setLoading] = useState(false);
-      const navigate=useNavigate()
-   
-      // Errors
-      const [emailError, setEmailError] = useState("");
-      const [firstNameRequired, setFirstNameRequired] = useState("");
-      const [success, setSuccess] = useState(false);
-      const [serverError, setServerError] = useState("");
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      setLoading(true); 
-      let valid = true;
+  const [customer_email, setEmail] = useState("");
+  const [customer_first_name, setFirstName] = useState("");
+  const [customer_last_name, setLastName] = useState("");
+  const [customer_phone_number, setPhoneNumber] = useState("");
+  const [active_customer_status, setActive_customer] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const { isAdmin } = useAuth();
+  const navigate = useNavigate();
 
-      if (!customer_first_name) {
-        setFirstNameRequired("First name is required");
+  // Errors
+  const [emailError, setEmailError] = useState("");
+  const [firstNameRequired, setFirstNameRequired] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [serverError, setServerError] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!isAdmin) {
+      toast.error("Unauthorized Access");
+      return;
+    }
+    setLoading(true);
+    let valid = true;
+
+    if (!customer_first_name) {
+      setFirstNameRequired("First name is required");
+      valid = false;
+    } else {
+      setFirstNameRequired("");
+    }
+
+    if (!customer_email) {
+      setEmailError("Email is required");
+      valid = false;
+    } else {
+      const regex = /^\S+@\S+\.\S+$/;
+      if (!regex.test(customer_email)) {
+        setEmailError("Invalid email format");
         valid = false;
       } else {
-        setFirstNameRequired("");
+        setEmailError("");
       }
+    }
 
-      if (!customer_email) {
-        setEmailError("Email is required");
-        valid = false;
-      } else {
-        const regex = /^\S+@\S+\.\S+$/;
-        if (!regex.test(customer_email)) {
-          setEmailError("Invalid email format");
-          valid = false;
-        } else {
-          setEmailError("");
-        }
-      }
+    if (!valid) {
+      setLoading(false);
+      return;
+    }
 
-      if (!valid) {
-        setLoading(false);
-        return;
-      }
-
-      const formData = {
-        customer_first_name,
-        customer_last_name,
-        customer_email,
-        customer_phone_number,
-        active_customer_status,
-      };
-
-      try {
-        const response = await customers.addCustomers(formData);
-        const data = await response.json();
-
-        if (data.error) {
-          setServerError(data.error);
-        } else {
-          setSuccess(true);
-          setServerError("");
-          toast.success(data.message);
-          navigate("/admin/all_customers");
-        }
-      } catch (error) {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        setServerError(resMessage);
-      } finally {
-        setLoading(false); 
-      }
+    const formData = {
+      customer_first_name,
+      customer_last_name,
+      customer_email,
+      customer_phone_number,
+      active_customer_status,
     };
+
+    try {
+      const response = await customers.addCustomers(formData);
+      const data = await response.json();
+
+      if (data.error) {
+        returnsetServerError(data.error);
+      } 
+        setSuccess(true);
+        setServerError("");
+        toast.success(data.message);
+        navigate("/admin/all_customers");
+      
+    } catch (error) {
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      setServerError(resMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="contact-section">
@@ -183,4 +188,4 @@ function AddCustomer() {
   );
 }
 
-export default AddCustomer
+export default AddCustomer;

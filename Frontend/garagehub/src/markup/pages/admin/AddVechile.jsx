@@ -15,9 +15,10 @@ function AddVechile({ customer_id,onVehicleAdded,  existingVehicle }) {
   const [vehicle_serial, setvehicle_serial_number] = useState("");
   const [vehicle_color, setVehicle_color] = useState("");
   const [serverError, setServerError] = useState("");
-  const navigate=useNavigate()
   const[loading,setLoading]=useState(false)
   const {isAdmin}=useAuth()
+  
+  const navigate=useNavigate()
 
 
   // const isEditing=Boolean(existingVehicle)
@@ -47,12 +48,13 @@ function AddVechile({ customer_id,onVehicleAdded,  existingVehicle }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!isAdmin){
-      toast.error('Only admin can add vehicles')
+    if (!isAdmin){
+      toast.error("Only admin can add/edit vehicles");
       return;
     }
+      
+      setLoading(true);
 
-    setLoading(true);
     const payload = {
       customer_id: isEditing ? existingVehicle?.customer_id : "",
       vehicle_year,
@@ -109,7 +111,9 @@ function AddVechile({ customer_id,onVehicleAdded,  existingVehicle }) {
           error.toString();
         setServerError(resMessage);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false)
+      });
   };
 
   return (
@@ -226,20 +230,17 @@ function AddVechile({ customer_id,onVehicleAdded,  existingVehicle }) {
                     </div>
 
                     <div className="form-group col-md-12">
-                     
 
                       <button
                         className="theme-btn btn-style-one"
                         type="submit"
-                        disabled={loading}
+                        disabled={loading} // ✅ Disable button when loading
                       >
                         <span>
                           {loading ? (
                             <div>
                               <span>please wait </span>
-                              <span>
-                                <PulseLoader size={10} color={"#123abc"} />
-                              </span>
+                              <PulseLoader size={10} color={"#123abc"} />
                             </div>
                           ) : (
                             <span>{isEditing ? "Update" : "Add Vehicle"}</span>

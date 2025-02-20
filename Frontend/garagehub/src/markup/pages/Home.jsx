@@ -4,6 +4,7 @@ import left from '/10001.jpg'
 // import left from '../../../public/10001.jpg'
 import right from '/10002.jpg'
 import car from '/p1.jpg'
+import {Link} from 'react-router-dom'
 
 
 import icon3 from "../../assets/images/images/icons/icon-3.png";
@@ -50,24 +51,24 @@ function Home() {
           </div>
         </div>
       </section>
-      <section class="about-section">
-        <div class="auto-container">
-          <div class="row">
-            <div class="col-lg-5">
-              <div class="image-box">
+      <section className="about-section">
+        <div className="auto-container">
+          <div className="row">
+            <div className="col-lg-5">
+              <div className="image-box">
                 <img src={left} alt="" />
                 <img src={right} alt="" />
-                <div class="year-experience" data-parallax='{"y": 30}'>
+                <div className="year-experience" data-parallax='{"y": 30}'>
                   <strong>17</strong> years <br />
                   Experience
                 </div>
               </div>
             </div>
-            <div class="col-lg-7 pl-lg-5">
-              <div class="sec-title">
+            <div className="col-lg-7 pl-lg-5">
+              <div className="sec-title">
                 <h5>Welcome to Our workshop</h5>
                 <h2>We have 24 years experience</h2>
-                <div class="text">
+                <div className="text">
                   <p>
                     Bring to the table win-win survival strategies to ensure
                     proactive domination. At the end of the day, going forward,
@@ -84,129 +85,130 @@ function Home() {
                     on focusing.
                   </p>
                 </div>
-                <div class="link-btn mt-40">
-                  <a
-                    href="about.html"
-                    class="theme-btn btn-style-one style-two"
+                <div className="link-btn mt-40">
+                  <Link to ={'/about'}
+                    
+                    className="theme-btn btn-style-one style-two"
                   >
                     <span>
-                      About Us <i class="flaticon-right"></i>
+                      About Us <i className="flaticon-right"></i>
                     </span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section class="services-section">
-        <div class="auto-container">
-          <div class="sec-title style-two">
+      {/* service */}
+      <section className="services-section">
+        <div className="auto-container">
+          <div className="sec-title style-two">
             <h2>Our Featured Services</h2>
-            <div class="text">
+            <div className="text">
               Bring to the table win-win survival strategies to ensure proactive
               domination. At the end of the day, going forward, a new normal
               that has evolved from generation X is on the runway heading
               towards a streamlined cloud solution.
             </div>
           </div>
-          <div class="row">
-            <div class="col-lg-4 service-block-one">
-              <div class="inner-box hvr-float-shadow">
+          <div className="row">
+            <div className="col-lg-4 service-block-one">
+              <div className="inner-box hvr-float-shadow">
                 <h5>Service and Repairs</h5>
                 <h2>Performance Upgrade</h2>
-                <a href="#" class="read-more">
+                <a href="#" className="read-more">
                   read more +
                 </a>
-                <div class="icon">
-                  <span class="flaticon-power"></span>
+                <div className="icon">
+                  <span className="flaticon-power"></span>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 service-block-one">
-              <div class="inner-box hvr-float-shadow">
+            <div className="col-lg-4 service-block-one">
+              <div className="inner-box hvr-float-shadow">
                 <h5>Service and Repairs</h5>
                 <h2>Transmission Services</h2>
-                <a href="#" class="read-more">
+                <a href="#" className="read-more">
                   read more +
                 </a>
-                <div class="icon">
-                  <span class="flaticon-gearbox"></span>
+                <div className="icon">
+                  <span className="flaticon-gearbox"></span>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 service-block-one">
-              <div class="inner-box hvr-float-shadow">
+            <div className="col-lg-4 service-block-one">
+              <div className="inner-box hvr-float-shadow">
                 <h5>Service and Repairs</h5>
                 <h2>Break Repair & Service</h2>
-                <a href="#" class="read-more">
+                <a href="#" className="read-more">
                   read more +
                 </a>
-                <div class="icon">
-                  <span class="flaticon-brake-disc"></span>
+                <div className="icon">
+                  <span className="flaticon-brake-disc"></span>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 service-block-one">
-              <div class="inner-box hvr-float-shadow">
+            <div className="col-lg-4 service-block-one">
+              <div className="inner-box hvr-float-shadow">
                 <h5>Service and Repairs</h5>
                 <h2>Engine Service & Repair</h2>
-                <a href="#" class="read-more">
+                <a href="#" className="read-more">
                   read more +
                 </a>
-                <div class="icon">
-                  <span class="flaticon-car-engine"></span>
+                <div className="icon">
+                  <span className="flaticon-car-engine"></span>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 service-block-one">
-              <div class="inner-box hvr-float-shadow">
+            <div className="col-lg-4 service-block-one">
+              <div className="inner-box hvr-float-shadow">
                 <h5>Service and Repairs</h5>
                 <h2>Tyre & Wheels</h2>
-                <a href="#" class="read-more">
+                <a href="#" className="read-more">
                   read more +
                 </a>
-                <div class="icon">
-                  <span class="flaticon-tire"></span>
+                <div className="icon">
+                  <span className="flaticon-tire"></span>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 service-block-one">
-              <div class="inner-box hvr-float-shadow">
+            <div className="col-lg-4 service-block-one">
+              <div className="inner-box hvr-float-shadow">
                 <h5>Service and Repairs</h5>
                 <h2>Denting & Painting</h2>
-                <a href="#" class="read-more">
+                <a href="#" className="read-more">
                   read more +
                 </a>
-                <div class="icon">
-                  <span class="flaticon-spray-gun"></span>
+                <div className="icon">
+                  <span className="flaticon-spray-gun"></span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section class="features-section">
-        <div class="auto-container">
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="inner-container">
+      <section className="features-section">
+        <div className="auto-container">
+          <div className="row">
+            <div className="col-lg-6">
+              <div className="inner-container">
                 <h2>
                   Quality Service And <br />
                   Customer Satisfaction !!
                 </h2>
-                <div class="text">
+                <div className="text">
                   We utilize the most recent symptomatic gear to ensure your
                   vehicle is fixed or adjusted appropriately and in an opportune
                   manner. We are an individual from Professional Auto Service, a
-                  first class execution arrange, where free assistance offices
-                  share shared objectives of being world-class car
+                  first className execution arrange, where free assistance offices
+                  share shared objectives of being world-className car
                   administration focuses.
                 </div>
               </div>
             </div>
-            <div class="col-lg-6">
-              <div class="image">
+            <div className="col-lg-6">
+              <div className="image">
                 <img
                   src={car}
                   alt=""
@@ -216,74 +218,75 @@ function Home() {
           </div>
         </div>
       </section>
-       <section class="brand-logo mt-5  pt-2">
-        <div class="auto-container">
-            <div class="sec-title style-two text-center">
+      {/* why choose us */}
+       <section className="brand-logo mt-5  pt-2">
+        <div className="auto-container">
+            <div className="sec-title style-two text-center">
                 <h2>We Work All Brands of Car</h2>
             </div>
-            <div class="wrapper-box">
+            <div className="wrapper-box">
                
-                <div class="image"><img src={icon3} alt=""/></div>
-                <div class="image"><img src={icon4} alt=""/></div>
-                <div class="image"><img src={icon5} alt=""/></div>
-                <div class="image"><img src={icon6} alt=""/></div>
-                <div class="image"><img src={icon7} alt=""/></div>
-                <div class="image"><img src={icon8} alt=""/></div>
-                  <div class="image"><img src={icon9} alt=""/></div>
-                  <div class="image"><img src={icon10} alt=""/></div>
+                <div className="image"><img src={icon3} alt=""/></div>
+                <div className="image"><img src={icon4} alt=""/></div>
+                <div className="image"><img src={icon5} alt=""/></div>
+                <div className="image"><img src={icon6} alt=""/></div>
+                <div className="image"><img src={icon7} alt=""/></div>
+                <div className="image"><img src={icon8} alt=""/></div>
+                  <div className="image"><img src={icon9} alt=""/></div>
+                  <div className="image"><img src={icon10} alt=""/></div>
               
             </div>
         </div>
     </section>
-      <section class="why-choose-us">
-        <div class="auto-container">
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="sec-title style-two">
+      <section className="why-choose-us">
+        <div className="auto-container">
+          <div className="row">
+            <div className="col-lg-6">
+              <div className="sec-title style-two">
                 <h2>Why Choose Us</h2>
-                <div class="text">
+                <div className="text">
                   Bring to the table win-win survival strategies to ensure
                   proactive domination. At the end of the day, going forward, a
                   new normal that has evolved from generation heading towards.
                 </div>
               </div>
-              <div class="icon-box">
-                <div class="icon">
-                  <span class="flaticon-mechanic"></span>
+              <div className="icon-box">
+                <div className="icon">
+                  <span className="flaticon-mechanic"></span>
                 </div>
                 <h4>Certified Expert Mechanics</h4>
               </div>
-              <div class="icon-box">
-                <div class="icon">
-                  <span class="flaticon-wrench"></span>
+              <div className="icon-box">
+                <div className="icon">
+                  <span className="flaticon-wrench"></span>
                 </div>
                 <h4>Fast And Quality Service</h4>
               </div>
-              <div class="icon-box">
-                <div class="icon">
-                  <span class="flaticon-price-tag-1"></span>
+              <div className="icon-box">
+                <div className="icon">
+                  <span className="flaticon-price-tag-1"></span>
                 </div>
                 <h4>Best Prices in Town</h4>
               </div>
-              <div class="icon-box">
-                <div class="icon">
-                  <span class="flaticon-trophy"></span>
+              <div className="icon-box">
+                <div className="icon">
+                  <span className="flaticon-trophy"></span>
                 </div>
                 <h4>Awarded Workshop</h4>
               </div>
             </div>
-            <div class="col-lg-6">
-              <div class="sec-title style-two">
+            <div className="col-lg-6">
+              <div className="sec-title style-two">
                 <h2>Addtional Services</h2>
               </div>
-              <div class="row">
-                <div class="col-md-5">
-                  <div class="image">
-                    <img src="assets/images/resource/image-4.jpg" alt="" />
+              <div className="row">
+                <div className="col-md-5">
+                  <div className="image">
+                    <img src={left}/>
                   </div>
                 </div>
-                <div class="col-md-7">
-                  <ul class="list">
+                <div className="col-md-7">
+                  <ul className="list">
                     <li>General Auto Repair & Maintenance</li>
                     <li>Transmission Repair & Replacement</li>
                     <li>Tire Repair and Replacement</li>

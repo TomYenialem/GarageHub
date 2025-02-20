@@ -26,6 +26,7 @@ function CustomerOrder() {
   useEffect(()=>{
 fetchSingelOrderList()
   },[])
+  console.log(singleOrderData)
   return (
     <div className="customer_order">
       <div className="container sub_order">

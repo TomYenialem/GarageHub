@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 
 function Footer(props) {
   return (
@@ -26,9 +27,9 @@ function Footer(props) {
                   </div>
                   <div className="text">
                     Email us : <br />{" "}
-                    <a href="mailto:contact.contact@autorex.com">
+                    <Link to="mailto:contact.contact@autorex.com">
                       contact@autorex.com
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -70,19 +71,19 @@ function Footer(props) {
                       <div className="widget-content">
                         <ul className="list">
                           <li>
-                            <a href="index.html">Home</a>
+                            <Link to="/">Home</Link>
                           </li>
                           <li>
-                            <a href="about.html">About Us</a>
+                            <Link to="/about">About Us</Link>
                           </li>
                           <li>
-                            <a href="#">Appointment</a>
+                            <Link to="#">Appointment</Link>
                           </li>
                           <li>
-                            <a href="testimonial.html">Testimonials</a>
+                            <Link to="testimonial.html">Testimonials</Link>
                           </li>
                           <li>
-                            <a href="contact.html">Contact Us</a>
+                            <Link to="/contact">Contact Us</Link>
                           </li>
                         </ul>
                       </div>
@@ -94,19 +95,19 @@ function Footer(props) {
                       <div className="widget-content">
                         <ul className="list">
                           <li>
-                            <a href="#">Performance Upgrade</a>
+                            <Link to="">Performance Upgrade</Link>
                           </li>
                           <li>
-                            <a href="#">Transmission Service</a>
+                            <Link to="#">Transmission Service</Link>
                           </li>
                           <li>
-                            <a href="#">Break Repair & Service</a>
+                            <Link to="#">Break Repair & Service</Link>
                           </li>
                           <li>
-                            <a href="#">Engine Service & Repair</a>
+                            <Link to="#">Engine Service & Repair</Link>
                           </li>
                           <li>
-                            <a href="#">Trye & Wheels</a>
+                            <Link to="#">Trye & Wheels</Link>
                           </li>
                         </ul>
                       </div>
@@ -121,24 +122,24 @@ function Footer(props) {
                   <div className="newsletter-form"></div>
                   <ul className="social-links">
                     <li>
-                      <a href="#">
+                      <Link to="#">
                         <span className="fab fa-facebook-f"></span>
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href="#">
+                      <Link to="#">
                         <span className="fab fa-linkedin-in"></span>
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href="#">
+                      <Link to="#">
                         <span className="fab fa-twitter"></span>
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href="#">
+                      <Link to="#">
                         <span className="fab fa-google-plus-g"></span>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -150,7 +151,7 @@ function Footer(props) {
       <div className="auto-container">
         <div className="footer-bottom">
           <div className="copyright-text">
-            © Copyright <a href="#">Abe Garage</a> 2023 . All right reserved.
+            © Copyright <Link to="#">Abe Garage</Link> 2023 . All right reserved.
           </div>
         </div>
       </div>

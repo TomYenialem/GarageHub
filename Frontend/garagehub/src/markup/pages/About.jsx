@@ -1,15 +1,24 @@
 import React from 'react'
 
+import img2 from "../../assets/images/images/gallery/two.jpg";
+
+import img4 from "../../assets/images/images/gallery/four.jpg";
+import img6 from "../../assets/images/images/gallery/7.jpg";
+
+import img9 from "../../assets/images/images/gallery/10.jpg";
+
 function About() {
   return (
-    <div class="page-wrapper">
+    <div className="page-wrapper">
       <section
-        class="page-title"
-        // style="background-image:url(assets/images/background/bg-3.jpg)"
+        className="page-title"
+        style={{
+          backgroundImage:`url(${img6})`,
+        }}
       >
-        <div class="auto-container">
+        <div className="auto-container">
           <h2>About us</h2>
-          <ul class="page-breadcrumb">
+          <ul className="page-breadcrumb">
             <li>
               <a href="index.html">home</a>
             </li>
@@ -18,15 +27,15 @@ function About() {
         </div>
         <h1 data-parallax='{"x": 200}'>Car Repairing</h1>
       </section>
-      <section class="about-section-three">
-        <div class="auto-container">
-          <div class="row">
-            <div class="col-lg-7">
-              <div class="content">
+      <section className="about-section-three">
+        <div className="auto-container">
+          <div className="row">
+            <div className="col-lg-7">
+              <div className="content">
                 <h2>
                   We are highly skilled mechanics <br /> for your car repair
                 </h2>
-                <div class="text">
+                <div className="text">
                   <p>
                     Bring to the table win-win survival strategies to ensure
                     proactive domination. At the end of the day, going forward,
@@ -46,29 +55,29 @@ function About() {
                 </div>
               </div>
             </div>
-            <div class="col-lg-5">
-              <div class="image">
-                <img src="assets/images/resource/image-8.jpg" alt="" />
+            <div className="col-lg-5">
+              <div className="image">
+                <img src={img9} alt="" />
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section class="why-choose-us-two">
-        <div class="auto-container">
-          <div class="row no-gutters">
-            <div class="col-xl-6 left-column">
-              <div class="inner-container">
-                <div class="sec-title style-two light">
+      <section className="why-choose-us-two">
+        <div className="auto-container">
+          <div className="row no-gutters">
+            <div className="col-xl-6 left-column">
+              <div className="inner-container">
+                <div className="sec-title style-two light">
                   <h2>Why Choose Us</h2>
                 </div>
-                <div class="icon-box">
-                  <div class="icon">
-                    <span class="flaticon-repair"></span>
+                <div className="icon-box">
+                  <div className="icon">
+                    <span className="flaticon-repair"></span>
                   </div>
                   <div>
                     <h4>Smart Technology</h4>
-                    <div class="text">
+                    <div className="text">
                       Leverage agile frameworks to provide a robust synopsis for{" "}
                       <br /> high level overviews. Iterative approaches to
                       corporate strategy <br /> foster collaborative thinking to
@@ -76,13 +85,13 @@ function About() {
                     </div>
                   </div>
                 </div>
-                <div class="icon-box">
-                  <div class="icon">
-                    <span class="flaticon-price-tag"></span>
+                <div className="icon-box">
+                  <div className="icon">
+                    <span className="flaticon-price-tag"></span>
                   </div>
                   <div>
                     <h4>Best & Reasonable Prices</h4>
-                    <div class="text">
+                    <div className="text">
                       Leverage agile frameworks to provide a robust synopsis for{" "}
                       <br />
                       high level overviews. Iterative approaches to corporate
@@ -91,13 +100,13 @@ function About() {
                     </div>
                   </div>
                 </div>
-                <div class="icon-box">
-                  <div class="icon">
-                    <span class="flaticon-fast-time"></span>
+                <div className="icon-box">
+                  <div className="icon">
+                    <span className="flaticon-fast-time"></span>
                   </div>
                   <div>
                     <h4>Timely Delivery</h4>
-                    <div class="text">
+                    <div className="text">
                       Leverage agile frameworks to provide a robust synopsis for{" "}
                       <br /> high level overviews. Iterative approaches to
                       corporate strategy <br />
@@ -107,81 +116,81 @@ function About() {
                 </div>
               </div>
             </div>
-            <div class="col-xl-6 right-column">
-              <div class="image">
-                <img src="assets/images/resource/image-9.jpg" alt="" />
+            <div className="col-xl-6 right-column">
+              <div className="image">
               </div>
+                <img src={img2} alt="" />
             </div>
           </div>
         </div>
       </section>
-      <section class="video-section">
+      <section className="video-section  mt-5">
         <div
           data-parallax='{"y": 50}'
-          class="sec-bg"
-          //  style="background-image: url(assets/images/background/bg-1.jpg);"
+          className="sec-bg"
+           style={{backgroundImage:`url(${img4})`}}
         ></div>
-        <div class="auto-container">
+        <div className="auto-container">
           <h5>Working since 1992</h5>
           <h2>
             We are leader <br /> in Car Mechanical Work
           </h2>
-          <div class="video-box">
-            <div class="video-btn">
+          <div className="video-box">
+            <div className="video-btn">
               <a
                 href="https://www.youtube.com/watch?v=nfP5N9Yc72A&amp;t=28s"
-                class="overlay-link lightbox-image video-fancybox ripple"
+                className="overlay-link lightbox-image video-fancybox ripple"
               >
-                <i class="flaticon-play"></i>
+                <i className="flaticon-play"></i>
               </a>
             </div>
-            <div class="text">
+            <div className="text">
               Watch intro video <br /> about us
             </div>
           </div>
         </div>
       </section>
-      <section class="facts-section">
-        <div class="auto-container">
-          <div class="row align-items-center">
-            <div class="col-lg-3">
+      <section className="facts-section ">
+        <div className="auto-container">
+          <div className="row align-items-center">
+            <div className="col-lg-3">
               <h2>
                 <span>100%</span> Satisfaction <br /> Guarantee
               </h2>
             </div>
-            <div class="col-lg-9">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="facts-block">
-                    <div class="icon">
-                      <span class="flaticon-customer-service-1"></span>
+            <div className="col-lg-9">
+              <div className="row">
+                <div className="col-md-4">
+                  <div className="facts-block">
+                    <div className="icon">
+                      <span className="flaticon-customer-service-1"></span>
                     </div>
                     <h4>Quality Support</h4>
-                    <div class="text">
+                    <div className="text">
                       Our Repair Services offers quality help programs for any
                       vehicles that permit them to consistently.
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="facts-block">
-                    <div class="icon">
-                      <span class="flaticon-car-1"></span>
+                <div className="col-md-4">
+                  <div className="facts-block">
+                    <div className="icon">
+                      <span className="flaticon-car-1"></span>
                     </div>
                     <h4>All Car Makes</h4>
-                    <div class="text">
+                    <div className="text">
                       Our Repair Services offers quality help programs for any
                       vehicles that permit them to consistently.
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="facts-block">
-                    <div class="icon">
-                      <span class="flaticon-maintenance"></span>
+                <div className="col-md-4">
+                  <div className="facts-block">
+                    <div className="icon">
+                      <span className="flaticon-maintenance"></span>
                     </div>
                     <h4>Variety Services</h4>
-                    <div class="text">
+                    <div className="text">
                       Our Repair Services offers quality help programs for any
                       vehicles that permit them to consistently.
                     </div>

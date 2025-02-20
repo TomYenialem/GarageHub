@@ -1,4 +1,6 @@
 import React from 'react'
+import img11 from "../../assets/images/images/gallery/11.jpg";
+import img15 from "../../assets/images/images/gallery/15.jpg";
 
 function Services() {
   return (
@@ -6,7 +8,7 @@ function Services() {
 
     
     <section class="page-title" 
-    // style="background-image:url(assets/images/background/bg-3.jpg)"
+    style={{ backgroundImage: `url(${img11})` }}
     >
         <div class="auto-container">
             <h2>Services</h2>
@@ -30,7 +32,7 @@ function Services() {
                     <div class="inner-box hvr-float-shadow">
                         <h5>Service and Repairs</h5>
                         <h2>Performance Upgrade</h2>
-                        <a href="service-details.html" class="read-more">read more  +</a>
+                        {/* <a href="service-details.html" class="read-more">read more  +</a> */}
                         <div class="icon"><span class="flaticon-power"></span></div>
                     </div>
                 </div>
@@ -38,7 +40,7 @@ function Services() {
                     <div class="inner-box hvr-float-shadow">
                         <h5>Service and Repairs</h5>
                         <h2>Transmission Services</h2>
-                        <a href="service-details.html" class="read-more">read more  +</a>
+                        {/* <a href="service-details.html" class="read-more">read more  +</a> */}
                         <div class="icon"><span class="flaticon-gearbox"></span></div>
                     </div>
                 </div>
@@ -46,7 +48,7 @@ function Services() {
                     <div class="inner-box hvr-float-shadow">
                         <h5>Service and Repairs</h5>
                         <h2>Break Repair & Service</h2>
-                        <a href="service-details.html" class="read-more">read more  +</a>
+                        {/* <a href="service-details.html" class="read-more">read more  +</a> */}
                         <div class="icon"><span class="flaticon-brake-disc"></span></div>
                     </div>
                 </div>
@@ -54,7 +56,7 @@ function Services() {
                     <div class="inner-box hvr-float-shadow">
                         <h5>Service and Repairs</h5>
                         <h2>Engine Service & Repair</h2>
-                        <a href="service-details.html" class="read-more">read more  +</a>
+                        {/* <a href="service-details.html" class="read-more">read more  +</a> */}
                         <div class="icon"><span class="flaticon-car-engine"></span></div>
                     </div>
                 </div>
@@ -62,7 +64,7 @@ function Services() {
                     <div class="inner-box hvr-float-shadow">
                         <h5>Service and Repairs</h5>
                         <h2>Tyre & Wheels</h2>
-                        <a href="service-details.html" class="read-more">read more  +</a>
+                        {/* <a href="service-details.html" class="read-more">read more  +</a> */}
                         <div class="icon"><span class="flaticon-tire"></span></div>
                     </div>
                 </div>
@@ -70,7 +72,7 @@ function Services() {
                     <div class="inner-box hvr-float-shadow">
                         <h5>Service and Repairs</h5>
                         <h2>Denting & Painting</h2>
-                        <a href="service-details.html" class="read-more">read more  +</a>
+                        {/* <a href="service-details.html" class="read-more">read more  +</a> */}
                         <div class="icon"><span class="flaticon-spray-gun"></span></div>
                     </div>
                 </div>
@@ -78,7 +80,7 @@ function Services() {
                     <div class="inner-box hvr-float-shadow">
                         <h5>Service and Repairs</h5>
                         <h2>Air Conditioning Evac</h2>
-                        <a href="service-details.html" class="read-more">read more  +</a>
+                        {/* <a href="service-details.html" class="read-more">read more  +</a> */}
                         <div class="icon"><span class="flaticon-air-conditioning"></span></div>
                     </div>
                 </div>
@@ -86,7 +88,7 @@ function Services() {
                     <div class="inner-box hvr-float-shadow">
                         <h5>Service and Repairs</h5>
                         <h2>General Service & Washing</h2>
-                        <a href="service-details.html" class="read-more">read more  +</a>
+                        {/* <a href="service-details.html" class="read-more">read more  +</a> */}
                         <div class="icon"><span class="flaticon-car-service"></span></div>
                     </div>
                 </div>
@@ -95,10 +97,10 @@ function Services() {
     </section>
 
 
-    <section class="video-section">
+    <section class="video-section mb-5">
         <div data-parallax='{"y": 50}' class="sec-bg" 
         
-        // style="background-image: url(assets/images/background/bg-1.jpg);"
+       style={{backgroundImage:`url(${img15})`}}
         ></div>
         <div class="auto-container">
             <h5>Working since 1992</h5>

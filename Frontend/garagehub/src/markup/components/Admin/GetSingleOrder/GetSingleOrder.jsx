@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import orders from "../../../../services/order.service";
 import { Table, Button, Modal } from "react-bootstrap";
 
-function GetSingleOrder({ customer_id }) {
-  console.log(customer_id)
+function GetSingleOrder({ order_id }) {
   const [orderData, setOrder] = useState([]);
+  console.log(order_id)
 
   const fetchSingleOrder = () => {
     try {
-      const response = orders.singleOrder(customer_id);
+      const response = orders.singleOrder(order_id);
       response.then((data) => {
         if (data.error) {
           console.log(data.error);
@@ -22,9 +22,10 @@ function GetSingleOrder({ customer_id }) {
       console.log(error);
     }
   };
+  console.log(orderData)
   useEffect(() => {
     fetchSingleOrder();
-  }, [customer_id]);
+  }, [order_id]);
   
   return (
     <div>
