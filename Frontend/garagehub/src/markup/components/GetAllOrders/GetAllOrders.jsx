@@ -8,7 +8,7 @@ import {PulseLoader} from 'react-spinners'
 import formatTime from "../../../util/formatTime";
 
 
-function GetAllOrders() {
+function GetAllOrders({customerOrderInfo}) {
   const [apiError, setApiError] = useState(false);
   const [ordersData, setOrdersData] = useState([]);
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
@@ -36,6 +36,7 @@ function GetAllOrders() {
         const data = await res.json();
         if (data.data.length !== 0) {
           setOrdersData(data.data);
+          customerOrderInfo(data.data)
         }
       } catch (err) {
         console.log(err);

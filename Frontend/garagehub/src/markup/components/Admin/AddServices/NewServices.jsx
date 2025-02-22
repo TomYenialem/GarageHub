@@ -109,16 +109,7 @@ const handleToDelete=(id)=>{
       setShowModal(false)
     }
   }
-  const chekToAddSerices=(e)=>{
-    e.preventDefault()
-    if(isAdmin){
-      handleSubmit()
-    }
-    else{
-      toast.error("You are not authorized to add new services.")
 
-    }
-  }
 
   // Prepare form for editing
   const editInputValues = (service) => {
@@ -185,7 +176,7 @@ const handleToDelete=(id)=>{
               <div className="form-column col-lg-10">
                 <div className="inner-column">
                   <div className="contact-form">
-                    <form onSubmit={chekToAddSerices}>
+                    <form onSubmit={handleSubmit}>
                       {serverError && (
                         <div
                           className="validation-error text-danger"
@@ -224,7 +215,8 @@ const handleToDelete=(id)=>{
                           <button
                             className="theme-btn btn-style-one"
                             type="submit"
-                            disabled={loading}
+                            disabled={
+                              !isAdmin ||loading}
                           >
                             <span>
                               {loading ? (

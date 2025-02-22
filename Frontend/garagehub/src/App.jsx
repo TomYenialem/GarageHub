@@ -37,6 +37,7 @@ import About from "./markup/pages/About";
 import Services from "./markup/pages/Services";
 import Contact from "./markup/pages/Contact";
 import CustomerOrder from "./markup/pages/CustomerOrder";
+import CustomerInfo from "./markup/pages/CustomerInfo";
 
 function App() {
   const { pathname } = useLocation();
@@ -55,6 +56,7 @@ function App() {
         <Route path="/service" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/customer_order/:order_id" element={<CustomerOrder />} />
+        <Route path="/customer_info" element={<CustomerInfo />} />
 
         <Route
           path="/unauthorized"
@@ -75,7 +77,7 @@ function App() {
         <Route
           path="/admin/add_customers"
           element={
-            <PrivateAuthRoute roles={[1,2, 3]}>
+            <PrivateAuthRoute roles={[1, 2, 3]}>
               <Customers />
             </PrivateAuthRoute>
           }
@@ -88,10 +90,7 @@ function App() {
             </PrivateAuthRoute>
           }
         />
-        <Route path="/admin/employees" element={
-          <Employees/>
-          
-          } />
+        <Route path="/admin/employees" element={<Employees />} />
         <Route path="/admin/all_customers" element={<CustomersList />} />
 
         <Route path="/admin/services" element={<AddNewServices />} />
@@ -114,7 +113,7 @@ function App() {
           path="/admin/edit_vehicle/:vehicle_id"
           element={<EditVehicles />}
         />
-      
+
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster position="top-right" />

@@ -10,16 +10,15 @@ import { useAuth } from "../../../../Context/AuthContext";
 function EditCustomersInfo() {
   const { customer_id } = useParams();
   const [customerData, setCustomerData] = useState();
-    const [loading, setLoading] = useState(false);
-  const navigate=useNavigate()
-  const {isAdmin}=useAuth()
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { isAdmin } = useAuth();
   // State variables for form fields
   const [customer_first_name, setFirstName] = useState("");
   const [customer_last_name, setLastName] = useState("");
   const [customer_phone_number, setPhoneNumber] = useState("");
   const [active_customer_status, setActiveCustomeer] = useState(1);
   const [serverError, setServerError] = useState("");
-
 
   // ✅ Load customer data when available
   useEffect(() => {
@@ -29,17 +28,16 @@ function EditCustomersInfo() {
       setPhoneNumber(customerData.customer_phone_number || "");
       setActiveCustomeer(customerData.active_customer_status ? 1 : 0);
     }
-  }, [customerData]); // Runs when customerData changes
+  }, [customerData]); 
 
   // ✅ Handle form submission
   const handleForm = async (e) => {
     e.preventDefault();
-       if (!isAdmin) {
-         toast.error("You don't have permission to edit this page");
-         return;
-  
-       }
-       setLoading(true);
+    if (!isAdmin) {
+      toast.error("You don't have permission to edit this page");
+      return;
+    }
+    setLoading(true);
     const data = {
       customer_first_name,
       customer_last_name,
@@ -48,29 +46,26 @@ function EditCustomersInfo() {
     };
 
     const edit = updateCustomers.editCustomerInfo(customer_id, data);
-    
+
     try {
       edit.then((data) => {
         if (data.error) {
           setServerError(data.error);
-   
         } else {
           setServerError("");
           toast.success("employees updated successfully");
-          navigate(-1)
+          navigate(-1);
         }
       });
     } catch (error) {
       const resMessage =
         error.response?.data?.message || error.message || error.toString();
       setServerError(resMessage);
-    }
-    finally{
+    } finally {
       setLoading(false);
     }
   };
 
- 
   return (
     <section className="contact-section">
       <div className="auto-container">
@@ -145,7 +140,7 @@ function EditCustomersInfo() {
                         name="active_employee"
                         id="active_employee"
                         style={{ marginRight: "8px" }}
-                        checked={active_customer_status===1}
+                        checked={active_customer_status === 1}
                         onChange={(e) =>
                           setActiveCustomeer(e.target.checked ? 1 : 0)
                         }

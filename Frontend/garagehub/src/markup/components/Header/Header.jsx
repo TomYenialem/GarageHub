@@ -25,9 +25,7 @@ function Header(props) {
     }
   };
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+ 
 
   return (
     <div>
@@ -75,7 +73,7 @@ function Header(props) {
                 <div className="nav-outer">
                   <div
                     className="mobile-nav-toggler"
-                    onClick={toggleMobileMenu}
+                    // onClick={toggleMobileMenu}
                   >
                     <img src="assets/images/icons/icon-bar.png" alt="Menu" />
                   </div>
@@ -103,6 +101,9 @@ function Header(props) {
                         </li>
                         <li onClick={chekAdmin}>
                           <Link>Admin</Link>
+                        </li>
+                        <li>
+                          <Link to={'/customer_info'}>Orders</Link>
                         </li>
                       </ul>
                     </div>
@@ -146,7 +147,7 @@ function Header(props) {
                   <div className="nav-outer">
                     <div
                       className="mobile-nav-toggler"
-                      onClick={toggleMobileMenu}
+                      // onClick={toggleMobileMenu}
                     >
                       <GiHamburgerMenu />
                       <h1>hello</h1>
@@ -166,8 +167,8 @@ function Header(props) {
         </div>
 
         <div className={`mobile-menu ${isMobileMenuOpen ? "open" : ""}`}>
-          <div className="menu-backdrop" onClick={toggleMobileMenu}></div>
-          <div className="close-btn" onClick={toggleMobileMenu}>
+          <div className="menu-backdrop"></div>
+          <div className="close-btn">
             <span className="icon flaticon-remove"></span>
           </div>
 
@@ -180,24 +181,16 @@ function Header(props) {
             <div className="menu-outer">
               <ul className="navigation">
                 <li className="dropdown">
-                  <Link to={"/"} onClick={toggleMobileMenu}>
-                    Home
-                  </Link>
+                  <Link to={"/"}>Home</Link>
                 </li>
                 <li className="dropdown">
-                  <Link to={"/about"} onClick={toggleMobileMenu}>
-                    About Us
-                  </Link>
+                  <Link to={"/about"}>About Us</Link>
                 </li>
                 <li className="dropdown">
-                  <Link to={"/service"} onClick={toggleMobileMenu}>
-                    Services
-                  </Link>
+                  <Link to={"/service"}>Services</Link>
                 </li>
                 <li>
-                  <Link to={"/contact"} onClick={toggleMobileMenu}>
-                    Contact Us
-                  </Link>
+                  <Link to={"/contact"}>Contact Us</Link>
                 </li>
                 <li
                   onClick={() => {
@@ -218,7 +211,257 @@ function Header(props) {
         </div>
       </header>
     </div>
+    // <header class="main-header header-style-one">
+    //   <div class="header-top">
+    //     <div class="auto-container">
+    //       <div class="inner-container">
+    //         <div class="left-column">
+    //           <div class="text">
+    //             # 1 Multibrand Car Workshop of Losangle City
+    //           </div>
+    //           <div class="office-hour">Monday - Saturday 7:00AM - 6:00PM</div>
+    //         </div>
+    //         <div class="right-column">
+    //           <div class="phone-number">
+    //             Schedule Your Appontment Today : <strong>1800 456 7890</strong>
+    //           </div>
+    //           <div class="language-switcher">
+    //             <div id="polyglotLanguageSwitcher" class="">
+    //               <form action="#">
+    //                 <select id="polyglot-language-options">
+    //                   <option id="en" value="en" selected>
+    //                     English
+    //                   </option>
+    //                   <option id="fr" value="fr">
+    //                     French
+    //                   </option>
+    //                   <option id="de" value="de">
+    //                     German
+    //                   </option>
+    //                   <option id="it" value="it">
+    //                     Italian
+    //                   </option>
+    //                   <option id="es" value="es">
+    //                     Spanish
+    //                   </option>
+    //                 </select>
+    //               </form>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+
+    //   <div class="header-upper">
+    //     <div class="auto-container">
+    //       <div class="inner-container">
+    //         <div class="logo-box">
+    //           <div class="logo">
+    //             <a href="index.html">
+    //               <img src="assets/images/logo.png" alt="" />
+    //             </a>
+    //           </div>
+    //         </div>
+    //         <div class="right-column">
+    //           <div class="nav-outer">
+    //             <div class="mobile-nav-toggler">
+    //               <img src="assets/images/icons/icon-bar.png" alt="" />
+    //             </div>
+
+    //             <nav class="main-menu navbar-expand-md navbar-light">
+    //               <div
+    //                 class="collapse navbar-collapse show clearfix"
+    //                 id="navbarSupportedContent"
+    //               >
+    //                 <ul class="navigation">
+    //                   <li class="dropdown">
+    //                     <a href="index.html">Home</a>
+    //                     <ul>
+    //                       <li>
+    //                         <a href="index.html">Home Page 1</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="index-2.html">Home Page 2</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="index-3.html">Home Page 3</a>
+    //                       </li>
+    //                     </ul>
+    //                   </li>
+    //                   <li class="dropdown">
+    //                     <a href="about.html">About Us</a>
+    //                     <ul>
+    //                       <li>
+    //                         <a href="about.html">About Us</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="history.html">Company History</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="team.html">Our Team</a>
+    //                       </li>
+    //                     </ul>
+    //                   </li>
+    //                   <li class="dropdown">
+    //                     <a href="service-1.html">Services</a>
+    //                     <ul>
+    //                       <li>
+    //                         <a href="service-1.html">Services 1</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="service-2.html">Services 2</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="service-details.html">Single Service</a>
+    //                       </li>
+    //                     </ul>
+    //                   </li>
+    //                   <li class="dropdown">
+    //                     <a href="gallery-1.html">Gallery</a>
+    //                     <ul>
+    //                       <li>
+    //                         <a href="gallery-1.html">Gallery 1</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="gallery-2.html">Gallery 2</a>
+    //                       </li>
+    //                     </ul>
+    //                   </li>
+    //                   <li class="dropdown">
+    //                     <a href="blog.html">Pages</a>
+    //                     <ul>
+    //                       <li>
+    //                         <a href="projects.html">Projects</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="project-details.html">Project Details</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="testimonials.html">Testimonials</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="faq.html">Faq</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="error.html">404 Error Page</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="comming-soon.html">Coming Soon Page</a>
+    //                       </li>
+    //                     </ul>
+    //                   </li>
+    //                   <li class="dropdown">
+    //                     <a href="#">News</a>
+    //                     <ul>
+    //                       <li>
+    //                         <a href="blog.html">Blog With Side bar</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="blog-2.html">Blog 2 Column</a>
+    //                       </li>
+    //                       <li>
+    //                         <a href="blog-details.html">Blog Details</a>
+    //                       </li>
+    //                     </ul>
+    //                   </li>
+    //                   <li>
+    //                     <a href="contact.html">Contact Us</a>
+    //                   </li>
+    //                 </ul>
+    //               </div>
+    //             </nav>
+    //           </div>
+
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+
+    //   <div class="sticky-header">
+    //     <div class="header-upper">
+    //       <div class="auto-container">
+    //         <div class="inner-container">
+    //           <div class="logo-box">
+    //             <div class="logo">
+    //               <a href="index.html">
+    //                 <img src={logo} alt="" />
+    //               </a>
+    //             </div>
+    //           </div>
+    //           <div class="right-column">
+    //             <div class="nav-outer">
+    //               <div class="mobile-nav-toggler">
+    //                 <img src="assets/images/icons/icon-bar.png" alt="" />
+    //               </div>
+
+    //               <nav class="main-menu navbar-expand-md navbar-light"></nav>
+    //             </div>
+    //             <div class="search-btn">
+    //               <button type="button" class="theme-btn search-toggler">
+    //                 <span class="stroke-gap-icon icon-Search"></span>
+    //               </button>
+    //             </div>
+
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+
+    //   <div class="mobile-menu">
+    //     <div class="menu-backdrop"></div>
+    //     <div class="close-btn">
+    //       <span class="icon flaticon-remove"></span>
+    //     </div>
+
+    //     <nav class="menu-box">
+    //       <div class="nav-logo">
+    //         <a href="index.html">
+    //           <img src="assets/images/logo-two.png" alt="" title="" />
+    //         </a>
+    //       </div>
+    //       <div class="menu-outer"></div>
+
+    //       <div class="social-links">
+    //         <ul class="clearfix">
+    //           <li>
+    //             <a href="#">
+    //               <span class="fab fa-twitter"></span>
+    //             </a>
+    //           </li>
+    //           <li>
+    //             <a href="#">
+    //               <span class="fab fa-facebook-square"></span>
+    //             </a>
+    //           </li>
+    //           <li>
+    //             <a href="#">
+    //               <span class="fab fa-pinterest-p"></span>
+    //             </a>
+    //           </li>
+    //           <li>
+    //             <a href="#">
+    //               <span class="fab fa-instagram"></span>
+    //             </a>
+    //           </li>
+    //           <li>
+    //             <a href="#">
+    //               <span class="fab fa-youtube"></span>
+    //             </a>
+    //           </li>
+    //         </ul>
+    //       </div>
+    //     </nav>
+    //   </div>
+
+    //   <div class="nav-overlay">
+    //     <div class="cursor"></div>
+    //     <div class="cursor-follower"></div>
+    //   </div>
+    // </header>
   );
 }
-
+  
+      
 export default Header;

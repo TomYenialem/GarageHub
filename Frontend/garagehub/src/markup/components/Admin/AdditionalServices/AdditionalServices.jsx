@@ -38,7 +38,7 @@ function AdditionalServices({
         employee_id,
         customer_id,
         vehicle_id,
-        order_description,
+        additional_request:order_description,
         order_total_price: parseFloat(order_total_price), // Ensure it's a number
         active_order,
         order_status,
