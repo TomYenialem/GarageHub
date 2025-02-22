@@ -24,9 +24,7 @@ async function createEmployee(req, res, next) {
         });
       } else {
         res.status(200).json({
-         
           message: "Employee added successfully!",
-         
         });
       }
     } catch (error) {

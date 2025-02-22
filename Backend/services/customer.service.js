@@ -11,7 +11,7 @@ const checkIfCustomerExists = async (email) => {
 };
 
 const addCustomer = async (customer) => {
-    let returnDatas={}
+  let returnDatas = {};
   try {
     const quary1 =
       "INSERT INTO customer_identifier(customer_email,customer_phone_number) VALUES(?,?)";
@@ -29,44 +29,39 @@ const addCustomer = async (customer) => {
       customer.customer_last_name,
       customer.active_customer_status,
     ]);
-    returnDatas={
-        
-   customer_id:customer_id
-
-    }
+    returnDatas = {
+      customer_id: customer_id,
+    };
   } catch (error) {
     console.log(error);
   }
 
   return returnDatas;
 };
-const getAllCustomers=async()=>{
+const getAllCustomers = async () => {
   // selelct all customers fro those two tables
 
   try {
-    
     const allCustomers =
-      "SELECT * FROM customer_identifier INNER JOIN customer_info  ON customer_identifier.customer_id = customer_info.customer_id ORDER BY customer_identifier.customer_id DESC limit 10 "; 
-      const rows = await conn.query(allCustomers);
-      return rows;
-    
+      "SELECT * FROM customer_identifier INNER JOIN customer_info  ON customer_identifier.customer_id = customer_info.customer_id ORDER BY customer_identifier.customer_id DESC";
+    const rows = await conn.query(allCustomers);
+    return rows;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
-const getSingleCustomer=async(id)=>{
+};
+const getSingleCustomer = async (id) => {
   try {
     const singleCustomer =
-      "SELECT * FROM customer_identifier INNER JOIN customer_info  ON customer_identifier.customer_id = customer_info.customer_id WHERE customer_identifier.customer_id =? "; 
-    const rows = await conn.query(singleCustomer,[id]);
+      "SELECT * FROM customer_identifier INNER JOIN customer_info  ON customer_identifier.customer_id = customer_info.customer_id WHERE customer_identifier.customer_id =? ";
+    const rows = await conn.query(singleCustomer, [id]);
     return rows;
-    
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
-const editCustomer = async (customer_id,customer) => {
+const editCustomer = async (customer_id, customer) => {
   try {
     const query = `
       UPDATE customer_info 
@@ -85,18 +80,15 @@ const editCustomer = async (customer_id,customer) => {
       customer.customer_last_name,
       customer.active_customer_status,
       customer.customer_phone_number,
-     customer_id,
+      customer_id,
     ]);
-
-
 
     return rows;
   } catch (error) {
     console.error("Error updating customer:", error);
-    throw error; 
+    throw error;
   }
 };
-
 
 module.exports = {
   checkIfCustomerExists,
