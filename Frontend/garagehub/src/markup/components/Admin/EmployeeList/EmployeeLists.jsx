@@ -36,7 +36,7 @@ const fetchEmployesData =  () => {
     setApiErrorMessage(null);
   })
   } catch (err) {
-    console.error("Error fetching employees:", err);
+
     setApiError(true);
     setApiErrorMessage("An unexpected error occurred.");
   }

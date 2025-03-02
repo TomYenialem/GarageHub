@@ -84,7 +84,6 @@ function EachVehicleInfo() {
                 serviceDatas.map((service, index) => (
                   <div key={index} className="col-12 mb-3">
                     <div className="card shadow-sm p-3">
-                     
                       <div className="d-flex justify-content-between align-items-center col-md-12 mx-auto">
                         <div className="d-flex flex-column justify-content-center">
                           <label
@@ -101,13 +100,16 @@ function EachVehicleInfo() {
                           <input
                             type="checkbox"
                             required
-                            className="form-check-input me-3"
+                            className="form-check-input me-5 mt-4"
                             id={`service-${index}`}
+                            style={{
+                              width: "20px",
+                              height: "20px",
+                              border: "2px solid blue",
+                              cursor: "pointer",
+                            }}
                             onChange={(e) =>
-                              checkedService(
-                                service.service_id,
-                                e.target.checked
-                              )
+                              checkedService(service.service_id, e.target.checked)
                             }
                           />
                         </div>

@@ -71,7 +71,7 @@ function Orders() {
                 </button>
               </div>
             ) : (
-              <Table striped bordered hover className=" ">
+              <Table striped bordered hover className="table-responsive-mobile">
                 <thead>
                   <tr>
                     <th>First Name</th>

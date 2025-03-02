@@ -47,7 +47,7 @@ function AddEmployeeForm(props) {
      company_role_id: Number(company_role_id), // Ensure number type
    };
 
-   console.log("🚀 Sending FormData:", formData); // Debug log
+
 
    employeeService
      .createEmployee(formData)

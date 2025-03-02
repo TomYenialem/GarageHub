@@ -48,14 +48,14 @@ function AdditionalServices({
         })),
       };
 
-      console.log("Submitting order data:", datas); // Debugging: Log the payload
+  
 
       // Send the order data to the server
       const order = await orders.sendOrderInfo(datas);
 
       if (order.error) {
         setServerError(order.error);
-        console.log(order.error);
+
       } else {
         toast.success(order.message);
         setServerError("");
@@ -65,7 +65,6 @@ function AdditionalServices({
       }
     } catch (error) {
 
-      console.log(error);
       const resMessage =
         (error.response &&
           error.response.data &&

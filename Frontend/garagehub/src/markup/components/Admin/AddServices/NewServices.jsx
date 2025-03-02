@@ -72,7 +72,7 @@ const handleToDelete=(id)=>{
        }
      }
    } catch (error) {
-     console.log(error);
+
      setServerError("Something went wrong. Please try again.");
    } finally {
      fetchDatas(); // Ensures data is fetched after all operations
@@ -131,143 +131,150 @@ const handleToDelete=(id)=>{
       {loading ? (
         <div className="center_loader">
           <PulseLoader size={10} color={"#123abc"} />
-        </div>)
-        :<>
-    <section className="contact-section">
-        <div className="auto-container">
-          <div className="col-md-10">
-            <div className="contact-title">
-              <h4>Services We Provide</h4>
-            </div>
+        </div>
+      ) : (
+        <>
+          <section className="contact-section">
+            <div className="auto-container">
+              <div className="col-md-10">
+                <div className="contact-title">
+                  <h4>Services We Provide</h4>
+                </div>
 
-            {/* Services List */}
-            {serviceDatas.map((service, index) => (
-              <div key={index} className="row bg-white d-flex p-2 mb-2">
-                <div className="col-md-10">
-                  <h5>{service.service_name}</h5>
-                  <p>{service.service_description}</p>
-                </div>
-                <div className="col-md-2 d-flex justify-content-center delete_edit_icons">
-                  <span
-                    className="text-primary me-3"
-                    role="button"
-                    onClick={() => editInputValues(service)}
-                  >
-                    <FaRegEdit />
-                  </span>
-                  <span
-                    className="text-danger"
-                    role="button"
-                    onClick={() => handleToDelete(service.service_id)}
-                  >
-                    <MdDelete />
-                  </span>
-                </div>
+                {/* Services List */}
+                {serviceDatas.map((service, index) => (
+                  <div key={index} className="row bg-white d-flex p-2 mb-2">
+                    <div className="col-md-10">
+                      <h5>{service.service_name}</h5>
+                      <p>{service.service_description}</p>
+                    </div>
+                    <div className="col-md-2 d-flex justify-content-center delete_edit_icons">
+                      <span
+                        className="text-primary me-3"
+                        role="button"
+                        onClick={() => editInputValues(service)}
+                      >
+                        <FaRegEdit />
+                      </span>
+                      <span
+                        className="text-danger"
+                        role="button"
+                        onClick={() => handleToDelete(service.service_id)}
+                      >
+                        <MdDelete />
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
 
-          {/* Add or Edit Service Form */}
-          <div className="service-box col-md-10 mt-5">
-            <div className="contact-title">
-              <h2>{editingId ? "Edit Service" : "Add a New Service"}</h2>
-            </div>
-            <div className="row clearfix">
-              <div className="form-column col-lg-10">
-                <div className="inner-column">
-                  <div className="contact-form">
-                    <form onSubmit={handleSubmit}>
-                      {serverError && (
-                        <div
-                          className="validation-error text-danger"
-                          role="alert"
+              {/* Add or Edit Service Form */}
+              <div className="service-box col-md-10 mt-5">
+                <div className="contact-title">
+                  <h2>{editingId ? "Edit Service" : "Add a New Service"}</h2>
+                </div>
+                <div className="row clearfix">
+                  <div className="form-column col-lg-10">
+                    <div className="inner-column">
+                      <div className="contact-form">
+                        <form onSubmit={handleSubmit}>
+                          {serverError && (
+                            <div
+                              className="validation-error text-danger"
+                              role="alert"
+                            >
+                              {serverError}
+                            </div>
+                          )}
+                          <div className="row clearfix">
+                            <div className="form-group col-md-10">
+                              <input
+                                type="text"
+                                required
+                                name="ServiceName"
+                                value={service_name}
+                                onChange={(e) =>
+                                  setService_name(e.target.value)
+                                }
+                                placeholder="Service Name"
+                                className="form-control"
+                              />
+                            </div>
+                            <div className="form-group col-md-10">
+                              <textarea
+                                type="text"
+                                required
+                                name="service_description"
+                                value={service_description}
+                                onChange={(e) =>
+                                  setService_description(e.target.value)
+                                }
+                                placeholder="Service Description"
+                                className="form-control"
+                                rows="3"
+                              />
+                            </div>
+                            <div className="form-group col-md-12">
+                              <button
+                                className="theme-btn btn-style-one"
+                                type="submit"
+                                disabled={!isAdmin || loading}
+                              >
+                                <span>
+                                  {loading ? (
+                                    <div>
+                                      <span>please wait </span>
+                                      <span>
+                                        <PulseLoader
+                                          size={10}
+                                          color={"#123abc"}
+                                        />
+                                      </span>
+                                    </div>
+                                  ) : (
+                                    <span>
+                                      {editingId
+                                        ? "Update Service"
+                                        : "Add Service"}
+                                    </span>
+                                  )}
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                        <Modal
+                          show={showModal}
+                          onHide={() => setShowModal(false)}
+                          className="confirm_modal"
                         >
-                          {serverError}
-                        </div>
-                      )}
-                      <div className="row clearfix">
-                        <div className="form-group col-md-10">
-                          <input
-                            type="text"
-                            required
-                            name="ServiceName"
-                            value={service_name}
-                            onChange={(e) => setService_name(e.target.value)}
-                            placeholder="Service Name"
-                            className="form-control"
-                          />
-                        </div>
-                        <div className="form-group col-md-10">
-                          <textarea
-                            type="text"
-                            required
-                            name="service_description"
-                            value={service_description}
-                            onChange={(e) =>
-                              setService_description(e.target.value)
-                            }
-                            placeholder="Service Description"
-                            className="form-control"
-                            rows="3"
-                          />
-                        </div>
-                        <div className="form-group col-md-12">
-                          <button
-                            className="theme-btn btn-style-one"
-                            type="submit"
-                            disabled={
-                              !isAdmin ||loading}
-                          >
-                            <span>
-                              {loading ? (
-                                <div>
-                                  <span>please wait </span>
-                                  <span>
-                                    <PulseLoader size={10} color={"#123abc"} />
-                                  </span>
-                                </div>
-                              ) : (
-                                "update"
-                              )}
-                            </span>
-                          </button>
-                        </div>
+                          <Modal.Header closeButton>
+                            <Modal.Title>Confirm Deletion</Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            Are you sure you want to delete this employee?
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button
+                              variant="secondary"
+                              onClick={() => setShowModal(false)}
+                            >
+                              Cancel
+                            </Button>
+                            <Button variant="danger" onClick={checkToDelete}>
+                              Delete
+                            </Button>
+                          </Modal.Footer>
+                        </Modal>
                       </div>
-                    </form>
-                    <Modal
-                      show={showModal}
-                      onHide={() => setShowModal(false)}
-                      className="confirm_modal"
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title>Confirm Deletion</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        Are you sure you want to delete this employee?
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button
-                          variant="secondary"
-                          onClick={() => setShowModal(false)}
-                        >
-                          Cancel
-                        </Button>
-                        <Button variant="danger" onClick={checkToDelete}>
-                          Delete
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
         </>
-      
-
-                            }
+      )}
     </>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import orders from '../../../../services/order.service'
 import { Table, Button, Modal } from "react-bootstrap";
+import { format } from 'date-fns';
 function SingleCustomerAllorders({customer_id}) {
     const[orderData,setOrderData]=useState([])
   
@@ -9,7 +10,7 @@ function SingleCustomerAllorders({customer_id}) {
     const getAllOrdersPercustomer=()=>{
         orders.singleCustomersOrder(customer_id).then(response=>{
             setOrderData(response.data)
-            console.log(response.data)
+
         }).catch(error=>{
             console.log(error)
         })
@@ -21,7 +22,7 @@ getAllOrdersPercustomer()
     
   return (
     <div>
-      <Table striped bordered hover>
+      <Table striped bordered hover className="table-responsive-mobile">
         {orderData.length > 0 && (
           <thead>
             <tr>
@@ -54,12 +55,13 @@ getAllOrdersPercustomer()
 
                 {/* Vehicle Info in One Cell */}
                 <td>
-                  {order.vehicle_type} <br />({order.vehicle_year}
-                  <br />
-                  {order.vehicle_mileage})
+                  {order.vehicle_type} <br />({order.vehicle_year})
+                  <br />( {order.vehicle_mileage})
                 </td>
 
-                <td>{(new Date(order.order_date), "MM-dd-yyyy | HH:mm")}</td>
+                <td>
+                  {format(new Date(order.order_date), "MM-dd-yyyy | HH:mm")}
+                </td>
 
                 <td>
                   {order.employee_first_name} {order.employee_last_name}

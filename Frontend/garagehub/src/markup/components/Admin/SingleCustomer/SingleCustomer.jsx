@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import singleCustomers from "../../../../services/customers.service"; 
 import { FaRegEdit } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function  SingleCustomer({ customer_id, onBack ,showBackButton=true,customerData}) {
    const [singleCustomer, setSingleCustomer] = useState([]);
-
+const navigate=useNavigate(0)
 
   useEffect(() => {
     const fetchSingleCustomer = async () => {
@@ -15,8 +15,8 @@ function  SingleCustomer({ customer_id, onBack ,showBackButton=true,customerData
         const data = await response.json();
         setSingleCustomer(data.data); 
         customerData(data.data[0])
-        // Assuming data.data is an array
-        console.log(data.data[0]);
+        
+
       } catch (error) {
         console.error("Error fetching customer details:", error);
       }

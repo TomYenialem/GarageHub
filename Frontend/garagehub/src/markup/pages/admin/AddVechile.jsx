@@ -120,7 +120,7 @@ function AddVechile({ customer_id,onVehicleAdded,  existingVehicle }) {
     <section className="contact-section">
       <div className="auto-container">
         <div className="contact-title">
-          <h2>{isEditing ? "Edit Vehicle" : "Add a new vehicle"}</h2>
+          <h2 className="vehicle_titles">{isEditing ? "Edit Vehicle" : "Add a new vehicle"}</h2>
         </div>
         <div className="row clearfix">
           <div className="form-column col-lg-10">

@@ -74,7 +74,12 @@ function AllCustomersList() {
                     />
                   </div>
                   {/* Customers table */}
-                  <Table striped bordered hover className="table-responsive">
+                  <Table
+                    striped
+                    bordered
+                    hover
+                    className="table-responsive-mobile"
+                  >
                     <thead>
                       <tr>
                         <th>ID</th>

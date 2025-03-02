@@ -12,7 +12,7 @@ function EditVehicleInfo() {
         const vehicle=vehicles.singleVehicle(vehicle_id)
         vehicle.then((data)=>{
             setVehicleData(data.data[0])
-            console.log(data.data[0])
+            
         })
     },[vehicle_id])
 

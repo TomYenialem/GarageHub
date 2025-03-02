@@ -4,7 +4,7 @@ import { Table, Button, Modal } from "react-bootstrap";
 
 function GetSingleOrder({ order_id }) {
   const [orderData, setOrder] = useState([]);
-  console.log(order_id)
+
 
   const fetchSingleOrder = () => {
     try {
@@ -22,7 +22,7 @@ function GetSingleOrder({ order_id }) {
       console.log(error);
     }
   };
-  console.log(orderData)
+ 
   useEffect(() => {
     fetchSingleOrder();
   }, [order_id]);

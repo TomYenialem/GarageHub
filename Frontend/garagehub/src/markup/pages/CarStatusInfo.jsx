@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
-import orders from "../../services/order.service"; // Ensure the correct import
-
-function CustomerInfo() {
+import orders from "../../services/order.service"; 
+function CarStatusInfo() {
   const [loading, setLoading] = useState(false);
   const [customerInfo, setCustomerInfo] = useState("");
   const [orderList, setOrderList] = useState([]);
@@ -108,4 +107,4 @@ function CustomerInfo() {
   );
 }
 
-export default CustomerInfo;
+export default CarStatusInfo

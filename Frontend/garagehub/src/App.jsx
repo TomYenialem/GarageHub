@@ -2,7 +2,6 @@ import { Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 // impoer react toaster
 import { Toaster } from "react-hot-toast";
-
 import Login from "./markup/pages/Login";
 import Home from "./markup/pages/Home";
 import AddEmployee from "./markup/pages/admin/AddEmployee";
@@ -37,7 +36,8 @@ import About from "./markup/pages/About";
 import Services from "./markup/pages/Services";
 import Contact from "./markup/pages/Contact";
 import CustomerOrder from "./markup/pages/CustomerOrder";
-import CustomerInfo from "./markup/pages/CustomerInfo";
+
+import CarStatusInfo from "./markup/pages/CarStatusInfo";
 
 function App() {
   const { pathname } = useLocation();
@@ -56,7 +56,7 @@ function App() {
         <Route path="/service" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/customer_order/:order_id" element={<CustomerOrder />} />
-        <Route path="/customer_info" element={<CustomerInfo />} />
+        <Route path="/customer_info" element={<CarStatusInfo />} />
 
         <Route
           path="/unauthorized"

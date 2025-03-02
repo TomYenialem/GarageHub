@@ -31,7 +31,7 @@ function GetSingleVehicle({
         striped
         bordered
         hover
-        className="table-responsive d-flex justify-content-center " // Use w-100 for full-width
+        className="table-responsive-mobile" // Use w-100 for full-width
       >
         <thead>
           {/* Uncomment and adjust headers as needed */}

@@ -5,43 +5,39 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 function CustomerOrder() {
-  const[singleOrderData,setSingleOrderData]=useState([])
-  const {order_id}=useParams()
-  const fetchSingelOrderList= ()=>{
+  const [singleOrderData, setSingleOrderData] = useState([]);
+  const { order_id } = useParams();
+  const fetchSingelOrderList = () => {
     try {
-      const singleOrder=orders.singleOrder(order_id)
-      
-      singleOrder.then((data)=>{
-        if(data.error){
-          console.log(data.error)
-          toast.error(data.error)
-          return
+      const singleOrder = orders.singleOrder(order_id);
+      singleOrder.then((data) => {
+        if (data.error) {
+          console.log(data.error);
+          toast.error(data.error);
+          return;
         }
-        setSingleOrderData(data?.data[0])
+        setSingleOrderData(data?.data[0]);
         // console.log(data>.data[0])
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  useEffect(()=>{
-fetchSingelOrderList()
-  },[])
-  console.log(singleOrderData)
+  };
+  useEffect(() => {
+    fetchSingelOrderList();
+  }, []);
+  console.log(singleOrderData);
+
   return (
     <>
       {singleOrderData === undefined || singleOrderData.length == 0 ? (
         <>
           <div className="container text-center m-5">
             <h1 className="mb-2">Order Not Found</h1>
-          
-            <Link to="/customer_info">
-            <button className="btn btn-danger">
 
-            Check It Again
-            </button>
+            <Link to="/customer_info">
+              <button className="btn btn-danger">Check It Again</button>
             </Link>
-        
           </div>
         </>
       ) : (
@@ -211,37 +207,47 @@ fetchSingelOrderList()
                                       )}
                                     </span>
                                   </div>
-                                  <div
-                                    key={index}
-                                    className="d-flex justify-content-between align-items-center p-3 rounded shadow-sm"
-                                  >
-                                    {/* Left Side - Service Name & Description */}
-                                    <div>
-                                      <h4 className="mb-1text-muted">
-                                        Additional Services
-                                      </h4>
-                                      <p>{service.additional_services}</p>
-                                    </div>
+                                  {index === 0 &&
+                                    service.additional_services !== "" && (
+                                      <div
+                                        key={index}
+                                        className="d-flex justify-content-between align-items-center p-3 rounded shadow-sm"
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "space-between",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        {/* Left Side - Service Name & Description */}
+                                        <div className="d-flex flex-column gap-2">
+                                          <h4 className="mb-1 text-muted">
+                                            Additional Service
+                                          </h4>
+                                          <p className="mb-0">
+                                            {service?.additional_services}
+                                          </p>
+                                        </div>
 
-                                    {/* Right Side - Status Indicator */}
-                                    <span className="px-3 py-2 rounded text-white text-center status-badge">
-                                      {service.order_status === 0 ? (
-                                        <span className="bg-warning text-white px-2 d-inline-block text-center status-badge">
-                                          Received
+                                        {/* Right Side - Status Indicator */}
+                                        <span className="px-3 py-2 rounded text-white text-center status-badge">
+                                          {service.order_status === 0 ? (
+                                            <span className="bg-warning text-white px-2 d-inline-block text-center status-badge">
+                                              Received
+                                            </span>
+                                          ) : service.order_status === 1 ? (
+                                            <span className="bg-primary text-white px-2 d-inline-block text-center status-badge">
+                                              In Progress
+                                            </span>
+                                          ) : (
+                                            service.order_status === 2 && (
+                                              <span className="bg-success ttext-white px-2 d-inline-block text-center status-badge">
+                                                Completed
+                                              </span>
+                                            )
+                                          )}
                                         </span>
-                                      ) : service.order_status === 1 ? (
-                                        <span className="bg-primary text-white px-2 d-inline-block text-center status-badge">
-                                          In Progress
-                                        </span>
-                                      ) : (
-                                        service.order_status === 2 && (
-                                          <span className="bg-success text-white px-2 d-inline-block text-center status-badge">
-                                            Completed
-                                          </span>
-                                        )
-                                      )}
-                                    </span>
-                                  </div>
+                                      </div>
+                                    )}
                                 </>
                               )
                             )}
@@ -250,12 +256,6 @@ fetchSingelOrderList()
                           <p>No services found.</p>
                         )}
                       </div>
-                      {singleOrderData?.additional_request && (
-                        <div className="mt-4">
-                          <h4>Additional Order</h4>
-                          <p>{singleOrderData?.additional_request}</p>
-                        </div>
-                      )}
                     </div>
 
                     {/* Additional Order Section */}

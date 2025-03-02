@@ -5,7 +5,7 @@ function AdminPage() {
   return (
     <section className="services-section">
       <div className="auto-container">
-        <div className="sec-title style-two">
+        <div className="sec-title style-two admin_title">
           <h2>Admin Dashbord</h2>
           <div className="text">
             Bring to the table win-win survival strategies to ensure proactive
