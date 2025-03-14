@@ -9,7 +9,7 @@ const cors = require("cors");
 // Set up the CORS options to allow requests from our front-end
 
 // Create a variable to hold our port number
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 // Import the router
 const router = require("./routes");
 // Create the webserver

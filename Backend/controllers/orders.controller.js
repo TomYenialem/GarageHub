@@ -49,17 +49,26 @@ const getsingleOrder = async (req, res) => {
   try {
     const { id } = req.params;
     const order = await orderServices.getSingleOrderInfo(id);
-    if (!order) {
+
+    if (!order || order.length === 0) {
       return res.status(400).json({ error: "Failed to get order" });
     } else {
+      // Ensure `order_services` is parsed as an array
+      const parsedOrder = order.map((o) => ({
+        ...o,
+        order_services: JSON.parse(o.order_services || "[]"), // Parse JSON string into an array
+      }));
+
       return res.status(200).json({
-        data: order,
+        data: parsedOrder,
       });
     }
   } catch (error) {
     console.log(error);
+    res.status(500).json({ error: "Server error" });
   }
 };
+
 const getsinglecustomersOrder = async (req, res) => {
   try {
     const { id } = req.params;

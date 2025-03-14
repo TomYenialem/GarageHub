@@ -281,12 +281,13 @@ const getSingleOrderInfo = async (order_id) => {
         employee_info.employee_last_name
     `;
 
-    const result = await conn.query(singleOrderInfo, [order_id]);
+    const result = await conn. query(singleOrderInfo, [order_id]);
     return result;
   } catch (error) {
     console.log("Error in getSingleOrderInfo:", error);
   }
 };
+
 const getAllOrdersPerCustomer = async (customer_id) => {
   try {
     const singleOrderInfo = `

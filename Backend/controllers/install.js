@@ -1,4 +1,4 @@
-const installService=require('../services/install');
+const installService = require("../services/install");
 
 // Create a function to install the database tables
 async function install(req, res) {
@@ -16,4 +16,4 @@ async function install(req, res) {
   }
 }
 
-module.exports={install}
+module.exports = { install };

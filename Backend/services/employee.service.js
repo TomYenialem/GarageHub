@@ -107,16 +107,15 @@ const editEmployee = async (employee_id, employeesData) => {
     console.log("SQL Error:", error);
   }
 };
-const getSingleEmployee=async(id)=>{
-try {
-  const query = `SELECT * FROM employee INNER JOIN employee_info ON employee.employee_id = employee_info.employee_id INNER JOIN employee_pass ON employee.employee_id = employee_pass.employee_id INNER JOIN employee_role ON employee.employee_id = employee_role.employee_id INNER JOIN company_roles ON employee_role.company_role_id = company_roles.company_role_id WHERE employee.employee_id = ?`;
-  const rows = await conn.query(query,[id]);
-  return rows
-  
-} catch (error) {
-  console.log(error)
-}
-}
+const getSingleEmployee = async (id) => {
+  try {
+    const query = `SELECT * FROM employee INNER JOIN employee_info ON employee.employee_id = employee_info.employee_id INNER JOIN employee_pass ON employee.employee_id = employee_pass.employee_id INNER JOIN employee_role ON employee.employee_id = employee_role.employee_id INNER JOIN company_roles ON employee_role.company_role_id = company_roles.company_role_id WHERE employee.employee_id = ?`;
+    const rows = await conn.query(query, [id]);
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
 const deleteEmployee = async (id) => {
   try {
     // Delete related records first
