@@ -69,7 +69,7 @@ function AddCustomer() {
       const data = await response.json();
 
       if (data.error) {
-        returnsetServerError(data.error);
+        return setServerError(data.error);
       } 
         setSuccess(true);
         setServerError("");

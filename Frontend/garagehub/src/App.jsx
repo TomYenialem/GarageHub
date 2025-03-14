@@ -69,25 +69,27 @@ function App() {
         <Route
           path="/admin/orders"
           element={
-            <PrivateAuthRoute roles={[1, 2, 3]}>
-              <OrdersPage />
-            </PrivateAuthRoute>
+            // <PrivateAuthRoute roles={[1, 2, 3]}>
+            //   <OrdersPage />
+            // </PrivateAuthRoute>
+            <OrdersPage/>
           }
         />
         <Route
           path="/admin/add_customers"
           element={
-            <PrivateAuthRoute roles={[1, 2, 3]}>
+     
               <Customers />
-            </PrivateAuthRoute>
+       
           }
         />
         <Route
           path="/admin/add-employee"
           element={
-            <PrivateAuthRoute roles={[1, 2, 3]}>
+            // <PrivateAuthRoute roles={[1, 2, 3]}>
+            //   <AddEmployee />
+            // </PrivateAuthRoute>
               <AddEmployee />
-            </PrivateAuthRoute>
           }
         />
         <Route path="/admin/employees" element={<Employees />} />

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import orders from "../../services/order.service";
-import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 function CustomerOrder() {
@@ -13,7 +12,6 @@ function CustomerOrder() {
       singleOrder.then((data) => {
         if (data.error) {
           console.log(data.error);
-          toast.error(data.error);
           return;
         }
         setSingleOrderData(data?.data[0]);
@@ -26,7 +24,7 @@ function CustomerOrder() {
   useEffect(() => {
     fetchSingelOrderList();
   }, []);
-  console.log(singleOrderData);
+
 
   return (
     <>
@@ -42,7 +40,7 @@ function CustomerOrder() {
         </>
       ) : (
         <>
-          <div className="customer_order">
+          <div className="customer_order ">
             <div className="container sub_order">
               {/* Customer Info & Status */}
               <div className="row justify-content-center">
@@ -183,13 +181,12 @@ function CustomerOrder() {
                                       <h4 className="mb-1">
                                         {service.service_name}
                                       </h4>
-                                      <p className="text-muted">
+                                      <p className="text-muted ">
                                         {service.service_description}
                                       </p>
                                     </div>
 
-                                    {/* Right Side - Status Indicator */}
-                                    <span className="px-3 py-2 rounded text-white text-center status-badge">
+                                    <span className="px-3 py-2 rounded text-white text-center status-badge indicators">
                                       {service.order_status === 0 ? (
                                         <span className="bg-warning text-white px-2 d-inline-block text-center status-badge">
                                           Received
@@ -208,7 +205,9 @@ function CustomerOrder() {
                                     </span>
                                   </div>
                                   {index === 0 &&
-                                    service.additional_services !== "" && (
+                                    service.additional_services !== null &&
+                                    service.additional_services?.trim() !==
+                                      "" && (
                                       <div
                                         key={index}
                                         className="d-flex justify-content-between align-items-center p-3 rounded shadow-sm"
@@ -229,7 +228,7 @@ function CustomerOrder() {
                                         </div>
 
                                         {/* Right Side - Status Indicator */}
-                                        <span className="px-3 py-2 rounded text-white text-center status-badge">
+                                        <span className="px-3 py-2 rounded text-white text-center status-badge indicators">
                                           {service.order_status === 0 ? (
                                             <span className="bg-warning text-white px-2 d-inline-block text-center status-badge">
                                               Received

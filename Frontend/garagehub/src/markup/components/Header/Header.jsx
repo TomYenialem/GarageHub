@@ -1,96 +1,139 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../../assets/images/logo.png";
-import loginService from "../../../services/login.service";
 import { useAuth } from "../../../Context/AuthContext";
-import toast from "react-hot-toast";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { IoClose } from "react-icons/io5";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import loginService from "../../../services/login.service";
+import {toast} from 'react-hot-toast'
+
+import iconBar from "../../../assets/images/banner/menu.png";
+import logo from "../../../assets/images/logo.png";
 
 function Header() {
   const { isLogged, setIsLogged, employee } = useAuth();
+  const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
   const navigate = useNavigate();
-  const [showMenu, setShowMenu] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setShowMenu(!showMenu);
-  };
-
+  // Logout function
   const logOut = () => {
-    loginService.logOut();
+    loginService.logout();
     setIsLogged(false);
   };
 
-  const checkAdmin = () => {
-    if (isLogged) {
-      navigate("/admin");
-    } else {
-      toast.error("You are not authorized for the admin panel");
-      navigate("/login");
-    }
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuVisible(!isMobileMenuVisible);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuVisible(false);
+  };
+
+  // Admin route check
+const checkAdmin = () => {
+  if (!isLogged) {
+    toast.error("Please login first");
+    navigate("/login"); // Redirects to login page
+  } else {
+    navigate("/admin"); // Only navigates if logged in
+  }
+};
+
+  const isAdmin = () => {
+    closeMobileMenu();
+    checkAdmin();
   };
 
   return (
-    <header className="main-header header-style-one header-style-two">
-      {/* Top Bar */}
-      <div className="header-top text-dark py-2">
-        <div className="auto-container header_cont">
-          <div className="left-column ">
-            <span className="text text-sm car-repair sm-w-75 ">
-              "Fast, Reliable, and Affordable Car Repairs!"
-            </span>
-            <span className="office-hour text-sm call-us">
-              Mon - Sat: <strong>7:00 AM - 6:00 PM</strong>
-            </span>
-          </div>
-          <div className=" text-sm text-md">
-            {isLogged ? (
-              <span className="d-block d-md-inline text-white welcome">
-                <strong>Welcome, {employee?.employee_first_name}!</strong>
-              </span>
-            ) : (
-              <span className="text-sm text-white call-us">
-                Need Assistance? Call Us: <strong>+251 923685549</strong>
-              </span>
-            )}
+    <header
+      className={`main-header header-style-one fixed-top ${
+        isMobileMenuVisible ? "mobile-menu-visible" : ""
+      }`}
+    >
+      {/* 🔹 Top Header Section */}
+      <div className="header-top px-5 py-2">
+        <div className="auto-container">
+          <div className="inner-container">
+            <div className="left-column">
+              <div className="text enjoy ">
+                Driven by expertise, fueled by care
+              </div>
+              <div className="office-hour">
+                Monday - Saturday 7:00AM - 6:00PM
+              </div>
+            </div>
+            <div className="right-column">
+              {isLogged ? (
+                <div className="phone-number fw-bold ">
+                  Welcome : {employee.employee_first_name}
+                </div>
+              ) : (
+                <div className="phone-number ">
+                  Schedule Your Appointment Today:{" "}
+                  <strong>1800 456 7890</strong>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Main Navbar */}
-      <div className="header-upper">
-        <Container>
-          <div className="d-flex justify-content-between align-items-center p-3">
-            {/* Logo */}
-            <Link to="/" className="logo">
-              <img src={logo} alt="Logo" />
-            </Link>
-
-            {/* Mobile Menu Toggle */}
-            <div className="menu-icon d-lg-none" onClick={toggleMobileMenu}>
-              {showMenu ? <IoClose size={30} /> : <GiHamburgerMenu size={30} />}
+      {/* 🔹 Main Header */}
+      <div className="header-upper ">
+        <div className="auto-container">
+          <div className="inner-container logo_cont mb-5">
+            {/* 🔹 Logo Section */}
+            <div className="logo-box mb-4 ">
+              <div className="logo">
+                <Link to="/">
+                  <img src={logo} alt="Logo" />
+                </Link>
+              </div>
             </div>
 
-            {/* Desktop Navigation */}
-            <Navbar expand="lg" className="desktop-menu d-none d-lg-block">
-              <Nav className="ms-auto d-flex align-items-center">
-                <Nav.Link as={Link} to="/">
-                  Home
-                </Nav.Link>
-                <Nav.Link as={Link} to="/about">
-                  About Us
-                </Nav.Link>
-                <Nav.Link as={Link} to="/service">
-                  Services
-                </Nav.Link>
-                <Nav.Link as={Link} to="/contact">
-                  Contact Us
-                </Nav.Link>
-                <Nav.Link onClick={checkAdmin}>Admin</Nav.Link>
-                <Nav.Link as={Link} to="/customer_info">
-                  Orders
-                </Nav.Link>
+            {/* 🔹 Navigation & Buttons */}
+            <div className="right-column ">
+              <div className="nav-outer">
+                {/* Mobile Menu Toggle */}
+                <div className="mobile-nav-toggler" onClick={toggleMobileMenu}>
+                  <img src={iconBar} alt="Menu" width={"30px"} />
+                </div>
+
+                {/* Main Navigation */}
+                <nav className="main-menu navbar-expand-md navbar-light">
+                  <div className="collapse navbar-collapse show clearfix">
+                    <ul className="navigation list_nav">
+                      <li>
+                        <Link to="/">Home</Link>
+                      </li>
+                      <li>
+                        <Link to="/about">About Us</Link>
+                      </li>
+                      <li>
+                        <Link to="/service">Services</Link>
+                      </li>
+                      <li>
+                        <Link to="/contact">Contact Us</Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/admin"
+                          onClick={(e) => {
+                            e.preventDefault(); // Prevents default link behavior
+                            checkAdmin();
+                          }}
+                        >
+                          Admin
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/customer_info">Orders</Link>
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+
+              {/* 🔹 Login / Logout Button */}
+              <div className="mb-2">
                 {isLogged ? (
                   <Link
                     to="/"
@@ -104,58 +147,129 @@ function Header() {
                     Login
                   </Link>
                 )}
-              </Nav>
-            </Navbar>
+              </div>
+            </div>
           </div>
-        </Container>
+        </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div className={`mobile-menu ${showMenu ? "open" : ""}`}>
-        <Nav className="d-flex flex-column align-items-center">
-          <Nav.Link as={Link} to="/" onClick={toggleMobileMenu}>
-            Home
-          </Nav.Link>
-          <Nav.Link as={Link} to="/about" onClick={toggleMobileMenu}>
-            About Us
-          </Nav.Link>
-          <Nav.Link as={Link} to="/service" onClick={toggleMobileMenu}>
-            Services
-          </Nav.Link>
-          <Nav.Link as={Link} to="/contact" onClick={toggleMobileMenu}>
-            Contact Us
-          </Nav.Link>
-          <Nav.Link
-            onClick={() => {
-              checkAdmin();
-              toggleMobileMenu();
-            }}
-          >
-            Admin
-          </Nav.Link>
-          <Nav.Link as={Link} to="/customer_info" onClick={toggleMobileMenu}>
-            Orders
-          </Nav.Link>
-          {isLogged ? (
-            <Link
-              to="/"
-              className="theme-btn btn-style-one blue mt-3"
-              onClick={logOut}
-            >
-              Log out
-            </Link>
-          ) : (
-            <Link to="/login" className="theme-btn btn-style-one mt-3">
-              Login
-            </Link>
-          )}
-        </Nav>
-      </div>
+      {/* 🔹 Mobile Menu */}
+      {isMobileMenuVisible && (
+        <div className="mobile-menu">
+          <div className="menu-backdrop" onClick={closeMobileMenu}></div>
+          <div className="menu-box">
+            <div className="close-btn" onClick={closeMobileMenu}>
+              ✖
+            </div>
+            <nav className="menu-box">
+              {/* 🔹 Mobile Logo */}
+              <div className="nav-logo">
+                <Link to="/">
+                  <img src={logo} alt="Logo" />
+                </Link>
+              </div>
 
-      {/* Overlay for mobile menu */}
-      {showMenu && (
-        <div className="menu-overlay" onClick={toggleMobileMenu}></div>
+              {/* 🔹 Mobile Navigation */}
+              <ul className="navigation">
+                <li>
+                  <Link to="/" onClick={closeMobileMenu}>
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/about" onClick={closeMobileMenu}>
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/service" onClick={closeMobileMenu}>
+                    Services
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/contact" onClick={closeMobileMenu}>
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/admin"
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevents default link behavior
+                      isAdmin();
+                    }}
+                  >
+                    Admin
+                  </Link>
+                </li>
+
+                <li>
+                  <Link to="/customer_info" onClick={closeMobileMenu}>
+                    Orders
+                  </Link>
+                </li>
+                {isLogged ? (
+                  <li>
+                    <Link
+                      to="/"
+                      className="theme-btn btn-style-one"
+                      onClick={logOut}
+                    >
+                      Log Out
+                    </Link>
+                  </li>
+                ) : (
+                  <li>
+                    <Link
+                      to="/login"
+                      className="theme-btn btn-style-one text-light"
+                    >
+                      Log in
+                    </Link>
+                  </li>
+                )}
+              </ul>
+
+              {/* 🔹 Social Links */}
+              <div className="social-links">
+                <ul>
+                  <li>
+                    <Link to="#">
+                      <span className="fab fa-twitter"></span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="#">
+                      <span className="fab fa-facebook-square"></span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="#">
+                      <span className="fab fa-pinterest-p"></span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="#">
+                      <span className="fab fa-instagram"></span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="#">
+                      <span className="fab fa-youtube"></span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
       )}
+
+      {/* 🔹 Overlay Cursor Effect */}
+      <div className="nav-overlay">
+        <div className="cursor"></div>
+        <div className="cursor-follower"></div>
+      </div>
     </header>
   );
 }

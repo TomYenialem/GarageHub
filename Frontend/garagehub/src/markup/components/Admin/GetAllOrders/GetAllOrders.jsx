@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { Table } from "react-bootstrap";
-import orders from "../../../services/order.service";
+import orders from "../../../../services/order.service";
 import { FaRegEdit, FaExternalLinkAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import {PulseLoader} from 'react-spinners'
-import formatTime from "../../../util/formatTime";
+import formatTime from "../../../../util/formatTime";
 
 
 function GetAllOrders() {
@@ -35,7 +35,7 @@ function GetAllOrders() {
 
         const data = await res.json();
         if (data.data.length !== 0) {
-          setOrdersData(data.data);
+          setOrdersData(data.data.slice(0,8));
       
         }
       } catch (err) {

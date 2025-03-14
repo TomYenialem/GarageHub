@@ -1,6 +1,6 @@
 import React from 'react'
 import AdminMenu from '../../components/Admin/AdminMenu/AdminMenu';
-import GetAllOrders from '../../components/GetAllOrders/GetAllOrders';
+import GetAllOrders from '../../components/Admin/GetAllOrders/GetAllOrders';
 
 function GetAllOrdersInfo() {
   return (

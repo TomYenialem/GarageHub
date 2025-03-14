@@ -15,8 +15,8 @@ const logIn = async (formData) => {
 };
 
 // A function to log out the user
-const logOut = () => {
+const logout = () => {
   localStorage.removeItem("employee");
 };
 
-export default { logIn, logOut };
+export default { logIn, logout };

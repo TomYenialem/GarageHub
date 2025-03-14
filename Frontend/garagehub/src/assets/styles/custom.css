@@ -418,7 +418,7 @@ font-size: 29px !important;
 }
 
 .mobile-menu {
-  position: fixed;
+  /* position: fixed;
   top: 0;
   right: 300px;
   width: 250px;
@@ -430,7 +430,7 @@ font-size: 29px !important;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 1000; */
 }
 
 .mobile-menu.open {
@@ -447,7 +447,7 @@ font-size: 29px !important;
 }
 
 .mobile-menu a:hover {
-  background: #f8f9fa;
+  background: red;
 }
 
 .menu-overlay {
@@ -511,4 +511,168 @@ font-size: 29px !important;
   align-items: center;
   justify-content: space-between;
   gap: 15px;
+}
+
+.card p strong {
+  display: inline-block;
+  min-width: 140px; /* Adjust width to align text properly */
+}
+
+.card p .text-muted {
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .customer-card,
+  .vehicle-card {
+    margin-top: 20px; 
+  }
+  .logo{
+    width: 100px;
+  }
+  .left-column{
+    display: none;
+  }
+}
+
+/* .status-badge {
+  display: inline-block;
+  min-width: 100px;
+  padding: 6px 12px;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-left: 20px; /* Ensures uniform spacing */
+
+/* 
+.service-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px; 
+}  */
+
+
+/* General Styles */
+.customer_order .card {
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.customer_order h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.customer_order p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-block;
+  padding: 8px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 20px;
+  min-width: 120px;
+}
+
+.bg-warning {
+  background-color: #ffcc00 !important;
+  color: black;
+}
+
+.bg-primary {
+  background-color: #007bff !important;
+  color: white;
+}
+
+.bg-success {
+  background-color: #28a745 !important;
+  color: white;
+}
+
+/* Customer & Vehicle Info */
+.customer_order .info-card {
+  padding: 20px;
+  border-bottom: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.customer_order .info-card h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.customer_order .info-card p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Services Section */
+.customer_order .service-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.customer_order .service-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.customer_order .service-card p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+
+/* Adjustments for Mobile Screens */
+
+.indicators{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100px;
+}
+
+
+.fixed-top{
+  position: sticky !important;
+  top: 0;
+  z-index: 1000;
+  background-color: white;
+}
+.header-upper {
+  padding: 0px;
+  background: oklch(0.97 0.001 106.424);
+  color :white !important
+}
+.logo_cont{
+/* background-color: red; */
+height: 100px;
+
+}
+.list_nav{
+ 
+padding-bottom: 10px;
+position: sticky;
+top: -14px;
+right: 15px;
 }

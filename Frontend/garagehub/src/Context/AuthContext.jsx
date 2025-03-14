@@ -40,8 +40,7 @@ export const AuthProvider = ({ children }) => {
     function getAllCustomerList() {
  setLoading(true);
  const allcustomers = customerService.getCustomer();
- allcustomers
-   .then((res) => {
+ allcustomers.then((res) => {
      if (!res.ok) {
        setApiError(true);
        if (res.status === 401) {
@@ -55,7 +54,7 @@ export const AuthProvider = ({ children }) => {
      return res.json();
    })
    .then((data) => {
-     if (data.data.length !== 0) {
+     if (data?.data?.length !== 0) {
        setcustomers(data.data);
      }
    })

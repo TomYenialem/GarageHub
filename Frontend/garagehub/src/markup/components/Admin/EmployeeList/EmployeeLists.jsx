@@ -113,7 +113,7 @@ const fetchEmployesData =  () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {employees.map((employee) => (
+                      {employees?.map((employee) => (
                         <tr key={employee.employee_id}>
                           <td>
                             {employee.active_employee ? (

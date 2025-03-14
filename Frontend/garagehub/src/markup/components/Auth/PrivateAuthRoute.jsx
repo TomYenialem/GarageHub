@@ -34,10 +34,10 @@ const PrivateAuthRoute = ({ roles, children }) => {
     });
   }, [roles]);
   if (isChecked) {
-    if (!isLogged) {
+    if (isLogged) {
       return <Navigate to="/login" />;
     }
-    if (!isAuthorized) {
+    if (isAuthorized) {
       return <Navigate to="/unauthorized" />;
     }
   }
