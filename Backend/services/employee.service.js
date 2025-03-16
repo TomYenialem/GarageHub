@@ -2,7 +2,7 @@
 const e = require("express");
 const conn = require("../config/db.config");
 // Import the bcrypt module
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 // A function to check if employee exists in the database
 async function checkIfEmployeeExists(email) {
   const query = "SELECT * FROM employee WHERE employee_email = ? ";

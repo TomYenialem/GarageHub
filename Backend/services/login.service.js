@@ -1,7 +1,7 @@
 // Import the query function from the db.config.js file
 const conn = require("../config/db.config");
 // Import the bcrypt module to do the password comparison
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 // Import the employee service to get employee by email
 const employeeService = require("./employee.service");
 // Handle employee login
