@@ -20,7 +20,7 @@ async function logIn(req, res, next) {
       });
       // console.log(employee.message);
     }
-    // If successful, send a response to the client
+
     const payload = {
       employee_id: employee.data.employee_id,
       employee_email: employee.data.employee_email,
@@ -44,7 +44,6 @@ async function logIn(req, res, next) {
   } catch (error) {}
 }
 
-// Export the functions
 module.exports = {
   logIn,
 };
