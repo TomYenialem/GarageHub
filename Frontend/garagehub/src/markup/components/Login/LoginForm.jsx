@@ -184,7 +184,7 @@ function guestLogin() {
                           flex: "1",
                           backgroundColor: "#f39c12",
                           color: "#fff",
-                        }} // Orange guest button
+                        }} 
                       >
                         Login as a Guest
                       </button>
